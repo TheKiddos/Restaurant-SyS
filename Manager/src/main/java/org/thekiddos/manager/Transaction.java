@@ -1,4 +1,4 @@
-package org.thekiddos.payroll;
+package org.thekiddos.manager;
 
 public interface Transaction {
     void execute();
