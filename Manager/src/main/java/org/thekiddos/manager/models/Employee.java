@@ -11,7 +11,7 @@ import org.thekiddos.manager.PaymentSchedule;
 @RequiredArgsConstructor
 public class Employee {
     @NonNull
-    private long id;
+    private Long id;
     @NonNull
     private String name;
 

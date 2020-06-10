@@ -8,7 +8,7 @@ import java.util.Map;
 public class Database {
     private static Map<Long, Employee> employees = new HashMap<>();
 
-    public static Employee getEmployeeById( long employeeId ) {
+    public static Employee getEmployeeById( Long employeeId ) {
         return employees.get( employeeId );
     }
 

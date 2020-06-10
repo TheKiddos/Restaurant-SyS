@@ -4,10 +4,10 @@ import org.thekiddos.manager.models.Employee;
 import org.thekiddos.manager.repositories.Database;
 
 public abstract class AddEmployeeTransaction implements Transaction {
-    private long id;
+    private Long id;
     private String name;
 
-    public AddEmployeeTransaction( long id, String name ) {
+    public AddEmployeeTransaction( Long id, String name ) {
         this.id = id;
         this.name = name;
     }

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PayrollTest {
     @Test
     void testAddSalariedEmployee() {
-        int empId = 1;
+        Long empId = 1L;
         Transaction addSalariedEmployee = new AddSalariedEmployee( empId, "Zahlt", 1000.0 );
         addSalariedEmployee.execute();
 

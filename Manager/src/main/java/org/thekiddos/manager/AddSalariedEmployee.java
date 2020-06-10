@@ -3,7 +3,7 @@ package org.thekiddos.manager;
 public class AddSalariedEmployee extends AddEmployeeTransaction {
     private double salary;
 
-    public AddSalariedEmployee( int empId, String name, double salary ) {
+    public AddSalariedEmployee( Long empId, String name, double salary ) {
         super( empId, name );
         this.salary = salary;
     }
