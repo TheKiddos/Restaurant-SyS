@@ -17,12 +17,35 @@ class PayrollTest {
 
         PaymentClassification paymentClassification = emp.getPaymentClassification();
         SalariedClassification salariedClassification = (SalariedClassification)paymentClassification;
-        assertNotNull( paymentClassification );
+        assertNotNull( paymentClassification ); // Same if salariedClassification because casting null gives null
         assertEquals( 1000.0, salariedClassification.getSalary() );
 
         PaymentSchedule paymentSchedule = emp.getPaymentSchedule();
         MonthlySchedule monthlySchedule = (MonthlySchedule)paymentSchedule;
         assertNotNull( monthlySchedule );
+
+        PaymentMethod paymentMethod = emp.getPaymentMethod();
+        HoldMethod holdMethod = (HoldMethod)paymentMethod;
+        assertNotNull( holdMethod );
+    }
+
+    @Test
+    void testAddHourlyEmployee() {
+        Long empId = 1L;
+        Transaction addHourlyEmployee = new AddHourlyEmployee( empId, "Zahlt", 8.0 );
+        addHourlyEmployee.execute();
+
+        Employee emp = Database.getEmployeeById( empId );
+        assertEquals( "Zahlt", emp.getName() );
+
+        PaymentClassification paymentClassification = emp.getPaymentClassification();
+        HourlyClassification hourlyClassification = (HourlyClassification)paymentClassification;
+        assertNotNull( paymentClassification );
+        assertEquals( 10.0, hourlyClassification.getHourlyRate() );
+
+        PaymentSchedule paymentSchedule = emp.getPaymentSchedule();
+        WeeklySchedule weeklySchedule = (WeeklySchedule)paymentSchedule;
+        assertNotNull( weeklySchedule );
 
         PaymentMethod paymentMethod = emp.getPaymentMethod();
         HoldMethod holdMethod = (HoldMethod)paymentMethod;
