@@ -1,9 +1,9 @@
 package org.thekiddos.manager;
 
-public class AddSalariedEmployee extends AddEmployeeTransaction {
+public class AddSalariedEmployeeTransaction extends AddEmployeeTransaction {
     private double salary;
 
-    public AddSalariedEmployee( Long empId, String name, double salary ) {
+    public AddSalariedEmployeeTransaction( Long empId, String name, double salary ) {
         super( empId, name );
         this.salary = salary;
     }

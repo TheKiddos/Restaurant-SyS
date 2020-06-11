@@ -5,11 +5,12 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
-@Data
-@RequiredArgsConstructor
 public class DeleteEmployeeTransaction implements Transaction {
-    @NonNull
     private Long empId;
+
+    public DeleteEmployeeTransaction( Long empId ) {
+        this.empId = empId;
+    }
 
     @Override
     public void execute() {

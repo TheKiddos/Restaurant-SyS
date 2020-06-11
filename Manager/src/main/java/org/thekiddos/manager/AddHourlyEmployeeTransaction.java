@@ -1,9 +1,9 @@
 package org.thekiddos.manager;
 
-public class AddHourlyEmployee extends AddEmployeeTransaction {
+public class AddHourlyEmployeeTransaction extends AddEmployeeTransaction {
     private double hourlyRate;
 
-    public AddHourlyEmployee( Long empId, String name, double hourlyRate ) {
+    public AddHourlyEmployeeTransaction( Long empId, String name, double hourlyRate ) {
         super( empId, name );
         this.hourlyRate = hourlyRate;
     }
