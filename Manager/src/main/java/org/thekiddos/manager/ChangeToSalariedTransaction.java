@@ -1,0 +1,20 @@
+package org.thekiddos.manager;
+
+public class ChangeToSalariedTransaction extends ChangeClassificationTransaction {
+    private double salary;
+
+    public ChangeToSalariedTransaction( Long empId, double salary ) {
+        super( empId );
+        this.salary = salary;
+    }
+
+    @Override
+    protected PaymentClassification getPaymentClassification() {
+        return new SalariedClassification( salary );
+    }
+
+    @Override
+    protected PaymentSchedule getPaymentSchedule() {
+        return new MonthlySchedule();
+    }
+}
