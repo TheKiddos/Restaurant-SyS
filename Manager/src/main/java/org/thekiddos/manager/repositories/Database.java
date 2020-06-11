@@ -15,4 +15,8 @@ public class Database {
     public static void addEmployee( Employee employee ) {
         employees.put( employee.getId(), employee );
     }
+
+    public static void removeEmployeeById( Long empId ) {
+        employees.remove( empId );
+    }
 }

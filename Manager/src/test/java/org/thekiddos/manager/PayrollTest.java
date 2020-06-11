@@ -3,6 +3,9 @@ package org.thekiddos.manager;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.models.Employee;
 import org.thekiddos.manager.repositories.Database;
+
+import javax.xml.crypto.Data;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PayrollTest {
@@ -50,5 +53,21 @@ class PayrollTest {
         PaymentMethod paymentMethod = emp.getPaymentMethod();
         HoldMethod holdMethod = (HoldMethod)paymentMethod;
         assertNotNull( holdMethod );
+    }
+
+    @Test
+    void testDeleteEmployee() {
+        Long empId = 1L;
+        Transaction addEmployee = new AddSalariedEmployee( empId, "Zahlt", 1000.0 );
+        addEmployee.execute();
+
+        Employee emp = Database.getEmployeeById( empId );
+        assertEquals( "Zahlt", emp.getName() );
+
+        Transaction deleteEmployee = new DeleteEmployeeTransaction( empId );
+        deleteEmployee.execute();
+
+        Employee emp2 = Database.getEmployeeById( empId );
+        assertNull( emp2 );
     }
 }
