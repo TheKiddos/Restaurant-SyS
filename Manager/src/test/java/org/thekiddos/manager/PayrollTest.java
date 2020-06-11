@@ -41,7 +41,7 @@ class PayrollTest {
         PaymentClassification paymentClassification = emp.getPaymentClassification();
         HourlyClassification hourlyClassification = (HourlyClassification)paymentClassification;
         assertNotNull( paymentClassification );
-        assertEquals( 10.0, hourlyClassification.getHourlyRate() );
+        assertEquals( 8.0, hourlyClassification.getHourlyRate() );
 
         PaymentSchedule paymentSchedule = emp.getPaymentSchedule();
         WeeklySchedule weeklySchedule = (WeeklySchedule)paymentSchedule;
