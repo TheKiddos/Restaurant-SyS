@@ -1,4 +1,4 @@
-package org.thekiddos.manager;
+package org.thekiddos.manager.models;
 
 public class HoldMethod implements PaymentMethod {
 }

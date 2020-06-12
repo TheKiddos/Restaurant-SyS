@@ -1,6 +1,7 @@
 package org.thekiddos.manager;
 
 import org.thekiddos.manager.models.Employee;
+import org.thekiddos.manager.models.PaymentMethod;
 
 public abstract class ChangeMethodTransaction extends ChangeEmployeeTransaction {
     private Long empId;

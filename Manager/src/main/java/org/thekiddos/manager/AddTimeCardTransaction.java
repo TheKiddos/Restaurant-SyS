@@ -1,7 +1,7 @@
 package org.thekiddos.manager;
 
-import org.thekiddos.manager.exceptions.NoSuchEmployeeException;
 import org.thekiddos.manager.models.Employee;
+import org.thekiddos.manager.models.HourlyClassification;
 import org.thekiddos.manager.models.TimeCard;
 import org.thekiddos.manager.repositories.Database;
 

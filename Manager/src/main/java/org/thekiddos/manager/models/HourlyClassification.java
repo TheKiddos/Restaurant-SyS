@@ -1,16 +1,12 @@
-package org.thekiddos.manager;
+package org.thekiddos.manager.models;
 
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.thekiddos.manager.models.TimeCard;
 
-import java.sql.Time;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 @Data
 @RequiredArgsConstructor

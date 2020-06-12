@@ -1,8 +1,7 @@
 package org.thekiddos.manager;
 
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.models.Employee;
-import org.thekiddos.manager.models.TimeCard;
+import org.thekiddos.manager.models.*;
 import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDate;
@@ -170,5 +169,35 @@ class PayrollTest {
         PaymentMethod paymentMethod = emp.getPaymentMethod();
         HoldMethod holdMethod = (HoldMethod)paymentMethod;
         assertNotNull( holdMethod );
+    }
+
+    @Test
+    void testPaySingleSalariedEmployee() {
+        Long empId = 1L;
+        Transaction addEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
+        addEmployee.execute();
+
+        LocalDate payDate = LocalDate.of( 2020, Month.JUNE, 30 );
+        PaydayTransaction payday = new PaydayTransaction( payDate );
+        payday.execute();
+
+        PayCheck payCheck = payday.getPayCheck( empId );
+        assertNotNull( payCheck );
+        assertEquals( LocalDate.of( 2020, Month.JUNE, 30 ), payCheck.getPayDate() );
+        assertEquals( 1000.0, payCheck.getAmount() );
+        assertEquals( "Hold", payCheck.getField( "Disposition" ) );
+    }
+
+    @Test void testPayingSingleSalariedEmployeeOnWrongDate() {
+        Long empId = 1L;
+        Transaction addEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
+        addEmployee.execute();
+
+        LocalDate payDate = LocalDate.of( 2020, Month.JUNE, 29 );
+        PaydayTransaction payday = new PaydayTransaction( payDate );
+        payday.execute();
+
+        PayCheck payCheck = payday.getPayCheck( empId );
+        assertNull( payCheck );
     }
 }

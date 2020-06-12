@@ -1,5 +1,10 @@
 package org.thekiddos.manager;
 
+import org.thekiddos.manager.models.HourlyClassification;
+import org.thekiddos.manager.models.PaymentClassification;
+import org.thekiddos.manager.models.PaymentSchedule;
+import org.thekiddos.manager.models.WeeklySchedule;
+
 public class AddHourlyEmployeeTransaction extends AddEmployeeTransaction {
     private double hourlyRate;
 

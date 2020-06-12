@@ -1,6 +1,6 @@
 package org.thekiddos.manager;
 
-import org.thekiddos.manager.models.Employee;
+import org.thekiddos.manager.models.*;
 import org.thekiddos.manager.repositories.Database;
 
 public abstract class AddEmployeeTransaction implements Transaction {

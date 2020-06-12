@@ -1,5 +1,10 @@
 package org.thekiddos.manager;
 
+import org.thekiddos.manager.models.MonthlySchedule;
+import org.thekiddos.manager.models.PaymentClassification;
+import org.thekiddos.manager.models.PaymentSchedule;
+import org.thekiddos.manager.models.SalariedClassification;
+
 public class AddSalariedEmployeeTransaction extends AddEmployeeTransaction {
     private double salary;
 

@@ -1,4 +1,4 @@
-package org.thekiddos.manager;
+package org.thekiddos.manager.models;
 
 import lombok.Data;
 import lombok.NonNull;
