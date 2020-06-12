@@ -28,6 +28,7 @@ public class PaydayTransaction implements Transaction {
     }
 
     public PayCheck getPayCheck( Long empId ) {
-
+        // TODO should we return something else if the id doesn't exists?
+        return payChecks.get( empId );
     }
 }
