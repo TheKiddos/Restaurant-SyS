@@ -5,7 +5,20 @@ import java.time.LocalDate;
 public class MonthlySchedule implements PaymentSchedule {
     @Override
     public boolean isPayDay( LocalDate payDay ) {
-        LocalDate firstDayOfNextMonth = payDay.plusMonths( 1 ).withDayOfMonth( 1 );
-        return payDay.plusDays( 1 ).equals( firstDayOfNextMonth );
+        return isLastDayOfMonth( payDay );
+    }
+
+    @Override
+    public LocalDate getStartPayDay( LocalDate payDay ) {
+        return firstDayOfMonth( payDay );
+    }
+
+    private LocalDate firstDayOfMonth( LocalDate date ) {
+        return date.withDayOfMonth( 1 );
+    }
+
+    private boolean isLastDayOfMonth( LocalDate date ) {
+        LocalDate firstDayOfNextMonth = date.plusMonths( 1 ).withDayOfMonth( 1 );
+        return date.plusDays( 1 ).equals( firstDayOfNextMonth );
     }
 }

@@ -23,8 +23,9 @@ public class Employee {
     }
 
     public PayCheck payDay( LocalDate payDate ) {
-        double amount = paymentClassification.calculatePay( payDate );
-        PayCheck payCheck = new PayCheck( payDate, amount );
+        LocalDate startPayDay = paymentSchedule.getStartPayDay( payDate );
+        double amount = paymentClassification.calculatePay( startPayDay, payDate );
+        PayCheck payCheck = new PayCheck( payDate, amount, paymentMethod.getDetails() );
         paymentMethod.pay( payCheck );
         return payCheck;
     }

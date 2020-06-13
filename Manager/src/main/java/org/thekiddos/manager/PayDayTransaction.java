@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PaydayTransaction implements Transaction {
+public class PayDayTransaction implements Transaction {
     LocalDate payDate;
     Map<Long, PayCheck> payChecks;
 
-    public PaydayTransaction( LocalDate payDate ) {
+    public PayDayTransaction( LocalDate payDate ) {
         this.payDate = payDate;
         this.payChecks = new HashMap<>();
     }

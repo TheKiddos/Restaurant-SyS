@@ -13,7 +13,7 @@ public class SalariedClassification implements PaymentClassification {
     double salary;
 
     @Override
-    public double calculatePay( LocalDate payDate ) {
+    public double calculatePay( LocalDate startData, LocalDate endDate ) {
         return salary;
     }
 }
