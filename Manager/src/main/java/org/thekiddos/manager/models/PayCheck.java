@@ -1,6 +1,5 @@
 package org.thekiddos.manager.models;
 
-import com.sun.istack.Nullable;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -16,4 +15,6 @@ public class PayCheck {
     private double amount;
     @NonNull
     private String details;
+    @NonNull
+    private Employee employee;
 }

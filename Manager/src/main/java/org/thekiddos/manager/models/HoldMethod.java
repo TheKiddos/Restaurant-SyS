@@ -1,9 +1,12 @@
 package org.thekiddos.manager.models;
 
+import org.thekiddos.manager.PrintPayCheckTransaction;
+
 public class HoldMethod implements PaymentMethod {
     @Override
     public void pay( PayCheck payCheck ) {
-        // TODO this should use a printer or something
+        PrintPayCheckTransaction check = new PrintPayCheckTransaction( payCheck.getEmployee(), payCheck.getAmount(), payCheck.getPayDate() );
+        check.execute();
     }
 
     @Override

@@ -320,6 +320,7 @@ class PayrollTest {
     private void validateHourlyPaycheck( PayDayTransaction payDay, Long empId, LocalDate payDate, double expectedAmount ) {
         PayCheck payCheck = payDay.getPayCheck( empId );
         assertNotNull( payCheck );
+        assertEquals( payDate, payCheck.getPayDate() );
         assertEquals( expectedAmount, payCheck.getAmount() );
         assertEquals( "Printed", payCheck.getDetails() );
     }

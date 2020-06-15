@@ -16,4 +16,14 @@ public class SalariedClassification implements PaymentClassification {
     public double calculatePay( LocalDate startData, LocalDate endDate ) {
         return salary;
     }
+
+    @Override
+    public String getType() {
+        return "Salaried Employee";
+    }
+
+    @Override
+    public String getBaseSalary() {
+        return salary + " per Month";
+    }
 }

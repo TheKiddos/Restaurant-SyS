@@ -1,6 +1,9 @@
 package org.thekiddos.manager.models;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -34,6 +37,16 @@ public class HourlyClassification implements PaymentClassification {
         }
 
         return amount;
+    }
+
+    @Override
+    public String getType() {
+        return "Hourly Employee";
+    }
+
+    @Override
+    public String getBaseSalary() {
+        return hourlyRate + " per normal hour";
     }
 
     private double calculateTimeCardPay( TimeCard timeCard ) {
