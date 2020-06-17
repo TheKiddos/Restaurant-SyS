@@ -1,5 +1,6 @@
 package org.thekiddos.manager.repositories;
 
+import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Employee;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.Map;
 
 public class Database {
     private static Map<Long, Employee> employees = new HashMap<>();
+    private static Map<Long, Customer> customers = new HashMap<>();
 
     public static Employee getEmployeeById( Long employeeId ) {
         return employees.get( employeeId );
@@ -24,5 +26,17 @@ public class Database {
 
     public static List<Employee> getEmployees() {
         return new ArrayList<>( employees.values() );
+    }
+
+    public static void addCustomer( Customer customer ) {
+        customers.put( customer.getId(), customer );
+    }
+
+    public static Customer getCustomerById( Long customerId ) {
+        return customers.get( customerId );
+    }
+
+    public static void removeCustomerById( Long customerId ) {
+        customers.remove( customerId );
     }
 }
