@@ -2,8 +2,10 @@ package org.thekiddos.manager.repositories;
 
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Employee;
+import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.models.Table;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Database {
     private static Map<Long, Employee> employees = new HashMap<>();
     private static Map<Long, Customer> customers = new HashMap<>();
     private static Map<Long, Table> tables = new HashMap<>();
+    private static Map<Long, List<Reservation>> reservations = new HashMap<>();
 
     public static Employee getEmployeeById( Long employeeId ) {
         return employees.get( employeeId );
@@ -52,5 +55,37 @@ public class Database {
 
     public static void removeTableById( Long tableId ) {
         tables.remove( tableId );
+    }
+
+    public static void addReservation( Reservation reservation ) {
+        List<Reservation> tableReservations = reservations.get( reservation.getTableId() );
+        if ( tableReservations == null )
+            tableReservations = new ArrayList<>();
+
+        tableReservations.add( reservation );
+
+        reservations.put( reservation.getTableId(), tableReservations );
+    }
+
+    public static List<Reservation> getReservationsByTableId( Long tableId ) {
+        return reservations.computeIfAbsent( tableId, k -> new ArrayList<>() );
+    }
+
+    public static List<Reservation> getReservationsByCustomerId( Long customerId ) {
+        List<Reservation> customerReservations = new ArrayList<>();
+        for ( List<Reservation> tableReservations : reservations.values() )
+            for ( Reservation reservation : tableReservations )
+                if ( reservation.getCustomerId().equals( customerId ) )
+                    customerReservations.add( reservation );
+        return customerReservations;
+    }
+
+    public static void deleteReservation( Long tableId, LocalDate reservationDate ) {
+        List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
+        for ( int i = 0; i < tableReservation.size(); ++i )
+            if ( tableReservation.get( i ).getReservationDate().equals( reservationDate ) ) {
+                tableReservation.remove( i );
+                return;
+            }
     }
 }
