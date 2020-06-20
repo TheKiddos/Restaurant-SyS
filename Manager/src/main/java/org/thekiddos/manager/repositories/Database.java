@@ -94,4 +94,8 @@ public class Database {
     public static void addItem( Item item ) {
         items.put( item.getId(), item );
     }
+
+    public static void removeItemById( Long itemId ) {
+        items.remove( itemId );
+    }
 }

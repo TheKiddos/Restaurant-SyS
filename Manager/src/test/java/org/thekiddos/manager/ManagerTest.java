@@ -323,7 +323,20 @@ public class ManagerTest {
         assertEquals( types, frenchFries.getTypes() );
     }
 
+    @Test
+    void testDeleteItemTransaction() {
+        Long itemId = 14L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 );
+
+        Transaction deleteItem = new DeleteItemTransaction( itemId );
+        deleteItem.execute();
+
+        Item frenchFries = Database.getItemById( itemId );
+        assertNull( frenchFries );
+    }
+
     // TODO No need for Reservation subclasses
     // TODO activating Scheduled reservations
     // TODO use package protection for the setters
+    // TODO maybe Types should be a class or a string for dynamic use
 }
