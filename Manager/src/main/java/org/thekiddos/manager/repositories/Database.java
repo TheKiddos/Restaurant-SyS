@@ -1,9 +1,6 @@
 package org.thekiddos.manager.repositories;
 
-import org.thekiddos.manager.models.Customer;
-import org.thekiddos.manager.models.Employee;
-import org.thekiddos.manager.models.Reservation;
-import org.thekiddos.manager.models.Table;
+import org.thekiddos.manager.models.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ public class Database {
     private static Map<Long, Employee> employees = new HashMap<>();
     private static Map<Long, Customer> customers = new HashMap<>();
     private static Map<Long, Table> tables = new HashMap<>();
+    private static Map<Long, Item> items = new HashMap<>();
     private static Map<Long, List<Reservation>> reservations = new HashMap<>();
 
     public static Employee getEmployeeById( Long employeeId ) {
@@ -87,5 +85,13 @@ public class Database {
                 tableReservation.remove( i );
                 return;
             }
+    }
+
+    public static Item getItemById( Long itemId ) {
+        return items.get( itemId );
+    }
+
+    public static void addItem( Item item ) {
+        items.put( item.getId(), item );
     }
 }
