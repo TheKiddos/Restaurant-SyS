@@ -81,7 +81,7 @@ public class Database {
     public static void deleteReservation( Long tableId, LocalDate reservationDate ) {
         List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
         for ( int i = 0; i < tableReservation.size(); ++i )
-            if ( tableReservation.get( i ).getReservationDate().equals( reservationDate ) ) {
+            if ( tableReservation.get( i ).getDate().equals( reservationDate ) ) {
                 tableReservation.remove( i );
                 return;
             }

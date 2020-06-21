@@ -26,7 +26,7 @@ public class DeleteReservationTransaction implements Transaction {
     private Long getReserveId() {
         List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
         for ( Reservation reservation : tableReservation )
-            if ( reservation.getReservationDate().equals( reservationDate ) )
+            if ( reservation.getDate().equals( reservationDate ) )
                 return reservation.getCustomerId();
         return NO_CUSTOMER;
     }

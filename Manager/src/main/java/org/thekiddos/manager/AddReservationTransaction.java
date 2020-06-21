@@ -1,7 +1,9 @@
 package org.thekiddos.manager;
 
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 
@@ -18,6 +20,9 @@ public abstract class AddReservationTransaction implements Transaction {
     protected LocalDate reservationDate;
     @NonNull
     protected LocalTime reservationTime;
+    @Setter
+    @Getter
+    protected double reservationFee;
 
     @Override
     public void execute() {
