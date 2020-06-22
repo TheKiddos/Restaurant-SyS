@@ -1,5 +1,6 @@
 package org.thekiddos.manager.models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.*;
 import org.thekiddos.manager.repositories.Database;
@@ -13,6 +14,12 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
+
+    @BeforeEach
+    void setUpDatabase() {
+        Database.init();
+    }
+
     @Test
     void testScheduledReservationTransactionOnWrongDate() {
         Long tableId = 1L;
@@ -43,7 +50,10 @@ class ReservationTest {
 
         LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        ScheduledReservationTransaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        assertEquals( 10.0, reserveTable.getReservationFee() );
+        reserveTable.setReservationFee( 0.0 );
+        assertEquals( 0.0, reserveTable.getReservationFee() );
         reserveTable.execute();
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
@@ -52,10 +62,11 @@ class ReservationTest {
         assertNotNull( reservation );
         assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
         assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
+        assertFalse( reservation.isActive() );
     }
 
     @Test
-    void testReserveTableTwiceADay() {
+    void testReserveTableThreeTimesADay() {
         Long tableId = 3L;
         Transaction addTable = new AddTableTransaction( tableId );
         addTable.execute();
@@ -74,25 +85,27 @@ class ReservationTest {
         addCustomer.execute();
 
         LocalTime ninePM = LocalTime.of( 21, 0 );
-        reserveTable = new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, ninePM );
-        reserveTable.execute();
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, ninePM ) );
 
+        assertEquals( 1, Database.getReservationsByTableId( tableId ).size() );
         Reservation reservation = Database.getReservationsByTableId( tableId ).get( 0 );
         assertNotNull( reservation );
         assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
         assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
+        assertFalse( reservation.isActive() );
 
         List<Reservation> customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
 
         LocalTime sevenPM = LocalTime.of( 19, 0 );
-        reserveTable = new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, sevenPM );
-        reserveTable.execute();
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, sevenPM ) );
 
+        assertEquals( 1, Database.getReservationsByTableId( tableId ).size() );
         reservation = Database.getReservationsByTableId( tableId ).get( 0 );
         assertNotNull( reservation );
         assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
         assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
+        assertFalse( reservation.isActive() );
 
         customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
@@ -171,7 +184,7 @@ class ReservationTest {
         Long customerId2 = 9L;
         new AddCustomerTransaction( customerId2, "Kiddo", "Django" ).execute();
 
-        new ImmediateReservationTransaction( tableId, customerId ).execute();
+        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( tableId, customerId ) );
 
         reservation = Database.getReservationsByTableId( tableId ).get( 0 );
         assertNotNull( reservation );
@@ -201,6 +214,32 @@ class ReservationTest {
         Set<Long> tableIdsExpected = Set.of( tableId, tableId2 );
         Set<Long> tableIdsActual = Set.of( customerReservations.get( 0 ).getTableId(), customerReservations.get( 1 ).getTableId() );
         assertEquals( tableIdsExpected, tableIdsActual );
+    }
+
+    @Test
+    void testActivateReservationWrongDay() {
+        Long tableId = 2L;
+        Transaction addTable = new AddTableTransaction( tableId );
+        addTable.execute();
+
+        Long customerId = 2L;
+        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" );
+        addCustomer.execute();
+
+        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalTime eightPM = LocalTime.of( 20, 0 );
+        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        reserveTable.execute();
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertNotEquals( 0, tableReservations.size() );
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
+        assertFalse( reservation.isActive() );
+
+        assertThrows( IllegalArgumentException.class, () -> new ActivateReservationTransaction( tableId ) );
     }
 
     @Test

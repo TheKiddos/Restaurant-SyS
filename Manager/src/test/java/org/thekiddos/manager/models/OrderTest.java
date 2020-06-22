@@ -1,5 +1,6 @@
 package org.thekiddos.manager.models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.*;
 import org.thekiddos.manager.repositories.Database;
@@ -12,6 +13,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
+
+    @BeforeEach
+    void setUpDatabase() {
+        Database.init();
+    }
+
     @Test
     void testAddOrderToReservation() {
         Long tableId = 15L;

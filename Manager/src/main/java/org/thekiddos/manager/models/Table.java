@@ -1,28 +1,24 @@
 package org.thekiddos.manager.models;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@RequiredArgsConstructor
+@Getter
 public class Table {
-    @NonNull
     private Long id;
     private int maxCapacity;
-    private double tableFee = 0.0;
+    private double tableFee;
 
-    public Table( Long id, int maxCapacity ) {
+    public Table( Long id, int maxCapacity, double tableFee ) {
         this.id = id;
         this.maxCapacity = maxCapacity;
+        this.tableFee = tableFee;
     }
 
     public boolean isReserved( LocalDate on ) {
-
         List<Reservation> tableReservations = Database.getReservationsByTableId( id );
 
         if ( tableReservations.size() == 0 )

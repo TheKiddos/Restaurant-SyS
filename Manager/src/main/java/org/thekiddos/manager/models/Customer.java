@@ -1,10 +1,10 @@
 package org.thekiddos.manager.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@Data
+@Getter
 @RequiredArgsConstructor
 public class Customer {
     @NonNull

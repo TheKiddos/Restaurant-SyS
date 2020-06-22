@@ -1,5 +1,6 @@
 package org.thekiddos.manager.models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.AddHourlyEmployeeTransaction;
 import org.thekiddos.manager.AddTimeCardTransaction;
@@ -14,6 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TimeCardTest {
+
+    @BeforeEach
+    void setUpDatabase() {
+        Database.init();
+    }
+
     @Test
     void testAddTimeCardTransaction() {
         Long empId = 1L;

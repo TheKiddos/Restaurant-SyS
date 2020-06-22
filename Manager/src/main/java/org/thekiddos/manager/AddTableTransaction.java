@@ -1,11 +1,14 @@
 package org.thekiddos.manager;
 
+import lombok.Setter;
 import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddTableTransaction implements Transaction {
     private Long tableId;
     private int maxCapacity;
+    @Setter
+    private double tableFee = 0.0;
     private static final int DEFAULT_MAX_CAPACITY = 4;
 
     public AddTableTransaction( Long tableId ) {
@@ -19,7 +22,7 @@ public class AddTableTransaction implements Transaction {
 
     @Override
     public void execute() {
-        Table table = new Table( tableId, maxCapacity );
+        Table table = new Table( tableId, maxCapacity, tableFee );
         Database.addTable( table );
     }
 }

@@ -108,4 +108,12 @@ public class Database {
         }
         return null;
     }
+
+    public static void init() {
+        employees.clear();
+        customers.clear();
+        tables.clear();
+        items.clear();
+        reservations.clear();
+    }
 }

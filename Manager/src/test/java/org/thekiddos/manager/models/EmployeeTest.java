@@ -1,5 +1,6 @@
 package org.thekiddos.manager.models;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.*;
 import org.thekiddos.manager.repositories.Database;
@@ -7,10 +8,16 @@ import org.thekiddos.manager.repositories.Database;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
+
+    @BeforeEach
+    void setUpDatabase() {
+        Database.init();
+    }
+
     @Test
     void testAddSalariedEmployee() {
         Long empId = 1L;
-        Transaction addSalariedEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
+        AddSalariedEmployeeTransaction addSalariedEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
         addSalariedEmployee.execute();
 
         Employee emp = Database.getEmployeeById( empId );
@@ -33,7 +40,10 @@ class EmployeeTest {
     @Test
     void testAddHourlyEmployee() {
         Long empId = 1L;
-        Transaction addHourlyEmployee = new AddHourlyEmployeeTransaction( empId, "Zahlt", 8.0 );
+        AddHourlyEmployeeTransaction addHourlyEmployee = new AddHourlyEmployeeTransaction( empId, "Zahlt", 8.0 );
+        addHourlyEmployee.setOverHoursBonusRate( addHourlyEmployee.getOverHoursBonusRate() + 1 );
+        addHourlyEmployee.setOverHoursThreshold( addHourlyEmployee.getOverHoursThreshold() + 1 );
+        addHourlyEmployee.setHourlyRate( addHourlyEmployee.getHourlyRate() + 1 );
         addHourlyEmployee.execute();
 
         Employee emp = Database.getEmployeeById( empId );
@@ -42,7 +52,9 @@ class EmployeeTest {
         PaymentClassification paymentClassification = emp.getPaymentClassification();
         HourlyClassification hourlyClassification = (HourlyClassification)paymentClassification;
         assertNotNull( paymentClassification );
-        assertEquals( 8.0, hourlyClassification.getHourlyRate() );
+        assertEquals( 9.0, hourlyClassification.getHourlyRate() );
+        assertEquals( 2.5, hourlyClassification.getOverHoursBonusRate() );
+        assertEquals( 9.0, hourlyClassification.getOverHoursThreshold() );
 
         PaymentSchedule paymentSchedule = emp.getPaymentSchedule();
         WeeklySchedule weeklySchedule = (WeeklySchedule)paymentSchedule;
@@ -89,7 +101,10 @@ class EmployeeTest {
         Transaction addEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
         addEmployee.execute();
 
-        Transaction changeToHourly = new ChangeToHourlyTransaction( empId, 8.0 );
+        ChangeToHourlyTransaction changeToHourly = new ChangeToHourlyTransaction( empId, 8.0 );
+        changeToHourly.setOverHoursBonusRate( changeToHourly.getOverHoursBonusRate() + 1 );
+        changeToHourly.setOverHoursThreshold( changeToHourly.getOverHoursThreshold() + 1 );
+        changeToHourly.setHourlyRate( changeToHourly.getHourlyRate() + 1 );
         changeToHourly.execute();
 
         Employee emp = Database.getEmployeeById( empId );
@@ -97,7 +112,9 @@ class EmployeeTest {
         PaymentClassification paymentClassification = emp.getPaymentClassification();
         HourlyClassification hourlyClassification = (HourlyClassification)paymentClassification;
         assertNotNull( paymentClassification );
-        assertEquals( 8.0, hourlyClassification.getHourlyRate() );
+        assertEquals( 9.0, hourlyClassification.getHourlyRate() );
+        assertEquals( 2.5, hourlyClassification.getOverHoursBonusRate() );
+        assertEquals( 9.0, hourlyClassification.getOverHoursThreshold() );
 
         PaymentSchedule paymentSchedule = emp.getPaymentSchedule();
         WeeklySchedule weeklySchedule = (WeeklySchedule)paymentSchedule;

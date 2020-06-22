@@ -1,6 +1,6 @@
 package org.thekiddos.manager.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -9,13 +9,15 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@Data
+@Getter
 @RequiredArgsConstructor
 public class HourlyClassification implements PaymentClassification {
     @NonNull
     private double hourlyRate;
-    private double overHoursBonusRate = 1.5;
-    private int overHoursThreshold = 8;
+    @NonNull
+    private double overHoursBonusRate;
+    @NonNull
+    private int overHoursThreshold;
     private Map<LocalDate, TimeCard> timeCards = new HashMap<>();
 
     public TimeCard getTimeCard( LocalDate date ) {

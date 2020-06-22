@@ -1,7 +1,9 @@
 package org.thekiddos.manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.thekiddos.manager.models.PayCheck;
+import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,6 +12,12 @@ import java.time.Month;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PayrollTest {
+
+    @BeforeEach
+    void setUpDatabase() {
+        Database.init();
+    }
+
     @Test
     void testPaySingleSalariedEmployee() {
         Long empId = 1L;
@@ -25,6 +33,7 @@ class PayrollTest {
         assertEquals( LocalDate.of( 2020, Month.JUNE, 30 ), payCheck.getPayDate() );
         assertEquals( 1000.0, payCheck.getAmount() );
         assertEquals( "Printed", payCheck.getDetails() );
+        assertEquals( empId, payCheck.getEmployee().getId() );
     }
 
     @Test void testPayingSingleSalariedEmployeeOnWrongDate() {
