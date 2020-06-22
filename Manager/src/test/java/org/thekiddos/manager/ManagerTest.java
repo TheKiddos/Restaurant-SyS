@@ -80,9 +80,7 @@ public class ManagerTest {
 
         LocalDate fifthOfNovember2019 = LocalDate.of( 2019, Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2019, eightPM );
-        reserveTable.execute();
-        // TODO really need to use exceptions
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2019, eightPM ) );
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         assertEquals( 0, tableReservations.size() );
@@ -107,8 +105,8 @@ public class ManagerTest {
         assertNotEquals( 0, tableReservations.size() );
         Reservation reservation = tableReservations.get( 0 );
         assertNotNull( reservation );
-        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getReservationDate() );
-        assertEquals( LocalTime.of( 20, 0 ), reservation.getReservationTime() );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
     }
 
     @Test
@@ -136,8 +134,8 @@ public class ManagerTest {
 
         Reservation reservation = Database.getReservationsByTableId( tableId ).get( 0 );
         assertNotNull( reservation );
-        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getReservationDate() );
-        assertEquals( LocalTime.of( 20, 0 ), reservation.getReservationTime() );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
 
         List<Reservation> customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
@@ -148,8 +146,8 @@ public class ManagerTest {
 
         reservation = Database.getReservationsByTableId( tableId ).get( 0 );
         assertNotNull( reservation );
-        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getReservationDate() );
-        assertEquals( LocalTime.of( 20, 0 ), reservation.getReservationTime() );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
 
         customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
@@ -185,13 +183,13 @@ public class ManagerTest {
         assertEquals( 2, tableReservations.size() );
 
         Reservation reservation = tableReservations.get( 0 );
-        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getReservationDate() );
-        assertEquals( LocalTime.of( 20, 0 ), reservation.getReservationTime() );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 5 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
         assertEquals( customerId, reservation.getCustomerId() );
 
         reservation = tableReservations.get( 1 );
-        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 6 ), reservation.getReservationDate() );
-        assertEquals( LocalTime.of( 20, 0 ), reservation.getReservationTime() );
+        assertEquals( LocalDate.of( 2020, Month.NOVEMBER, 6 ), reservation.getDate() );
+        assertEquals( LocalTime.of( 20, 0 ), reservation.getTime() );
         assertEquals( customerId2, reservation.getCustomerId() );
     }
 
@@ -323,7 +321,20 @@ public class ManagerTest {
         assertEquals( types, frenchFries.getTypes() );
     }
 
+    @Test
+    void testDeleteItemTransaction() {
+        Long itemId = 14L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 );
+
+        Transaction deleteItem = new DeleteItemTransaction( itemId );
+        deleteItem.execute();
+
+        Item frenchFries = Database.getItemById( itemId );
+        assertNull( frenchFries );
+    }
+
     // TODO No need for Reservation subclasses
     // TODO activating Scheduled reservations
     // TODO use package protection for the setters
+    // TODO maybe Types should be a class or a string for dynamic use
 }

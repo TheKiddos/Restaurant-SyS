@@ -29,7 +29,7 @@ public class Table {
             return false;
 
         for ( Reservation reservation : tableReservations ) {
-            if ( reservation.getReservationDate().equals( on ) )
+            if ( reservation.getDate().equals( on ) )
                 return true;
         }
 
