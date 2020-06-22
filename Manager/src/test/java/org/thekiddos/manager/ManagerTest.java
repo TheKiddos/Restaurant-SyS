@@ -324,7 +324,7 @@ public class ManagerTest {
     @Test
     void testDeleteItemTransaction() {
         Long itemId = 14L;
-        new AddItemTransaction( itemId, "French Fries", 10.0 );
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
 
         Transaction deleteItem = new DeleteItemTransaction( itemId );
         deleteItem.execute();
@@ -333,8 +333,141 @@ public class ManagerTest {
         assertNull( frenchFries );
     }
 
-    // TODO No need for Reservation subclasses
-    // TODO activating Scheduled reservations
+    @Test
+    void testAddOrderToReservation() {
+        Long tableId = 15L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 15L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 15L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        new ImmediateReservationTransaction( tableId, customerId ).execute();
+
+        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+        assertEquals( customerId, reservation.getCustomerId() );
+        assertEquals( 10.0, reservation.getTotal() );
+
+        Order order = reservation.getOrder();
+        assertEquals( 1, order.getItems().size() );
+        assertEquals( itemId, order.getItems().get( 0 ).getId() );
+        assertEquals( 10.0, order.getTotal() );
+    }
+
+    @Test
+    void testAddOrderToNonActiveReservationInFuture() {
+        Long tableId = 16L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 16L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 16L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalTime eightPM = LocalTime.of( 20, 0 );
+        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM ).execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+        assertFalse( reservation.isActive() );
+        assertEquals( customerId, reservation.getCustomerId() );
+
+        Order order = reservation.getOrder();
+        assertEquals( 0, order.getItems().size() );
+        assertEquals( 0.0, order.getTotal() );
+    }
+
+    @Test
+    void testAddOrderToNonActiveReservationToday() {
+        Long tableId = 17L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 17L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 17L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        new ScheduledReservationTransaction( tableId, customerId, currentDate, currentTime ).execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+        assertFalse( reservation.isActive() );
+        assertEquals( customerId, reservation.getCustomerId() );
+
+        Order order = reservation.getOrder();
+        assertEquals( 0, order.getItems().size() );
+        assertEquals( 0.0, order.getTotal() );
+    }
+
+    @Test
+    void testAddOrderToActiveReservationToday() {
+        Long tableId = 18L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 18L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 18L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        new ScheduledReservationTransaction( tableId, customerId, currentDate, currentTime ).execute();
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+
+        Transaction activateReservation = new ActivateReservationTransaction( reservation );
+        activateReservation.execute();
+
+        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        assertTrue( reservation.isActive() );
+        assertEquals( customerId, reservation.getCustomerId() );
+        assertEquals( 20.0, reservation.getTotal() );
+
+        Order order = reservation.getOrder();
+        assertEquals( 1, order.getItems().size() );
+        assertEquals( 10.0, order.getTotal() );
+    }
+
     // TODO use package protection for the setters
     // TODO maybe Types should be a class or a string for dynamic use
+    // As soon as an order is marked as payed it's removed to another table/database
+    // can we replace Order with a list?
+    // Database should be transparent to all classes
+    // test adding orders later
+    // paying orders this should delete/move the reservation
+    // test two reservation and add orders to them and pay
+    // remember to save the reservation object after retrieving from an actual database
 }

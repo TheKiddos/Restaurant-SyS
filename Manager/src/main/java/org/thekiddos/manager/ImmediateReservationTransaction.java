@@ -14,6 +14,8 @@ public class ImmediateReservationTransaction extends AddReservationTransaction {
 
     @Override
     protected Reservation getReservation() {
-        return new Reservation( tableId, customerId, reservationDate, reservationTime, reservationFee );
+        Reservation reservation = new Reservation( tableId, customerId, reservationDate, reservationTime, reservationFee );
+        reservation.activate();
+        return reservation;
     }
 }

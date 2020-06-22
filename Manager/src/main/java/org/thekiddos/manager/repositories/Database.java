@@ -98,4 +98,14 @@ public class Database {
     public static void removeItemById( Long itemId ) {
         items.remove( itemId );
     }
+
+    public static Reservation getCurrentReservationByTableId( Long tableId ) {
+        List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
+        LocalDate now = LocalDate.now();
+        for ( Reservation reservation : tableReservation ) {
+            if ( reservation.getDate().equals( now ) )
+                return reservation;
+        }
+        return null;
+    }
 }
