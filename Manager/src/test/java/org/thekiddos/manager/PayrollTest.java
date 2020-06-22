@@ -324,6 +324,4 @@ class PayrollTest {
         assertEquals( expectedAmount, payCheck.getAmount() );
         assertEquals( "Printed", payCheck.getDetails() );
     }
-
-    // TODO When changing an employee classification what should happen to his current pay for example if he was hourly paid?
 }

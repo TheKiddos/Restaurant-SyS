@@ -20,7 +20,7 @@ public class Reservation extends Service {
 
     @Override
     protected double getFees() {
-        return reservationFee + Database.getTableById( tableId ).getTableFee(); // TODO Cache?
+        return reservationFee + getTableFee();
     }
 
     public boolean isActive() {
@@ -29,5 +29,9 @@ public class Reservation extends Service {
 
     public void activate() {
         active = true;
+    }
+
+    public double getTableFee() {
+        return Database.getTableById( tableId ).getTableFee(); // TODO Cache?
     }
 }

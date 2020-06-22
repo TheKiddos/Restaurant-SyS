@@ -445,8 +445,14 @@ public class ManagerTest {
         Reservation reservation = tableReservations.get( 0 );
         assertNotNull( reservation );
 
-        Transaction activateReservation = new ActivateReservationTransaction( reservation );
+        Transaction activateReservation = new ActivateReservationTransaction( tableId ); // TODO Maybe we should rely on the customer Id
         activateReservation.execute();
+
+        tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
 
         AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
         service.addItem( itemId );
@@ -461,13 +467,94 @@ public class ManagerTest {
         assertEquals( 10.0, order.getTotal() );
     }
 
+    @Test
+    void testAddTwoOrderToReservation() {
+        Long tableId = 19L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 19L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 19L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        new ImmediateReservationTransaction( tableId, customerId ).execute();
+
+        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        Reservation reservation = tableReservations.get( 0 );
+        assertNotNull( reservation );
+        assertEquals( customerId, reservation.getCustomerId() );
+        assertEquals( 20.0, reservation.getTotal() );
+
+        Order order = reservation.getOrder();
+        assertEquals( 2, order.getItems().size() );
+        assertEquals( itemId, order.getItems().get( 0 ).getId() );
+        assertEquals( itemId, order.getItems().get( 1 ).getId() );
+        assertEquals( 20.0, order.getTotal() );
+    }
+
+    @Test
+    void testPayForOrder() {
+        Long tableId = 20L;
+        new AddTableTransaction( tableId ).execute();
+
+        Long customerId = 20L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+
+        Long itemId = 20L;
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+
+        new ImmediateReservationTransaction( tableId, customerId ).execute();
+
+        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 1, tableReservations.size() );
+
+        CheckOutTransaction checkOut = new CheckOutTransaction( tableId );
+        checkOut.execute();
+
+        tableReservations = Database.getReservationsByTableId( tableId );
+        assertEquals( 0, tableReservations.size() );
+
+        Invoice invoice = checkOut.getInvoice();
+        assertNotNull( invoice );
+        assertEquals( 10.0, invoice.getTotal() );
+        assertEquals( 10.0, invoice.getOrderTotal() );
+        assertEquals( 0.0, invoice.getTableFee() );
+        assertEquals( 0.0, invoice.getReservationFee() );
+        assertEquals( 0.0, invoice.getDiscount() );
+        assertEquals( 10.0, invoice.getNetAmount() );
+
+        assertEquals( customerId, invoice.getCustomerId() );
+        assertEquals( tableId, invoice.getTableId() );
+
+        assertEquals( LocalDate.now(), invoice.getDate() );
+        assertEquals( 1, invoice.getItems().size() );
+        assertEquals( itemId, invoice.getItems().get( 0 ).getId() );
+    }
+
     // TODO use package protection for the setters
     // TODO maybe Types should be a class or a string for dynamic use
-    // As soon as an order is marked as payed it's removed to another table/database
+    // When deleting something move it to another table instead
     // can we replace Order with a list?
     // Database should be transparent to all classes
-    // test adding orders later
-    // paying orders this should delete/move the reservation
+    // paying orders should delete/move the reservation
     // test two reservation and add orders to them and pay
     // remember to save the reservation object after retrieving from an actual database
+    // save the invoice in the database
+    // TODO group related items in a quantity field
+    // TODO again Make sure we can't mutate anything outside of transactions(package)
 }
