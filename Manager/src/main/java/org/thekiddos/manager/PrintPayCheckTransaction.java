@@ -70,7 +70,7 @@ public class PrintPayCheckTransaction implements Transaction {
     }
 
     private String replaceCheckPlaceholders( String payCheckConents ) {
-        payCheckConents = payCheckConents.replace( "$RESTUARANT_NAME$", "MHA" );
+        payCheckConents = payCheckConents.replace( "$RESTAURANT_NAME$", "MHA" );
         payCheckConents = payCheckConents.replace( "$PAYMENT_DATE$", dateOfPayment.toString() );
         payCheckConents = payCheckConents.replace( "$ID$", employee.getId().toString() );
         payCheckConents = payCheckConents.replace( "$NAME$", employee.getName() );
