@@ -60,7 +60,7 @@ public class ManagerTest {
 
         assertEquals( LocalDate.now(), invoice.getDate() );
         assertEquals( 1, invoice.getItems().size() );
-        assertEquals( itemId, invoice.getItems().get( 0 ).getId() );
+        assertEquals( 1, invoice.getItems().get( Database.getItemById( itemId ) ) );
     }
 
     @Test
@@ -98,6 +98,5 @@ public class ManagerTest {
     // test two reservation and add orders to them and pay
     // remember to save the reservation object after retrieving from an actual database
     // save the invoice in the database
-    // TODO group related items in a quantity field
     // TODO again Make sure we can't mutate anything outside of transactions(package)
 }

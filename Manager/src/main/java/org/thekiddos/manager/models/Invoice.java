@@ -4,7 +4,8 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class Invoice {
@@ -12,5 +13,5 @@ public class Invoice {
     private Long tableId, customerId;
     private LocalDate date = LocalDate.now();
     private LocalTime time = LocalTime.now();
-    private List<Item> items;
+    private Map<Item, Integer> items = new HashMap<>();
 }

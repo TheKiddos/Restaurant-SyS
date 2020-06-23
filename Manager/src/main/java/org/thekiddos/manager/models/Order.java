@@ -1,21 +1,24 @@
 package org.thekiddos.manager.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order {
-    private List<Item> items = new ArrayList<>();
+    private Map<Item, Integer> items = new HashMap<>();
 
-    public List<Item> getItems() {
-        // TODO return as readonly?
+    public Map<Item, Integer> getItems() {
         return items;
     }
 
     public double getTotal() {
-        return items.stream().mapToDouble( Item::getPrice ).sum();
+        double total = 0;
+        for ( Item item : items.keySet() )
+            total += item.getPrice() * items.get( item );
+        return total;
     }
 
     public void addItem( Item item ) {
-        items.add( item );
+        Integer count = items.get( item );
+        items.put( item, count == null ? 1 : count + 1 );
     }
 }
