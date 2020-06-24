@@ -1,6 +1,10 @@
 package org.thekiddos.manager.repositories;
 
-import org.thekiddos.manager.models.*;
+import org.thekiddos.manager.models.Customer;
+import org.thekiddos.manager.models.Item;
+import org.thekiddos.manager.models.Reservation;
+import org.thekiddos.manager.models.Table;
+import org.thekiddos.manager.payroll.models.Employee;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -2,8 +2,8 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.*;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

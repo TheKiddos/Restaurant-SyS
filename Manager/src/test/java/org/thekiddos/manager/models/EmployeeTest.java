@@ -2,8 +2,10 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.*;
+import org.thekiddos.manager.payroll.models.*;
+import org.thekiddos.manager.payroll.transactions.*;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.Transaction;
 
 import static org.junit.jupiter.api.Assertions.*;
 

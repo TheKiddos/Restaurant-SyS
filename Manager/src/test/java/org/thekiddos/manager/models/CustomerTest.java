@@ -2,10 +2,10 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.AddCustomerTransaction;
-import org.thekiddos.manager.DeleteCustomerTransaction;
-import org.thekiddos.manager.Transaction;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.AddCustomerTransaction;
+import org.thekiddos.manager.transactions.DeleteCustomerTransaction;
+import org.thekiddos.manager.transactions.Transaction;
 
 import static org.junit.jupiter.api.Assertions.*;
 

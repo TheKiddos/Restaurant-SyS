@@ -2,10 +2,13 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.AddHourlyEmployeeTransaction;
-import org.thekiddos.manager.AddTimeCardTransaction;
-import org.thekiddos.manager.Transaction;
+import org.thekiddos.manager.payroll.models.Employee;
+import org.thekiddos.manager.payroll.models.HourlyClassification;
+import org.thekiddos.manager.payroll.models.TimeCard;
+import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
+import org.thekiddos.manager.payroll.transactions.AddTimeCardTransaction;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.Transaction;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

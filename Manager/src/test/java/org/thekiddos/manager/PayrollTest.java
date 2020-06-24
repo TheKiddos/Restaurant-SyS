@@ -2,8 +2,13 @@ package org.thekiddos.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.models.PayCheck;
+import org.thekiddos.manager.payroll.models.PayCheck;
+import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
+import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
+import org.thekiddos.manager.payroll.transactions.AddTimeCardTransaction;
+import org.thekiddos.manager.payroll.transactions.PayDayTransaction;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.Transaction;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

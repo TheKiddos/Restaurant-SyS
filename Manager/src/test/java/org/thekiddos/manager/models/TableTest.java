@@ -2,10 +2,10 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.thekiddos.manager.AddTableTransaction;
-import org.thekiddos.manager.DeleteTableTransaction;
-import org.thekiddos.manager.Transaction;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.AddTableTransaction;
+import org.thekiddos.manager.transactions.DeleteTableTransaction;
+import org.thekiddos.manager.transactions.Transaction;
 
 import java.time.LocalDate;
 
