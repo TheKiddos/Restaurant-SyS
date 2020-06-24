@@ -27,9 +27,9 @@ class TimeCardTest {
         Transaction addEmployee = new AddHourlyEmployeeTransaction( empId, "Zahlt", 8.0 );
         addEmployee.execute();
 
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime threeHoursAndThirtyMinutes = LocalTime.of( 3, 30 );
-        Transaction addTimeCard = new AddTimeCardTransaction( empId, fifthOfNovember2020, threeHoursAndThirtyMinutes );
+        Transaction addTimeCard = new AddTimeCardTransaction( empId, fifthOfNovemberNextYear, threeHoursAndThirtyMinutes );
         addTimeCard.execute();
 
         Employee emp = Database.getEmployeeById( empId );
@@ -38,9 +38,9 @@ class TimeCardTest {
         HourlyClassification hourlyClassification = (HourlyClassification)emp.getPaymentClassification();
         assertNotNull( hourlyClassification );
 
-        TimeCard timeCard = hourlyClassification.getTimeCard( LocalDate.of( 2020, Month.NOVEMBER, 5 ) ); // to make sure the data class works alright
+        TimeCard timeCard = hourlyClassification.getTimeCard( fifthOfNovemberNextYear );
         assertNotNull( timeCard );
 
-        assertEquals( LocalTime.of( 3, 30 ), timeCard.getTimeWorked() );
+        assertEquals( threeHoursAndThirtyMinutes, timeCard.getTimeWorked() );
     }
 }

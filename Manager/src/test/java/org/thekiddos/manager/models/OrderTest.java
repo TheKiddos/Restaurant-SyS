@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
-    private Long tableId = 1L, customerId = 1L, itemId = 1L;
+    private final Long tableId = 1L, customerId = 1L, itemId = 1L;
 
     @BeforeEach
     void setUpDatabase() {
@@ -45,9 +45,9 @@ class OrderTest {
 
     @Test
     void testAddOrderToNonActiveReservationInFuture() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM ).execute();
+        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM ).execute();
 
         assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
 

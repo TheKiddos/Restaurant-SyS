@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReservationTest {
-    private Long tableId = 1L, tableId2 = 2L, customerId = 1L, customerId2 = 2L;
+    private final Long tableId = 1L, tableId2 = 2L, customerId = 1L, customerId2 = 2L;
 
     @BeforeEach
     void setUpDatabase() {
@@ -40,36 +40,36 @@ class ReservationTest {
 
     @Test
     void testScheduledReservationTransaction() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        ScheduledReservationTransaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        ScheduledReservationTransaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM );
 
         assertEquals( 10.0, reserveTable.getReservationFee() );
         reserveTable.setReservationFee( 0.0 );
         assertEquals( 0.0, reserveTable.getReservationFee() );
         reserveTable.execute();
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 0.0, fifthOfNovember2020, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 0.0, fifthOfNovemberNextYear, eightPM );
     }
 
     @Test
     void testReserveTableThreeTimesADay() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM ).execute();
+        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM ).execute();
 
         LocalTime ninePM = LocalTime.of( 21, 0 );
-        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, ninePM ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovemberNextYear, ninePM ) );
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovember2020, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
 
         List<Reservation> customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
 
         LocalTime sevenPM = LocalTime.of( 19, 0 );
-        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovember2020, sevenPM ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId2, fifthOfNovemberNextYear, sevenPM ) );
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovember2020, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
 
         customerReservations = Database.getReservationsByCustomerId( customerId2 );
         assertEquals( 0, customerReservations.size() );
@@ -77,19 +77,19 @@ class ReservationTest {
 
     @Test
     void testReserveTableOnTwoDays() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM );
         reserveTable.execute();
 
-        LocalDate sixthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 6 );
+        LocalDate sixthOfNovemberNextYear = fifthOfNovemberNextYear.plusDays( 1 );
 
-        reserveTable = new ScheduledReservationTransaction( tableId, customerId2, sixthOfNovember2020, eightPM );
+        reserveTable = new ScheduledReservationTransaction( tableId, customerId2, sixthOfNovemberNextYear, eightPM );
         reserveTable.execute();
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
-        validateReservation( tableReservations, 2, 0, tableId, customerId, false, 10.0, fifthOfNovember2020, eightPM );
-        validateReservation( tableReservations, 2, 1, tableId, customerId2, false, 10.0, sixthOfNovember2020, eightPM );
+        validateReservation( tableReservations, 2, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
+        validateReservation( tableReservations, 2, 1, tableId, customerId2, false, 10.0, sixthOfNovemberNextYear, eightPM );
     }
 
     @Test
@@ -125,14 +125,28 @@ class ReservationTest {
 
     @Test
     void testActivateReservationWrongDay() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM );
+        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM );
         reserveTable.execute();
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovember2020, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
 
         assertThrows( IllegalArgumentException.class, () -> new ActivateReservationTransaction( tableId ) );
+    }
+
+    @Test
+    void testActivateReservation() {
+        LocalDate today = LocalDate.now();
+        LocalTime eightPM = LocalTime.of( 20, 0 );
+        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, today, eightPM );
+        reserveTable.execute();
+
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, today, eightPM );
+
+        new ActivateReservationTransaction( tableId ).execute();
+
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 10.0, today, eightPM );
     }
 
     @Test
