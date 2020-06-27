@@ -1,11 +1,11 @@
 package org.thekiddos.manager.payroll.transactions;
 
 import lombok.SneakyThrows;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.transactions.Transaction;
 
 import java.io.*;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -39,12 +39,13 @@ public class PrintPayCheckTransaction implements Transaction {
     }
 
     private void fillPayCheck() throws Exception {
-        String contents = readFileContents( getFileFromResources( PAYCHECK_TEMPLATE ) );
+        String contents = readFileContents( new File( Util.getResource( PAYCHECK_TEMPLATE ).getFile() ) );
         contents = replaceCheckPlaceholders( contents );
         savePayCheckToFile( contents );
     }
 
-    // TODO move to another package
+    /*
+    // TODO This function must be removed after testing that the class works without it
     private File getFileFromResources(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
 
@@ -54,7 +55,7 @@ public class PrintPayCheckTransaction implements Transaction {
         } else {
             return new File(resource.getFile());
         }
-    }
+    }*/
 
     private String readFileContents( File file ) throws IOException {
         BufferedReader reader = new BufferedReader( new FileReader( file ) );

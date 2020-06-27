@@ -1,0 +1,27 @@
+/*******************************************************************************
+ *                                                                             *
+ * TabPane                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+#root {
+    -fx-background-color: linear-gradient( rgba(10, 10, 10, 0.9 ), rgba(30, 30, 30, 0.9 ));
+}
+
+#root .tab-header-background {
+    -fx-background-color: darkcyan;
+}
+
+#root .tab {
+    -fx-cursor: hand;
+}
+
+.jfx-button {
+    -fx-border-color: white;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-radius: 3px;
+}
+
+.jfx-button:hover {
+    -fx-background-color: rgba(82,149,255,0.58);
+}
