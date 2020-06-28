@@ -4,7 +4,7 @@ import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddReservationServiceTransaction extends AddServiceTransaction {
-    private Reservation reservation;
+    private final Reservation reservation;
 
     public AddReservationServiceTransaction( Long tableId ) {
         super();

@@ -13,12 +13,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class HourlyClassification implements PaymentClassification {
     @NonNull
-    private double hourlyRate;
+    private final double hourlyRate;
     @NonNull
-    private double overHoursBonusRate;
+    private final double overHoursBonusRate;
     @NonNull
-    private int overHoursThreshold;
-    private Map<LocalDate, TimeCard> timeCards = new HashMap<>();
+    private final int overHoursThreshold;
+    private final Map<LocalDate, TimeCard> timeCards = new HashMap<>();
 
     public TimeCard getTimeCard( LocalDate date ) {
         return timeCards.get( date );

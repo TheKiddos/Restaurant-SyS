@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AddServiceTransaction implements Transaction {
     protected Service service;
-    private List<Long> items = new ArrayList<>();
+    private final List<Long> items = new ArrayList<>();
 
     @Override
     public void execute() {

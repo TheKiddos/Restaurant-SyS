@@ -3,7 +3,7 @@ package org.thekiddos.manager.payroll.transactions;
 import org.thekiddos.manager.payroll.models.Employee;
 
 public class ChangeNameTransaction extends ChangeEmployeeTransaction {
-    private String newName;
+    private final String newName;
 
     public ChangeNameTransaction( Long empId, String newName ) {
         super( empId );

@@ -4,7 +4,7 @@ import org.thekiddos.manager.transactions.Transaction;
 import org.thekiddos.manager.transactions.source.TransactionSource;
 
 public class Main {
-    private TransactionSource source;
+    private final TransactionSource source;
 
     public Main( TransactionSource source ) {
         this.source = source;

@@ -8,9 +8,9 @@ import java.util.List;
 
 @Getter
 public class Table {
-    private Long id;
-    private int maxCapacity;
-    private double tableFee;
+    private final Long id;
+    private final int maxCapacity;
+    private final double tableFee;
 
     public Table( Long id, int maxCapacity, double tableFee ) {
         this.id = id;

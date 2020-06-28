@@ -4,7 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.Controller;
 import org.thekiddos.manager.gui.controllers.GUIController;
@@ -35,8 +39,10 @@ public class GUIApplication extends Application {
         addReservationGUIController.setScene( new Scene( addReservationRoot ) );
         addReservationGUIController.getScene().getStylesheets().add( Util.getResource( "static/style.css" ).toExternalForm() );
 
-        guiController.setAddReservationGUIStage( addReservationGUIController.getScene() );
+        Stage addReservationGUIStage = createAddReservationGUIStage( addReservationGUIController.getScene(), guiController.getScene().getWindow() );
+        guiController.setAddReservationGUIStage( addReservationGUIStage );
 
+        primaryStage.getIcons().add( new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() ) );
         primaryStage.setTitle( "Digital Restaurant Manager" );
         primaryStage.setScene( guiController.getScene() );
         primaryStage.show();
@@ -52,6 +58,16 @@ public class GUIApplication extends Application {
         new AddCustomerTransaction( 1L, "Z", "X" ).execute();
         new AddCustomerTransaction( 2L, "A", "B" ).execute();
         new ImmediateReservationTransaction( 1L, 1L ).execute();
+    }
+
+    public Stage createAddReservationGUIStage( Scene scene, Window owner ) {
+        Stage addReservationGUIStage = new Stage();
+        addReservationGUIStage.initOwner( owner );
+        addReservationGUIStage.setTitle( "Add Reservation" );
+        addReservationGUIStage.initModality( Modality.NONE );
+        addReservationGUIStage.initStyle( StageStyle.UNDECORATED );
+        addReservationGUIStage.setScene( scene );
+        return addReservationGUIStage;
     }
 
     public static void main(String[] args) {

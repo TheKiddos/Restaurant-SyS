@@ -5,7 +5,7 @@ import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.Transaction;
 
 public abstract class ChangeEmployeeTransaction implements Transaction {
-    private Long empId;
+    private final Long empId;
 
     public ChangeEmployeeTransaction( Long empId ) {
         this.empId = empId;

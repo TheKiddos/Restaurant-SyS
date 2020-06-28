@@ -5,8 +5,8 @@ import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddTableTransaction implements Transaction {
-    private Long tableId;
-    private int maxCapacity;
+    private final Long tableId;
+    private final int maxCapacity;
     @Setter
     private double tableFee = 0.0;
     private static final int DEFAULT_MAX_CAPACITY = 4;

@@ -4,7 +4,9 @@
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
@@ -26,7 +28,24 @@
                </rowConstraints>
                <children>
                   <VBox alignment="TOP_CENTER" />
-                  <VBox fx:id="currentReservations" alignment="TOP_CENTER" GridPane.columnIndex="1" GridPane.columnSpan="4" />
+                  <VBox fx:id="currentReservations" alignment="TOP_CENTER" spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
+                     <children>
+                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                           <content>
+                              <TitledPane animated="false" text="Reservation" textFill="WHITE">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                </content>
+                                 <font>
+                                    <Font name="Times New Roman Bold" size="14.0" />
+                                 </font>
+                              </TitledPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding></VBox>
                   <VBox alignment="TOP_CENTER" spacing="50.0" GridPane.columnIndex="5">
                      <children>
                         <JFXButton fx:id="addReservationButton" contentDisplay="CENTER" onAction="#addReservation" ripplerFill="BLACK" text="+" textAlignment="CENTER" textFill="WHITE">

@@ -5,8 +5,8 @@ import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 
 public class CheckOutTransaction implements Transaction {
-    private Long tableId;
-    private Reservation reservation;
+    private final Long tableId;
+    private final Reservation reservation;
     private Invoice invoice;
 
     public CheckOutTransaction( Long tableId ) {

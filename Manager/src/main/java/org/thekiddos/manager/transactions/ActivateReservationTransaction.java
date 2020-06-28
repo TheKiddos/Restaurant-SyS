@@ -4,7 +4,7 @@ import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 
 public class ActivateReservationTransaction implements Transaction {
-    private Reservation reservation;
+    private final Reservation reservation;
 
     public ActivateReservationTransaction( Long tableId ) {
         reservation = Database.getCurrentReservationByTableId( tableId );

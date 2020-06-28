@@ -10,9 +10,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class AddTimeCardTransaction implements Transaction {
-    private Long empId;
-    private LocalDate date;
-    private LocalTime timeWorked;
+    private final Long empId;
+    private final LocalDate date;
+    private final LocalTime timeWorked;
 
     public AddTimeCardTransaction( Long empId, LocalDate date, LocalTime timeWorked ) {
         this.empId = empId;

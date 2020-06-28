@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class PayCheck {
     @NonNull
-    private LocalDate payDate;
+    private final LocalDate payDate;
     @NonNull
-    private double amount;
+    private final double amount;
     @NonNull
-    private String details;
+    private final String details;
     @NonNull
-    private Employee employee;
+    private final Employee employee;
 }

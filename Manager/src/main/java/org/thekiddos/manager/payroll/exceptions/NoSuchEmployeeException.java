@@ -1,7 +1,7 @@
 package org.thekiddos.manager.payroll.exceptions;
 
 public class NoSuchEmployeeException extends Throwable {
-    private Long empId;
+    private final Long empId;
 
     public NoSuchEmployeeException( Long empId ) {
         this.empId = empId;

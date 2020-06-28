@@ -15,7 +15,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ManagerTest {
-    private Long tableId = 1L, customerId = 1L, itemId = 1L;
+    private final Long tableId = 1L;
+    private final Long customerId = 1L;
+    private final Long itemId = 1L;
 
     @BeforeEach
     void setUpDatabase() {

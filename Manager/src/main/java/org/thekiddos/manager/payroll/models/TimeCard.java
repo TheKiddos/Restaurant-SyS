@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 public class TimeCard {
     @NonNull
-    private LocalDate date;
+    private final LocalDate date;
     @NonNull
-    private LocalTime timeWorked;
+    private final LocalTime timeWorked;
 }

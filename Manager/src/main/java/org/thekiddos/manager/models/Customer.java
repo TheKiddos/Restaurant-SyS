@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Customer {
     @NonNull
-    private Long Id;
+    private final Long Id;
     @NonNull
-    private String firstName;
+    private final String firstName;
     @NonNull
-    private String lastName;
+    private final String lastName;
 }

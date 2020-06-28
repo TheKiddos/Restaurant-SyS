@@ -8,8 +8,8 @@ import java.time.LocalTime;
 
 @Getter
 public class Reservation extends Service {
-    private Long tableId;
-    private double reservationFee;
+    private final Long tableId;
+    private final double reservationFee;
     private boolean active = false;
 
     public Reservation( Long tableId, Long customerId, LocalDate reservationDate, LocalTime reservationTime, double reservationFee ) {

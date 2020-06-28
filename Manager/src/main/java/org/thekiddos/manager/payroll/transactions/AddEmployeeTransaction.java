@@ -5,8 +5,8 @@ import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.Transaction;
 
 public abstract class AddEmployeeTransaction implements Transaction {
-    private Long id;
-    private String name;
+    private final Long id;
+    private final String name;
 
     public AddEmployeeTransaction( Long id, String name ) {
         this.id = id;

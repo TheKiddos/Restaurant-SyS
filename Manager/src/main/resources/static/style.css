@@ -14,6 +14,7 @@
     -fx-border-color: white;
     -fx-border-width: 0 0 1 0;
     -fx-border-radius: 3px;
+    -fx-cursor: hand;
 }
 
 .jfx-button:hover {
@@ -70,6 +71,10 @@
 .jfx-date-picker:editable:focused > .arrow-button {
     -fx-background-color: transparent;
     -fx-padding: 1 8 1 8;
+}
+
+.jfx-date-picker > .arrow-button, .jfx-time-picker > .arrow-button {
+    -fx-cursor: hand;
 }
 
 .jfx-date-picker > .arrow-button > .jfx-svg-glyph {
@@ -173,4 +178,119 @@
     -fx-background: -fx-selection-bar;
     -fx-background-color: -fx-background;
     -fx-text-fill: -fx-text-background-color;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em;  /* 4 5 4 5 */
+    -fx-text-fill:  -fx-text-background-color;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.00em;
+}
+
+.menu-item > .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+}
+
+.menu-item > .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+}
+
+.menu-item >.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: white;
+}
+
+.menu-item:focused, .menu-item:hover {
+    -fx-background-color: rgb(0,174,238);
+    -fx-text-fill:  -fx-text-background-color;
+}
+
+.menu-item:focused > .label {
+    -fx-text-fill: -fx-focused-text-base-color;
+}
+
+.menu-item > .right-container {
+    -fx-padding: 0em 0em 0em 0.5em;
+}
+
+.tooltip {
+    -fx-text-fill: white;
+    -fx-background-color: rgba(30,30,30,0.8);
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+    -fx-font-size: 1.0em;
+    -fx-font-weight: bold;
+}
+
+/* Title header area */
+.titled-pane > .title {
+    -fx-background-color: darkcyan;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: rgba(82,149,255,0.58);
+}
+
+.titled-pane > .content {
+    -fx-border-color: darkcyan;
+    -fx-border-width: 0 1 1 1;
+    -fx-background-color: rgba(0,0,30,0.2);
+    -fx-background-insets: 0;
+}
+
+.scroll-bar > .thumb {
+    -fx-background-color: darkcyan;
+}
+
+.scroll-bar > .thumb:hover {
+    -fx-background-color: rgba(82,149,255,0.58);
+}
+
+.scroll-bar > .track {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.scroll-bar > .track-background {
+    -fx-background-insets: 0;
+}
+
+.scroll-bar > .increment-button,
+.scroll-bar > .decrement-button {
+    -fx-background-color: darkcyan;
+    -fx-background-insets: 0;
+    -fx-background-radius: 20;
+}
+
+.scroll-bar > .increment-button > *,
+.scroll-bar > .decrement-button > * {
+    -fx-background-color: white;
+}
+
+.scroll-bar > .increment-button:hover,
+.scroll-bar > .decrement-button:hover  {
+    -fx-background-color: rgba(82,149,255,0.58);
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
 }

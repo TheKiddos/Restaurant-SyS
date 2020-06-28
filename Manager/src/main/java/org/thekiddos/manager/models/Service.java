@@ -9,7 +9,7 @@ public abstract class Service {
     protected Long customerId;
     protected LocalDate serviceDate;
     protected LocalTime serviceTime;
-    private Order order = new Order();
+    private final Order order = new Order();
 
     public Service( Long customerId, LocalDate serviceDate, LocalTime serviceTime ) {
         this.customerId = customerId;

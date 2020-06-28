@@ -5,7 +5,7 @@ import org.thekiddos.manager.models.Type;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddItemTransaction implements Transaction {
-    private Item item;
+    private final Item item;
 
     public AddItemTransaction( Long itemId, String itemName, double price ) {
         item = new Item( itemId, itemName, price );

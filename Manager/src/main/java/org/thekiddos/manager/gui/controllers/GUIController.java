@@ -3,11 +3,12 @@ package org.thekiddos.manager.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSpinner;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import org.thekiddos.manager.repositories.Database;
+
+import java.time.LocalDate;
 
 public class GUIController extends Controller {
     public JFXSpinner reservedTableTracker;
@@ -15,21 +16,29 @@ public class GUIController extends Controller {
     public VBox currentReservations;
     private Stage addReservationGUIStage;
 
+    public void initialize() {
+        reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
+        updateReservedTableTracker();
+    }
+
+    // TODO this may be optimized once I keep track of all reservations
+    private void updateReservedTableTracker() {
+        int numberOfTables = Database.getTables().size();
+        int numberOfReservedTables = numberOfTables - Database.getFreeTablesOn( LocalDate.now() ).size();
+        double ratioOfReservedTables = ((double)numberOfReservedTables) / numberOfTables;
+        reservedTableTracker.setProgress( ratioOfReservedTables );
+    }
+
     public void addReservation( ActionEvent actionEvent ) {
         addReservationGUIStage.show();
     }
 
-    private void refresh() {
-        System.out.println("new stuff");
+    public void setAddReservationGUIStage( Stage addReservationGUIStage ) {
+        addReservationGUIStage.setOnCloseRequest( e -> refresh() );
+        this.addReservationGUIStage = addReservationGUIStage;
     }
 
-    public void setAddReservationGUIStage( Scene scene ) {
-        addReservationGUIStage = new Stage();
-        addReservationGUIStage.initOwner( getScene().getWindow() );
-        addReservationGUIStage.setTitle( "Add Reservation" );
-        addReservationGUIStage.initModality( Modality.NONE );
-        addReservationGUIStage.initStyle( StageStyle.UNDECORATED );
-        addReservationGUIStage.setOnCloseRequest( e -> refresh() );
-        addReservationGUIStage.setScene( scene );
+    private void refresh() {
+        System.out.println("new stuff");
     }
 }

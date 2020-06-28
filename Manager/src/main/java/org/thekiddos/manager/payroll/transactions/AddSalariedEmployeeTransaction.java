@@ -6,7 +6,7 @@ import org.thekiddos.manager.payroll.models.PaymentSchedule;
 import org.thekiddos.manager.payroll.models.SalariedClassification;
 
 public class AddSalariedEmployeeTransaction extends AddEmployeeTransaction {
-    private double salary;
+    private final double salary;
 
     public AddSalariedEmployeeTransaction( Long empId, String name, double salary ) {
         super( empId, name );

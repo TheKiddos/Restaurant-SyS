@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ScheduledReservationTransaction extends AddReservationTransaction {
-    private static int MAX_DELAY_SECONDS = 3;
+    private static final int MAX_DELAY_SECONDS = 3;
 
     public ScheduledReservationTransaction( Long tableId, Long customerId, LocalDate reservationDate, LocalTime reservationTime ) {
         super( tableId, customerId, reservationDate, reservationTime );

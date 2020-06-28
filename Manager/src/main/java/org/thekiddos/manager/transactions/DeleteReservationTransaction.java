@@ -9,10 +9,10 @@ import java.util.List;
 
 public class DeleteReservationTransaction implements Transaction {
     private static final Long NO_CUSTOMER = -1L;
-    private Long tableId;
-    private LocalDate reservationDate;
+    private final Long tableId;
+    private final LocalDate reservationDate;
     @Getter
-    private Long customerId;
+    private final Long customerId;
     private boolean reservationExists = false;
 
     public DeleteReservationTransaction( Long tableId, LocalDate reservationDate ) {

@@ -4,9 +4,9 @@ import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddCustomerTransaction implements Transaction {
-    private Long customerId;
-    private String firstName;
-    private String lastName;
+    private final Long customerId;
+    private final String firstName;
+    private final String lastName;
 
     public AddCustomerTransaction( Long customerId, String firstName, String lastName ) {
         this.customerId = customerId;

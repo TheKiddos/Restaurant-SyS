@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PayDayTransaction implements Transaction {
-    private LocalDate payDate;
-    private Map<Long, PayCheck> payChecks;
+    private final LocalDate payDate;
+    private final Map<Long, PayCheck> payChecks;
 
     public PayDayTransaction( LocalDate payDate ) {
         this.payDate = payDate;

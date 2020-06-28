@@ -12,10 +12,10 @@ import java.util.List;
 
 public class PrintPayCheckTransaction implements Transaction {
     private String wordPath = "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16\\";
-    private Employee employee;
-    private double amount;
+    private final Employee employee;
+    private final double amount;
     private String checkPath;
-    private LocalDate dateOfPayment;
+    private final LocalDate dateOfPayment;
     private static int printJob = 1;
     private static final String PAYCHECK_TEMPLATE = "templates/check.rtf";
 
