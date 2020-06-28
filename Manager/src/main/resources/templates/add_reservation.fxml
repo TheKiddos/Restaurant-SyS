@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane id="add-reservation-root" alignment="TOP_CENTER" hgap="90.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" vgap="30.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.AddReservationGUIController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <JFXRadioButton onAction="#activateImmediateMode" selected="true" text="Immediate" textAlignment="CENTER" textFill="#d0da16">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="reservationType" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton onAction="#activateScheduledMode" text="Scheduled" textFill="#d0da16" toggleGroup="$reservationType" GridPane.columnIndex="1">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </JFXRadioButton>
+      <HBox spacing="10.0" styleClass="choice-hbox" GridPane.rowIndex="1">
+         <children>
+            <ChoiceBox fx:id="customerSelector" prefWidth="75.0" />
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../static/images/account.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox spacing="10.0" styleClass="choice-hbox" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <ChoiceBox fx:id="tableSelector" prefWidth="75.0" />
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../static/images/dining-room.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <JFXDatePicker fx:id="reservationDatePicker" defaultColor="DARKCYAN" disable="true" onAction="#updateTableSelector" promptText="Reservation Date" style="-fx-fill: white;" GridPane.rowIndex="2" />
+      <JFXTimePicker fx:id="reservationTimePicker" defaultColor="DARKCYAN" disable="true" promptText="Reservation Time" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <JFXButton defaultButton="true" onAction="#reserve" text="Reserve" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="3">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton cancelButton="true" onAction="#close" text="Cancel" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   </children>
+   <padding>
+      <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+   </padding>
+</GridPane>

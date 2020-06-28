@@ -7,10 +7,7 @@ import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.payroll.models.Employee;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Database {
     private static Map<Long, Employee> employees = new HashMap<>();
@@ -120,4 +117,26 @@ public class Database {
         items.clear();
         reservations.clear();
     }
+
+    public static Set<Long> getFreeTablesOn( LocalDate date ) {
+        Set<Long> freeTablesOnDate = getTables();
+        Set<Long> reservedTables = new HashSet<>();
+        for ( List<Reservation> tableReservations : reservations.values() ) {
+            tableReservations.stream().filter( reservation -> reservation.getDate().equals( date ) )
+                    .forEach( reservation -> reservedTables.add( reservation.getTableId() ) );
+        }
+
+        freeTablesOnDate.removeAll( reservedTables );
+        return freeTablesOnDate;
+    }
+
+    private static Set<Long> getTables() {
+        return tables.keySet();
+    }
+
+    public static Set<Long> getCustomers() {
+        return customers.keySet();
+    }
+
+    // TODO protect against nulls in all Transaction/Models
 }

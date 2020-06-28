@@ -11,6 +11,13 @@
     <packaging>jar</packaging>
     <name>Digital Restaurant Manager</name>
 
+    <repositories>
+        <repository>
+            <id>Gluon Repository</id>
+            <url>http://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -54,7 +61,5 @@
             <artifactId>jfoenix</artifactId>
             <version>9.0.8</version>
         </dependency>
-
     </dependencies>
-
 </project>

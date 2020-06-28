@@ -1,6 +1,7 @@
 package org.thekiddos.manager.transactions;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
@@ -9,9 +10,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public abstract class AddReservationTransaction implements Transaction {
+    @NonNull
     protected Long tableId;
+    @NonNull
     protected Long customerId;
+    @NonNull
     protected LocalDate reservationDate;
+    @NonNull
     protected LocalTime reservationTime;
 
     @Setter

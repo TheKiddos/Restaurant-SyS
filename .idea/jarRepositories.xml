@@ -17,6 +17,11 @@
       <option name="url" value="https://repository.aspose.com/repo/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="Gluon Repository" />
+      <option name="name" value="Gluon Repository" />
+      <option name="url" value="http://nexus.gluonhq.com/nexus/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />

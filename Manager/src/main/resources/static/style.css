@@ -1,15 +1,9 @@
-/*******************************************************************************
- *                                                                             *
- * TabPane                                                                     *
- *                                                                             *
- ******************************************************************************/
-
-#root {
+#root, #add-reservation-root {
     -fx-background-color: linear-gradient( rgba(10, 10, 10, 0.9 ), rgba(30, 30, 30, 0.9 ));
 }
 
 #root .tab-header-background {
-    -fx-background-color: darkcyan;
+    -fx-background-color: #008b8b;
 }
 
 #root .tab {
@@ -18,10 +12,165 @@
 
 .jfx-button {
     -fx-border-color: white;
-    -fx-border-width: 1 0 0 0;
+    -fx-border-width: 0 0 1 0;
     -fx-border-radius: 3px;
 }
 
 .jfx-button:hover {
     -fx-background-color: rgba(82,149,255,0.58);
+    -fx-border-color: yellow;
+}
+
+.choice-box {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 1 0 ;
+}
+
+.choice-box:hover {
+    -fx-background-color: rgba(82,149,255,0.58);;
+    -fx-border-color: yellow;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+/*
+#username-input-field {
+  -fx-background-image:url('login.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: left center;
+  -fx-padding: 5px 10px 5px 30px;
+}
+ */
+
+.jfx-date-picker {
+    -jfx-default-color: white;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.jfx-date-picker .jfx-text-field {
+    -jfx-default-color: white;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.jfx-date-picker,
+.jfx-date-picker:focused,
+.jfx-date-picker:focused:editable {
+    -fx-background-color: transparent;
+}
+
+.jfx-date-picker > .arrow-button,
+.jfx-date-picker:editable > .arrow-button,
+.jfx-date-picker:focused > .arrow-button,
+.jfx-date-picker:editable:focused > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 8 1 8;
+}
+
+.jfx-date-picker > .arrow-button > .jfx-svg-glyph {
+    -fx-background-color: white;
+}
+
+.date-picker-popup > .month-year-pane {
+    -fx-background-color: darkcyan;
+}
+
+.date-picker-popup > * > .spinner {
+    -fx-spacing: 0.25em; /* 3 */
+    -fx-alignment: CENTER;
+    -fx-fill-height: false;
+    -fx-background-color: transparent;
+}
+
+.date-picker-popup > * > .spinner > .label {
+    -fx-alignment: CENTER;
+}
+
+.date-picker-popup > * > .date-picker-list-view > .virtual-flow > .clipped-container > .sheet > .data-picker-list-cell {
+    -fx-font-size: 16;
+    -fx-font-weight: NORMAL;
+    -fx-background-color: darkcyan;
+    -fx-alignment: center;
+    -fx-text-fill: #313131;
+}
+
+.date-picker-popup > * > .date-picker-list-view > .virtual-flow > .clipped-container > .sheet > .data-picker-list-cell > .jfx-rippler {
+    -jfx-rippler-fill: darkcyan;
+}
+
+.date-picker-popup > * > .date-picker-list-view > .virtual-flow > .clipped-container > .sheet > .data-picker-list-cell:hover {
+    -fx-background-color: #EDEDED;
+}
+
+.jfx-time-picker {
+    -jfx-default-color: darkcyan; /* TODO fix this bug */
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.jfx-time-picker .jfx-text-field {
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.jfx-time-picker,
+.jfx-time-picker:focused,
+.jfx-time-picker:focused:editable {
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
+}
+
+.jfx-time-picker > .arrow-button,
+.jfx-time-picker:editable > .arrow-button,
+.jfx-time-picker:focused > .arrow-button,
+.jfx-time-picker:editable:focused > .arrow-button{
+    -fx-background-color: TRANSPARENT;
+    -fx-padding: 1 8 1 8;
+}
+
+.jfx-time-picker .jfx-svg-glyph {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-fill: white;
+    -fx-border-color: white;
+}
+
+.date-picker-popup > * > .spinner {
+    -fx-spacing: 0.25em; /* 3 */
+    -fx-alignment: CENTER;
+    -fx-fill-height: false;
+    -fx-background-color: transparent;
+}
+
+.date-picker-popup > * > .spinner > .label {
+    -fx-alignment: CENTER;
+}
+
+.context-menu {
+    -fx-background-color: rgba(30,30,30,0.5);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-padding: 0.333333em 0.083333em 0.333333em 0.083333em; /* 4 1 8 1 */
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+}
+
+.context-menu .separator:horizontal .line {
+    -fx-border-color: white;
+    -fx-border-insets: 1 0 0 0;
+}
+
+.context-menu > .scroll-arrow {
+    -fx-padding: 0.416667em 0.416667em 0.416667em 0.416667em; /* 5 */
+    -fx-background-color: transparent;
+}
+
+.context-menu > .scroll-arrow:hover {
+    -fx-background: -fx-selection-bar;
+    -fx-background-color: -fx-background;
+    -fx-text-fill: -fx-text-background-color;
 }
