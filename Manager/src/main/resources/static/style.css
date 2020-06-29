@@ -15,11 +15,14 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-radius: 3px;
     -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-fill: white;
 }
 
 .jfx-button:hover {
     -fx-background-color: rgba(82,149,255,0.58);
     -fx-border-color: yellow;
+    -fx-text-fill: yellow;
 }
 
 .choice-box {
@@ -137,6 +140,11 @@
     -fx-padding: 1 8 1 8;
 }
 
+.jfx-time-picker, .jfx-time-picker * {
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
 .jfx-time-picker .jfx-svg-glyph {
     -fx-background-color: white;
     -fx-text-fill: white;
@@ -226,11 +234,23 @@
     -fx-font-weight: bold;
 }
 
-/* Title header area */
-.titled-pane > .title {
-    -fx-background-color: darkcyan;
+.titled-pane {
+    -fx-alignment: center;
+    -fx-animated: true;
+    -fx-font-family: "Times New Roman";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
     -fx-text-fill: white;
     -fx-fill: white;
+}
+
+.titled-pane:hover {
+    -fx-text-fill: yellow;
+    -fx-fill: yellow;
+}
+
+.titled-pane > .title {
+    -fx-background-color: darkcyan;
 }
 
 .titled-pane > .title:hover {
@@ -293,4 +313,8 @@
     -fx-background-radius: 0 0 0 0;
     -fx-background-color: transparent;
     -fx-background-insets: 0 0 0 0;
+}
+
+.jfx-check-box:disabled {
+    -fx-opacity: 1.0;
 }

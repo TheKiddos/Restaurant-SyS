@@ -12,7 +12,9 @@ import javafx.stage.Window;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.Controller;
 import org.thekiddos.manager.gui.controllers.GUIController;
+import org.thekiddos.manager.models.Type;
 import org.thekiddos.manager.transactions.AddCustomerTransaction;
+import org.thekiddos.manager.transactions.AddItemTransaction;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 import org.thekiddos.manager.transactions.ImmediateReservationTransaction;
 
@@ -58,6 +60,20 @@ public class GUIApplication extends Application {
         new AddCustomerTransaction( 1L, "Z", "X" ).execute();
         new AddCustomerTransaction( 2L, "A", "B" ).execute();
         new ImmediateReservationTransaction( 1L, 1L ).execute();
+
+        String imagePath = "https://cms.splendidtable.org/sites/default/files/styles/w2000/public/french-fries.jpg?itok=FS-YwUYH";
+        AddItemTransaction addItem = new AddItemTransaction( 1L, "French Fries", 10.0 );
+        addItem.withDescription( "Well it's French Fries what else to say!" )
+                .withType( Type.FOOD )
+                .withType( Type.STARTER )
+                .withType( Type.HOT )
+                .withType( Type.SNACK )
+                .withCalories( 10000.0 )
+                .withFat( 51.0 )
+                .withProtein( 0.4 )
+                .withCarbohydrates( 0.2 )
+                .withImage( imagePath );
+        addItem.execute();
     }
 
     public Stage createAddReservationGUIStage( Scene scene, Window owner ) {

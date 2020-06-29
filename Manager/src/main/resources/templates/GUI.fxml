@@ -6,72 +6,55 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<JFXTabPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="640.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.GUIController">
-   <tabs>
-      <Tab closable="false" text="Dashboard">
-        <content>
-            <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="10.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <VBox alignment="TOP_CENTER" />
-                  <VBox fx:id="currentReservations" alignment="TOP_CENTER" spacing="30.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
-                     <children>
-                        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-                           <content>
-                              <TitledPane animated="false" text="Reservation" textFill="WHITE">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                </content>
-                                 <font>
-                                    <Font name="Times New Roman Bold" size="14.0" />
-                                 </font>
-                              </TitledPane>
-                           </content>
-                        </ScrollPane>
-                     </children>
-                     <padding>
-                        <Insets top="30.0" />
-                     </padding></VBox>
-                  <VBox alignment="TOP_CENTER" spacing="50.0" GridPane.columnIndex="5">
-                     <children>
-                        <JFXButton fx:id="addReservationButton" contentDisplay="CENTER" onAction="#addReservation" ripplerFill="BLACK" text="+" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font name="Consolas Bold" size="24.0" />
-                           </font>
-                        </JFXButton>
-                        <JFXSpinner fx:id="reservedTableTracker" progress="0.43">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <effect>
-                              <Bloom threshold="0.0" />
-                           </effect>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </JFXSpinner>
-                     </children>
-                     <padding>
-                        <Insets left="20.0" right="20.0" top="50.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </GridPane>
-        </content>
-      </Tab>
-   </tabs>
+<JFXTabPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="360.0" prefWidth="640.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.thekiddos.manager.gui.controllers.GUIController">
+   <Tab closable="false" text="Dashboard">
+      <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="10.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints/>
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+         </rowConstraints>
+         <VBox alignment="TOP_CENTER"/>
+         <ScrollPane fitToWidth="true" GridPane.columnIndex="1" GridPane.columnSpan="4">
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0"/>
+            </GridPane.margin>
+            <VBox fx:id="currentReservations" alignment="TOP_CENTER" spacing="10.0"/>
+         </ScrollPane>
+         <VBox alignment="TOP_CENTER" spacing="50.0" GridPane.columnIndex="5">
+            <padding>
+               <Insets left="20.0" right="20.0" top="50.0"/>
+            </padding>
+            <JFXButton fx:id="addReservationButton" contentDisplay="CENTER" onAction="#addReservation"
+                       ripplerFill="BLACK" text="+" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Consolas Bold" size="24.0"/>
+               </font>
+            </JFXButton>
+            <JFXSpinner fx:id="reservedTableTracker" progress="0.43">
+               <opaqueInsets>
+                  <Insets/>
+               </opaqueInsets>
+               <effect>
+                  <Bloom threshold="0.0"/>
+               </effect>
+               <VBox.margin>
+                  <Insets/>
+               </VBox.margin>
+            </JFXSpinner>
+         </VBox>
+      </GridPane>
+   </Tab>
 </JFXTabPane>
