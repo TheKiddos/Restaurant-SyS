@@ -11,7 +11,9 @@ import javafx.scene.layout.HBox;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.controllers.InvoiceController;
+import org.thekiddos.manager.gui.controllers.OrderController;
 import org.thekiddos.manager.gui.models.WindowContainer;
+import org.thekiddos.manager.models.Order;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.transactions.ActivateReservationTransaction;
 import org.thekiddos.manager.transactions.CheckOutTransaction;
@@ -26,12 +28,12 @@ public class ReservationPane extends TitledPane {
     private JFXButton viewOrderButton,
             activateButton,
             checkOutButton;
-    private WindowContainer invoiceWindow;
+    private WindowContainer orderWindow;
 
-    public ReservationPane( Reservation reservation, Remover remover, WindowContainer invoiceWindow ) {
+    public ReservationPane( Reservation reservation, Remover remover, WindowContainer orderWindow ) {
         this.reservation = reservation;
         this.remover = remover;
-        this.invoiceWindow = invoiceWindow;
+        this.orderWindow = orderWindow;
         setup();
     }
 
@@ -68,14 +70,21 @@ public class ReservationPane extends TitledPane {
         isReservationActiveCheckBox.setSelected( true );
     }
 
+    // TODO Notice how both viewOrder And Checkout both have similar functions in controllers this leads to another abstraction (interface)
     private void viewOrder( ActionEvent actionEvent ) {
+        Order order = reservation.getOrder();
+        OrderController orderController = (OrderController) orderWindow.getController();
+        orderController.setOrder( order );
+        orderWindow.getStage().show();
     }
 
     private void checkOut( ActionEvent actionEvent ) {
+        WindowContainer invoiceWindow = Util.getWindowContainer( "Invoice Summary" );
         CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getTableId() );
         checkOutTransaction.execute();
         InvoiceController invoiceController = (InvoiceController) invoiceWindow.getController();
         invoiceController.setInvoice( checkOutTransaction.getInvoice() );
+        invoiceWindow.getStage().setResizable( false );
         invoiceWindow.getStage().showAndWait();
         Util.print( invoiceController.getRoot() );
         remover.remove( this );

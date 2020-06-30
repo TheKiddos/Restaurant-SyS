@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO store Order in here
+
 @Data
 public class Invoice {
     private double total, orderTotal, tableFee, reservationFee, discount, netAmount;

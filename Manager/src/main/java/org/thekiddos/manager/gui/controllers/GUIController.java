@@ -25,7 +25,7 @@ public class GUIController extends Controller implements Remover {
     public void initialize() {
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
 
-        currentReservations.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this, Util.getWindowContainer( "Invoice Summary" ) ) );
+        currentReservations.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this, Util.getWindowContainer( "Order Summary" ) ) );
 
         updateReservedTableTracker();
     }
@@ -50,12 +50,13 @@ public class GUIController extends Controller implements Remover {
     }
 
     private void refresh() {
-        System.out.println("new stuff");
+        updateReservedTableTracker();
     }
 
     @Override
     public void remove( Node node ) {
         currentReservations.getChildren().remove( node );
+        refresh();
     }
 
     @Override

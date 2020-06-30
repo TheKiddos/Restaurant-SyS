@@ -1,33 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<VBox fx:id="root" alignment="TOP_CENTER" minHeight="595.0" minWidth="420.0" prefHeight="595.0" prefWidth="420.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.InvoiceController">
+<?import javafx.scene.text.*?>
+<VBox fx:id="root" alignment="TOP_CENTER" maxWidth="420.0" minHeight="595.0" minWidth="420.0" prefHeight="595.0" prefWidth="420.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.InvoiceController">
    <children>
-      <Label text="Digital Restaurant System">
+      <Label style="-fx-text-fill: black;" text="Digital Restaurant System">
          <font>
             <Font name="Times New Roman Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="85.0" layoutY="20.0" text="Restaurant Name" textAlignment="CENTER">
+      <Label layoutX="85.0" layoutY="20.0" style="-fx-text-fill: black;" text="Restaurant Name" textAlignment="CENTER">
          <font>
             <Font name="Times New Roman Bold" size="18.0" />
          </font>
       </Label>
-      <GridPane>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
+      <VBox fx:id="detailsBox" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <Label fx:id="tableIdLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="customerNameLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="reservationDateTimeLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="82.0" style="-fx-text-fill: black;" text="Details:">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <HBox spacing="50.0">
+               <children>
+                  <Label fx:id="tableFeeLabel" style="-fx-text-fill: black;" text="Times New Roman">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="reservationFeeLabel" style="-fx-text-fill: black;" text="Times New Roman">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label fx:id="discountLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="netAmountLabel" style="-fx-text-fill: black;" text="Times New Roman">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

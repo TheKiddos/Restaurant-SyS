@@ -18,13 +18,16 @@ public class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Stage invoiceStage = Util.createStage( "templates/invoice.fxml", null, "Invoice Summary" );
+        Stage invoiceStage = Util.createWindowContainer( "templates/invoice.fxml", null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
-        Stage addReservationGUIStage = Util.createStage( "templates/add_reservation.fxml", null, "Add Reservation" );
+        Stage orderStage = Util.createWindowContainer( "templates/order.fxml", null, "Order Summary" ).getStage();
+        orderStage.initModality( Modality.NONE );
+
+        Stage addReservationGUIStage = Util.createWindowContainer( "templates/add_reservation.fxml", null, "Add Reservation" ).getStage();
         addReservationGUIStage.initModality( Modality.NONE );
 
-        primaryStage = Util.createStage( "templates/GUI.fxml", null, "Digital Restaurant Manager" );
+        primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
         primaryStage.show();
     }
 

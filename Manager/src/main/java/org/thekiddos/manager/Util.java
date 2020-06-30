@@ -2,7 +2,7 @@ package org.thekiddos.manager;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXMLLoader;
-import javafx.print.PrinterJob;
+import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -52,7 +52,7 @@ public class Util {
         return button;
     }
 
-    public static Stage createStage( String FXMLPath, Window owner, String title ) throws IOException {
+    public static WindowContainer createWindowContainer( String FXMLPath, Window owner, String title ) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader( Util.getResource( FXMLPath ) );
         Parent root = fxmlLoader.load();
 
@@ -66,14 +66,17 @@ public class Util {
         stage.setScene( controller.getScene() );
         stage.getIcons().add( ICON );
 
-        addWindowContainer( title, new WindowContainer( controller.getScene(), stage, controller ) );
-        return stage;
+        WindowContainer windowContainer = new WindowContainer( controller.getScene(), stage, controller );
+        addWindowContainer( title, windowContainer );
+        return windowContainer;
     }
 
     // TODO make it create Exceptions
     public static void print( Node node )
     {
         PrinterJob job = PrinterJob.createPrinterJob();
+        PageLayout pageLayout = job.getPrinter().createPageLayout( Paper.A5, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM );
+        job.getJobSettings().setPageLayout( pageLayout );
 
         if (job == null)
             return;

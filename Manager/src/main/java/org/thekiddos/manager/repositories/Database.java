@@ -131,11 +131,11 @@ public class Database {
     }
 
     public static Set<Long> getTables() {
-        return tables.keySet();
+        return new HashSet<>( tables.keySet() );
     }
 
     public static Set<Long> getCustomers() {
-        return customers.keySet();
+        return new HashSet<>( customers.keySet() );
     }
 
     // TODO protect against nulls in all Transaction/Models
