@@ -3,8 +3,10 @@ package org.thekiddos.manager.gui.controllers;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddReservationTransaction;
@@ -23,6 +25,7 @@ public class AddReservationGUIController extends Controller {
     public ChoiceBox<Long> tableSelector;
     public JFXDatePicker reservationDatePicker;
     public JFXTimePicker reservationTimePicker;
+    public GridPane root;
 
     public void initialize() {
         fillTableSelector( LocalDate.now() );
@@ -89,5 +92,10 @@ public class AddReservationGUIController extends Controller {
     public void updateTableSelector( ActionEvent actionEvent ) {
         // TODO should we handle date in the past here too?
         fillTableSelector( reservationDatePicker.getValue() );
+    }
+
+    @Override
+    public Node getRoot() {
+        return root;
     }
 }

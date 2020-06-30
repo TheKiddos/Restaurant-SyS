@@ -2,11 +2,13 @@ package org.thekiddos.manager.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTabPane;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.views.ReservationPane;
 import org.thekiddos.manager.repositories.Database;
@@ -17,12 +19,13 @@ public class GUIController extends Controller implements Remover {
     public JFXSpinner reservedTableTracker;
     public JFXButton addReservationButton;
     public VBox currentReservations;
+    public JFXTabPane root;
     private Stage addReservationGUIStage;
 
     public void initialize() {
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
 
-        currentReservations.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this ) );
+        currentReservations.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this, Util.getWindowContainer( "Invoice Summary" ) ) );
 
         updateReservedTableTracker();
     }
@@ -36,12 +39,14 @@ public class GUIController extends Controller implements Remover {
     }
 
     public void addReservation( ActionEvent actionEvent ) {
+        if ( addReservationGUIStage == null )
+            setAddReservationGUIStage();
         addReservationGUIStage.show();
     }
 
-    public void setAddReservationGUIStage( Stage addReservationGUIStage ) {
+    private void setAddReservationGUIStage() {
+        addReservationGUIStage = Util.getWindowContainer( "Add Reservation" ).getStage();
         addReservationGUIStage.setOnCloseRequest( e -> refresh() );
-        this.addReservationGUIStage = addReservationGUIStage;
     }
 
     private void refresh() {
@@ -51,5 +56,10 @@ public class GUIController extends Controller implements Remover {
     @Override
     public void remove( Node node ) {
         currentReservations.getChildren().remove( node );
+    }
+
+    @Override
+    public Node getRoot() {
+        return root;
     }
 }

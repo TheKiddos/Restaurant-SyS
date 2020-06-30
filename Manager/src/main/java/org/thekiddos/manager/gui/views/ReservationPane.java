@@ -10,8 +10,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.Remover;
+import org.thekiddos.manager.gui.controllers.InvoiceController;
+import org.thekiddos.manager.gui.models.WindowContainer;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.transactions.ActivateReservationTransaction;
+import org.thekiddos.manager.transactions.CheckOutTransaction;
 
 public class ReservationPane extends TitledPane {
     private static int reservationNumber = 0;
@@ -23,10 +26,12 @@ public class ReservationPane extends TitledPane {
     private JFXButton viewOrderButton,
             activateButton,
             checkOutButton;
+    private WindowContainer invoiceWindow;
 
-    public ReservationPane( Reservation reservation, Remover remover ) {
+    public ReservationPane( Reservation reservation, Remover remover, WindowContainer invoiceWindow ) {
         this.reservation = reservation;
         this.remover = remover;
+        this.invoiceWindow = invoiceWindow;
         setup();
     }
 
@@ -67,6 +72,12 @@ public class ReservationPane extends TitledPane {
     }
 
     private void checkOut( ActionEvent actionEvent ) {
+        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getTableId() );
+        checkOutTransaction.execute();
+        InvoiceController invoiceController = (InvoiceController) invoiceWindow.getController();
+        invoiceController.setInvoice( checkOutTransaction.getInvoice() );
+        invoiceWindow.getStage().showAndWait();
+        Util.print( invoiceController.getRoot() );
         remover.remove( this );
     }
 

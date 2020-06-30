@@ -1,17 +1,9 @@
 package org.thekiddos.manager.gui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import org.thekiddos.manager.Util;
-import org.thekiddos.manager.gui.controllers.Controller;
-import org.thekiddos.manager.gui.controllers.GUIController;
 import org.thekiddos.manager.models.Type;
 import org.thekiddos.manager.transactions.AddCustomerTransaction;
 import org.thekiddos.manager.transactions.AddItemTransaction;
@@ -19,7 +11,6 @@ import org.thekiddos.manager.transactions.AddTableTransaction;
 import org.thekiddos.manager.transactions.ImmediateReservationTransaction;
 
 public class GUIApplication extends Application {
-
     @Override
     public void init() throws Exception {
         fillDatabase();
@@ -27,26 +18,13 @@ public class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader rootLoader = new FXMLLoader( Util.getResource("templates/GUI.fxml") );
-        Parent root = rootLoader.load();
+        Stage invoiceStage = Util.createStage( "templates/invoice.fxml", null, "Invoice Summary" );
+        invoiceStage.initModality( Modality.NONE );
 
-        FXMLLoader addReservationLoader = new FXMLLoader( Util.getResource( "templates/add_reservation.fxml" ) );
-        Parent addReservationRoot = addReservationLoader.load();
+        Stage addReservationGUIStage = Util.createStage( "templates/add_reservation.fxml", null, "Add Reservation" );
+        addReservationGUIStage.initModality( Modality.NONE );
 
-        GUIController guiController = rootLoader.getController();
-        guiController.setScene( new Scene( root ) );
-        guiController.getScene().getStylesheets().add( Util.getResource( "static/style.css" ).toExternalForm() );
-
-        Controller addReservationGUIController = addReservationLoader.getController();
-        addReservationGUIController.setScene( new Scene( addReservationRoot ) );
-        addReservationGUIController.getScene().getStylesheets().add( Util.getResource( "static/style.css" ).toExternalForm() );
-
-        Stage addReservationGUIStage = createAddReservationGUIStage( addReservationGUIController.getScene(), guiController.getScene().getWindow() );
-        guiController.setAddReservationGUIStage( addReservationGUIStage );
-
-        primaryStage.getIcons().add( new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() ) );
-        primaryStage.setTitle( "Digital Restaurant Manager" );
-        primaryStage.setScene( guiController.getScene() );
+        primaryStage = Util.createStage( "templates/GUI.fxml", null, "Digital Restaurant Manager" );
         primaryStage.show();
     }
 
@@ -74,16 +52,6 @@ public class GUIApplication extends Application {
                 .withCarbohydrates( 0.2 )
                 .withImage( imagePath );
         addItem.execute();
-    }
-
-    public Stage createAddReservationGUIStage( Scene scene, Window owner ) {
-        Stage addReservationGUIStage = new Stage();
-        addReservationGUIStage.initOwner( owner );
-        addReservationGUIStage.setTitle( "Add Reservation" );
-        addReservationGUIStage.initModality( Modality.NONE );
-        addReservationGUIStage.initStyle( StageStyle.UNDECORATED );
-        addReservationGUIStage.setScene( scene );
-        return addReservationGUIStage;
     }
 
     public static void main(String[] args) {

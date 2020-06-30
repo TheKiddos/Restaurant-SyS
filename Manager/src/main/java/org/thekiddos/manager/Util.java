@@ -1,12 +1,27 @@
 package org.thekiddos.manager;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import org.thekiddos.manager.gui.controllers.Controller;
+import org.thekiddos.manager.gui.models.WindowContainer;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Util {
+    private static final Map<String, WindowContainer> windows = new HashMap<>();
+    public static final Image ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
+
     public static URL getResource( String fileName) {
         ClassLoader classLoader = Util.class.getClassLoader();
 
@@ -18,6 +33,14 @@ public class Util {
         }
     }
 
+    public static WindowContainer getWindowContainer( String stageTitle ) {
+        return windows.get( stageTitle );
+    }
+
+    public static void addWindowContainer( String name, WindowContainer window ) {
+        windows.put( name, window );
+    }
+
     public static JFXButton createButton( String label, String graphicPath ) {
         JFXButton button = new JFXButton( label );
         if ( graphicPath != null ) {
@@ -27,5 +50,39 @@ public class Util {
             button.setGraphic( orderImage );
         }
         return button;
+    }
+
+    public static Stage createStage( String FXMLPath, Window owner, String title ) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader( Util.getResource( FXMLPath ) );
+        Parent root = fxmlLoader.load();
+
+        Controller controller = fxmlLoader.getController();
+        controller.setScene( new Scene( root ) );
+        controller.getScene().getStylesheets().add( Util.getResource( "static/style.css" ).toExternalForm() );
+
+        Stage stage = new Stage();
+        stage.initOwner( owner );
+        stage.setTitle( title );
+        stage.setScene( controller.getScene() );
+        stage.getIcons().add( ICON );
+
+        addWindowContainer( title, new WindowContainer( controller.getScene(), stage, controller ) );
+        return stage;
+    }
+
+    // TODO make it create Exceptions
+    public static void print( Node node )
+    {
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        if (job == null)
+            return;
+
+        boolean printed = job.printPage(node);
+        if ( !printed ) {
+            return;
+        }
+
+        job.endJob();
     }
 }
