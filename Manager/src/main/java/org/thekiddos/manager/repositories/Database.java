@@ -138,5 +138,15 @@ public class Database {
         return new HashSet<>( customers.keySet() );
     }
 
+    public static List<Reservation> getCurrentReservations() {
+        List<Reservation> currentReservations = new ArrayList<>();
+        for ( Long tableId : getTables() ) {
+            Reservation reservation = getCurrentReservationByTableId( tableId );
+            if ( reservation != null )
+                currentReservations.add( reservation );
+        }
+        return currentReservations;
+    }
+
     // TODO protect against nulls in all Transaction/Models
 }

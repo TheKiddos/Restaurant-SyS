@@ -39,7 +39,7 @@ public class InvoiceController extends Controller {
         discountLabel.setText( "Discount: " + invoice.getDiscount() );
         totalLabel.setText( "Total: " + invoice.getTotal() );
 
-        ordersGridPane.setVgap( 30 );
+        ordersGridPane.setVgap( 5 );
         ordersGridPane.setHgap( 30 );
         ordersGridPane.add( createLabel( "Item Name" ), 0, 0 );
         ordersGridPane.add( createLabel( "Quantity" ), 1, 0 );

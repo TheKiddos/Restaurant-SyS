@@ -29,7 +29,6 @@ public class CheckOutTransaction implements Transaction {
         invoice.setTableFee( reservation.getTableFee() );
         invoice.setNetAmount( reservation.getTotal() - 0.0 ); // Discount
         invoice.setItems( reservation.getOrder().getItems() );
-        // TODO Print the Invoice
     }
 
     public Invoice getInvoice() {

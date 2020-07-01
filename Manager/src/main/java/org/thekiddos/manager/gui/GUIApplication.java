@@ -5,10 +5,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Type;
-import org.thekiddos.manager.transactions.AddCustomerTransaction;
-import org.thekiddos.manager.transactions.AddItemTransaction;
-import org.thekiddos.manager.transactions.AddTableTransaction;
-import org.thekiddos.manager.transactions.ImmediateReservationTransaction;
+import org.thekiddos.manager.transactions.*;
 
 public class GUIApplication extends Application {
     @Override
@@ -55,6 +52,30 @@ public class GUIApplication extends Application {
                 .withCarbohydrates( 0.2 )
                 .withImage( imagePath );
         addItem.execute();
+        new AddItemTransaction( 2L, "Syrian Fries", 15.0 ).execute();
+        new AddItemTransaction( 3L, "Hasan's Fries", 25.0 ).execute();
+
+        AddReservationServiceTransaction serviceTransaction = new AddReservationServiceTransaction( 1L );
+        serviceTransaction.addItem( 1L );
+        serviceTransaction.addItem( 1L );
+        serviceTransaction.addItem( 1L );
+        serviceTransaction.addItem( 2L );
+        serviceTransaction.addItem( 3L );
+        serviceTransaction.addItem( 3L );
+
+        new AddItemTransaction( 4L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 4L );
+        new AddItemTransaction( 5L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 5L );
+        new AddItemTransaction( 6L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 6L );
+        new AddItemTransaction( 7L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 7L );
+        new AddItemTransaction( 8L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 8L );
+        new AddItemTransaction( 9L, "Hasan's Fries", 25.0 ).execute();
+        serviceTransaction.addItem( 9L );
+        serviceTransaction.execute();
     }
 
     public static void main(String[] args) {

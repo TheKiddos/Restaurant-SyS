@@ -28,7 +28,7 @@
             <GridPane.margin>
                <Insets bottom="10.0" top="10.0" />
             </GridPane.margin>
-            <VBox fx:id="currentReservations" alignment="TOP_CENTER" spacing="10.0" />
+            <VBox fx:id="currentReservationsBox" alignment="TOP_CENTER" spacing="10.0" />
          </ScrollPane>
          <VBox alignment="TOP_CENTER" spacing="50.0" GridPane.columnIndex="5">
             <padding>

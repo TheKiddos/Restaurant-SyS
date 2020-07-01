@@ -55,7 +55,7 @@
       </HBox>
       <JFXDatePicker fx:id="reservationDatePicker" defaultColor="DARKCYAN" disable="true" onAction="#updateTableSelector" promptText="Reservation Date" style="-fx-fill: white;" GridPane.rowIndex="2" />
       <JFXTimePicker fx:id="reservationTimePicker" defaultColor="DARKCYAN" disable="true" promptText="Reservation Time" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <JFXButton defaultButton="true" onAction="#reserve" text="Reserve" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="3">
+      <JFXButton fx:id="reservationButton" defaultButton="true" onAction="#reserve" text="Reserve" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="3">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>

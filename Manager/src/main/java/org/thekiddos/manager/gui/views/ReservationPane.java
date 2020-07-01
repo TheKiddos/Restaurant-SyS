@@ -90,6 +90,10 @@ public class ReservationPane extends TitledPane {
         remover.remove( this );
     }
 
+    public static void resetCounter() {
+        reservationNumber = 0;
+    }
+
     private void createLayout() {
         content.setHgap( 30 );
         content.setVgap( 30 );
