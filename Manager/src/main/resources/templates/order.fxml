@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.thekiddos.manager.gui.controllers.OrderController">
-
-</AnchorPane>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.OrderController">
+   <children>
+      <JFXListView fx:id="itemsList" prefHeight="250.0" />
+      <JFXButton fx:id="addOrderItemButton" defaultButton="true" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addOrderItem" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="orderTable">
+        <columns>
+          <TableColumn fx:id="itemNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Item Name" />
+          <TableColumn fx:id="quantityColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="50.0" text="Qty" />
+            <TableColumn fx:id="unitPriceColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="75.0" text="Unit Price" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

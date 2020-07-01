@@ -13,7 +13,6 @@ import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.controllers.InvoiceController;
 import org.thekiddos.manager.gui.controllers.OrderController;
 import org.thekiddos.manager.gui.models.WindowContainer;
-import org.thekiddos.manager.models.Order;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.transactions.ActivateReservationTransaction;
 import org.thekiddos.manager.transactions.CheckOutTransaction;
@@ -39,7 +38,7 @@ public class ReservationPane extends TitledPane {
 
     private void setup() {
         setText( nextReservationNumber() );
-        setExpanded( false );
+        //setExpanded( false );
         setContent( content );
         isReservationActiveCheckBox.setDisable( true );
         isReservationActiveCheckBox.setSelected( reservation.isActive() );
@@ -50,6 +49,8 @@ public class ReservationPane extends TitledPane {
 
         if ( isReservationActiveCheckBox.isSelected() )
             activateButton.setDisable( true );
+        else
+            viewOrderButton.setDisable( true );
 
         viewOrderButton.setOnAction( this::viewOrder );
         activateButton.setOnAction( this::activateReservation );
@@ -67,14 +68,14 @@ public class ReservationPane extends TitledPane {
         new ActivateReservationTransaction( reservation.getTableId() ).execute();
 
         activateButton.setDisable( true );
+        viewOrderButton.setDisable( false );
         isReservationActiveCheckBox.setSelected( true );
     }
 
     // TODO Notice how both viewOrder And Checkout both have similar functions in controllers this leads to another abstraction (interface)
     private void viewOrder( ActionEvent actionEvent ) {
-        Order order = reservation.getOrder();
         OrderController orderController = (OrderController) orderWindow.getController();
-        orderController.setOrder( order );
+        orderController.setReservation( reservation );
         orderWindow.getStage().show();
     }
 

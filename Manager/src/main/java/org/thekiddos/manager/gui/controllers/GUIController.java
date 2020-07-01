@@ -25,11 +25,13 @@ public class GUIController extends Controller implements Remover {
     public JFXTabPane root;
     private Stage addReservationGUIStage;
     private WindowContainer orderWindow;
-
+    // TODO fix this annoying refresh behavior of closing all ReservationPanes
     public void initialize() {
         orderWindow = Util.getWindowContainer( "Order Summary" );
-        reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
+        orderWindow.getStage().setOnCloseRequest( e -> refresh() );
 
+        reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
+        // TODO do I need the remover?
         currentReservationsBox.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this, orderWindow ) );
 
         updateReservedTableTracker();

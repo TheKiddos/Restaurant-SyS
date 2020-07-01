@@ -148,5 +148,9 @@ public class Database {
         return currentReservations;
     }
 
+    public static Set<Item> getItems() {
+        return new HashSet<>( items.values() );
+    }
+
     // TODO protect against nulls in all Transaction/Models
 }

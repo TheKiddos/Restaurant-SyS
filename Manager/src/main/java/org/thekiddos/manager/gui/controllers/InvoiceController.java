@@ -26,6 +26,10 @@ public class InvoiceController extends Controller {
     public VBox detailsBox;
     public GridPane ordersGridPane = new GridPane();
 
+    public void initialize() {
+        detailsBox.getChildren().add( ordersGridPane );
+    }
+    // TODO use TableView like order?
     public void setInvoice( Invoice invoice ) {
         Customer customer = Database.getCustomerById( invoice.getCustomerId() );
 
@@ -41,6 +45,7 @@ public class InvoiceController extends Controller {
 
         ordersGridPane.setVgap( 5 );
         ordersGridPane.setHgap( 30 );
+        ordersGridPane.getChildren().clear();
         ordersGridPane.add( createLabel( "Item Name" ), 0, 0 );
         ordersGridPane.add( createLabel( "Quantity" ), 1, 0 );
         ordersGridPane.add( createLabel( "Unit Price" ), 2, 0 );
@@ -52,8 +57,6 @@ public class InvoiceController extends Controller {
             ordersGridPane.add( createLabel( String.valueOf( item.getPrice() ) ), 2, row );
             ++row;
         }
-
-        detailsBox.getChildren().add( ordersGridPane );
     }
 
     private Label createLabel( String text ) {
