@@ -58,9 +58,9 @@
          <children>
             <HBox VBox.vgrow="ALWAYS">
                <children>
-                  <JFXTextField promptText="Id" HBox.hgrow="ALWAYS" />
-                  <JFXTextField layoutX="10.0" layoutY="10.0" promptText="Max Capacity" HBox.hgrow="ALWAYS" />
-                  <JFXTextField layoutX="134.0" layoutY="10.0" promptText="Fee" HBox.hgrow="ALWAYS" />
+                  <JFXTextField fx:id="tableIdField" promptText="Id" HBox.hgrow="ALWAYS" />
+                  <JFXTextField fx:id="tableMaxCapacityField" layoutX="10.0" layoutY="10.0" promptText="Max Capacity" HBox.hgrow="ALWAYS" />
+                  <JFXTextField fx:id="tableFeeField" layoutX="134.0" layoutY="10.0" promptText="Fee" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <JFXButton fx:id="addTableButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTable" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">

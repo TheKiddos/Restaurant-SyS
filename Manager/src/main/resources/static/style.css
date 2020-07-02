@@ -25,6 +25,11 @@
     -fx-text-fill: yellow;
 }
 
+.jfx-text-field {
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
 .choice-box {
     -fx-background-color: transparent;
     -fx-border-color: white;
