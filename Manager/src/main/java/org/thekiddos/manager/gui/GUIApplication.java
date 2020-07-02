@@ -1,6 +1,7 @@
 package org.thekiddos.manager.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.thekiddos.manager.Util;
@@ -25,6 +26,7 @@ public class GUIApplication extends Application {
         addReservationGUIStage.initModality( Modality.NONE );
 
         primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
+        primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();
     }
 

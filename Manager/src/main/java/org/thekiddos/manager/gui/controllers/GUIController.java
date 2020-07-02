@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,6 +25,29 @@ public class GUIController extends Controller implements Remover {
     public JFXButton addReservationButton;
     public VBox currentReservationsBox;
     public JFXTabPane root;
+
+    public JFXButton addTableButton;
+    public JFXButton removeTableButton;
+    public TableView tableTable;
+    public TableColumn tableIdColumn;
+    public TableColumn tableMaxCapacityColumn;
+    public TableColumn tableFeeColumn;
+
+    public JFXButton addCustomerButton;
+    public TableView CustomerTable;
+    public TableColumn CustomerIdColumn;
+    public TableColumn customerFirstNameColumn;
+    public TableColumn customerLastName;
+    public JFXButton removeCustomerButton;
+
+    public JFXButton addItemButton;
+    public TableView itemTable;
+    public TableColumn itemIdColumn;
+    public TableColumn itemNameColumn;
+    public TableColumn itemPriceColumn;
+    public TableColumn itemDescriptionColumn;
+    public JFXButton removeItemButton;
+
     private Stage addReservationGUIStage;
     private WindowContainer orderWindow;
     // TODO fix this annoying refresh behavior of closing all ReservationPanes
@@ -74,5 +99,25 @@ public class GUIController extends Controller implements Remover {
     @Override
     public Node getRoot() {
         return root;
+    }
+
+    public void addTable( ActionEvent actionEvent ) {
+
+    }
+
+    public void removeTable( ActionEvent actionEvent ) {
+
+    }
+
+    public void addCustomer( ActionEvent actionEvent ) {
+    }
+
+    public void removeCustomer( ActionEvent actionEvent ) {
+    }
+
+    public void addItem( ActionEvent actionEvent ) {
+    }
+
+    public void removeItem( ActionEvent actionEvent ) {
     }
 }
