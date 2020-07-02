@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Customer {
     @NonNull
-    private final Long Id;
+    private final Long id;
     @NonNull
     private final String firstName;
     @NonNull

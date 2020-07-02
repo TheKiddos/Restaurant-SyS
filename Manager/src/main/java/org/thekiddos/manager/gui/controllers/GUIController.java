@@ -16,13 +16,16 @@ import javafx.stage.Stage;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.models.WindowContainer;
+import org.thekiddos.manager.gui.validator.CustomerIdValidator;
 import org.thekiddos.manager.gui.validator.FeeValidator;
 import org.thekiddos.manager.gui.validator.PositiveIntegerValidator;
 import org.thekiddos.manager.gui.validator.TableIdValidator;
 import org.thekiddos.manager.gui.views.ReservationPane;
+import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.AddCustomerTransaction;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 
 import java.time.LocalDate;
@@ -45,11 +48,14 @@ public class GUIController extends Controller implements Remover {
     public JFXTextField tableFeeField;
 
     public JFXButton addCustomerButton;
-    public TableView CustomerTable;
-    public TableColumn CustomerIdColumn;
-    public TableColumn customerFirstNameColumn;
-    public TableColumn customerLastName;
+    public TableView<Customer> customerTable;
+    public TableColumn<Customer, Long> customerIdColumn;
+    public TableColumn<Customer, String> customerFirstNameColumn;
+    public TableColumn<Customer, String> customerLastNameColumn;
     public JFXButton removeCustomerButton;
+    public JFXTextField customerIdField;
+    public JFXTextField customerFirstNameField;
+    public JFXTextField customerLastNameField;
 
     public JFXButton addItemButton;
     public TableView itemTable;
@@ -66,6 +72,27 @@ public class GUIController extends Controller implements Remover {
     public void initialize() {
         initializeMainGUI();
         initializeTableGUI();
+        initializeCustomerGUI();
+    }
+
+    private void initializeCustomerGUI() {
+        customerIdField.setValidators( new CustomerIdValidator(), new RequiredFieldValidator() );
+        customerFirstNameField.setValidators( new RequiredFieldValidator() );
+        customerLastNameField.setValidators( new RequiredFieldValidator() );
+
+        customerIdColumn.setCellValueFactory( new PropertyValueFactory<>( "id" ) );
+        customerFirstNameColumn.setCellValueFactory( new PropertyValueFactory<>( "firstName" ) );
+        customerLastNameColumn.setCellValueFactory( new PropertyValueFactory<>( "lastName" ) );
+
+        fillCustomerTableView();
+    }
+
+    private void fillCustomerTableView() {
+        customerTable.getItems().clear();
+        for ( Long customerId : Database.getCustomers() ) {
+            Customer customer = Database.getCustomerById( customerId );
+            customerTable.getItems().add( customer );
+        }
     }
 
     private void initializeTableGUI() {
@@ -166,9 +193,25 @@ public class GUIController extends Controller implements Remover {
     }
 
     public void addCustomer( ActionEvent actionEvent ) {
+        if ( !validateCustomerFields() )
+            return;
+
+        Long id = Long.parseLong( customerIdField.getText() );
+        String firstName = customerFirstNameField.getText();
+        String lastName = customerLastNameField.getText();
+
+        new AddCustomerTransaction( id, firstName, lastName ).execute();
+        fillCustomerTableView();
+    }
+
+    private boolean validateCustomerFields() {
+        return customerIdField.validate() && customerFirstNameField.validate() && customerLastNameField.validate();
     }
 
     public void removeCustomer( ActionEvent actionEvent ) {
+        Customer customer = customerTable.getSelectionModel().getSelectedItem();
+        Database.removeCustomerById( customer.getId() );
+        fillCustomerTableView();
     }
 
     public void addItem( ActionEvent actionEvent ) {
