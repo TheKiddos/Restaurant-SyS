@@ -15,6 +15,7 @@ public class Database {
     private static final Map<Long, Table> tables = new HashMap<>();
     private static final Map<Long, Item> items = new HashMap<>();
     private static final Map<Long, List<Reservation>> reservations = new HashMap<>();
+    // TODO rename getAll methods to include id in the name
 
     public static Employee getEmployeeById( Long employeeId ) {
         return employees.get( employeeId );
@@ -86,6 +87,10 @@ public class Database {
                 tableReservation.remove( i );
                 return;
             }
+    }
+
+    public static Set<Long> getItemsId() {
+        return new HashSet<>( items.keySet() );
     }
 
     public static Item getItemById( Long itemId ) {

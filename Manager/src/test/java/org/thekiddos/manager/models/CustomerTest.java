@@ -44,4 +44,6 @@ class CustomerTest {
         customer = Database.getCustomerById( customerId );
         assertNull( customer );
     }
+
+    // TODO test delete a customer that have a reservation
 }

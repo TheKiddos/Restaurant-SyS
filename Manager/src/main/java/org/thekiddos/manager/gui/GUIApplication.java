@@ -25,6 +25,9 @@ public class GUIApplication extends Application {
         Stage addReservationGUIStage = Util.createWindowContainer( "templates/add_reservation.fxml", null, "Add Reservation" ).getStage();
         addReservationGUIStage.initModality( Modality.NONE );
 
+        Stage addItemGUIStage = Util.createWindowContainer( "templates/add_item.fxml", null, "Add Item" ).getStage();
+        addItemGUIStage.initModality( Modality.NONE );
+
         primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();

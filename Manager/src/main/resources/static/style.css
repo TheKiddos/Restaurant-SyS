@@ -30,6 +30,18 @@
     -fx-fill: white;
 }
 
+.jfx-text-area,
+.jfx-text-area:focused {
+    -fx-text-fill: white;
+    -fx-fill: white;
+    -fx-prompt-text-fill: darkgray;
+    -fx-background-color: rgba(0,0,30,0.2);
+}
+
+.jfx-check-box {
+    -fx-text-fill: white;
+}
+
 .choice-box {
     -fx-background-color: transparent;
     -fx-border-color: white;

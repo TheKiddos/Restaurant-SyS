@@ -60,4 +60,6 @@ class ItemTest {
         Item frenchFries = Database.getItemById( itemId );
         assertNull( frenchFries );
     }
+
+    // TODO test delete item in use now
 }
