@@ -28,6 +28,10 @@ public class GUIApplication extends Application {
         Stage addItemGUIStage = Util.createWindowContainer( "templates/add_item.fxml", null, "Add Item" ).getStage();
         addItemGUIStage.initModality( Modality.NONE );
 
+        Util.createWindowContainer( "templates/table.fxml", null, "Tables" );
+        Util.createWindowContainer( "templates/table.fxml", null, "Customers" );
+        Util.createWindowContainer( "templates/item.fxml", null, "Items" );
+
         primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();

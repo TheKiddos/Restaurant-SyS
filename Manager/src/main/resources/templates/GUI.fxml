@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<JFXTabPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="700.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.GUIController">
+<?import javafx.scene.text.Font?>
+<JFXTabPane id="root" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="700.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.GUIController">
    <Tab closable="false" text="Dashboard">
       <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="10.0">
          <columnConstraints>
@@ -53,101 +55,10 @@
          </VBox>
       </GridPane>
    </Tab>
-   <Tab closable="false" text="Tables">
-      <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-         <children>
-            <HBox VBox.vgrow="ALWAYS">
-               <children>
-                  <JFXTextField fx:id="tableIdField" promptText="Id" HBox.hgrow="ALWAYS" />
-                  <JFXTextField fx:id="tableMaxCapacityField" layoutX="10.0" layoutY="10.0" promptText="Max Capacity" HBox.hgrow="ALWAYS" />
-                  <JFXTextField fx:id="tableFeeField" layoutX="134.0" layoutY="10.0" promptText="Fee" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <JFXButton fx:id="addTableButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTable" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="Times New Roman Bold" size="14.0" />
-               </font>
-            </JFXButton>
-            <TableView fx:id="tableTable">
-               <columns>
-                  <TableColumn fx:id="tableIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="Table Id" />
-                  <TableColumn fx:id="tableMaxCapacityColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="Max Cap" />
-                  <TableColumn fx:id="tableFeeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="75.0" text="Table Fee" />
-               </columns>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </TableView>
-            <JFXButton fx:id="removeTableButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeTable" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="Times New Roman Bold" size="14.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
+   <Tab fx:id="tableTab" closable="false" text="Tables">
    </Tab>
-   <Tab closable="false" text="Customers">
-      <content>
-         <VBox>
-            <children>
-               <HBox VBox.vgrow="ALWAYS">
-                  <children>
-                     <JFXTextField fx:id="customerIdField" promptText="Id" HBox.hgrow="ALWAYS" />
-                     <JFXTextField fx:id="customerFirstNameField" layoutX="10.0" layoutY="10.0" promptText="First Name" HBox.hgrow="ALWAYS" />
-                     <JFXTextField fx:id="customerLastNameField" layoutX="134.0" layoutY="10.0" promptText="Last Name" HBox.hgrow="ALWAYS" />
-                  </children>
-               </HBox>
-               <JFXButton fx:id="addCustomerButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addCustomer" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
-                  <font>
-                     <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
-               </JFXButton>
-               <TableView fx:id="customerTable">
-                  <columns>
-                     <TableColumn fx:id="customerIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Customer Id" />
-                     <TableColumn fx:id="customerFirstNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="First Name" />
-                     <TableColumn fx:id="customerLastNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Last Name" />
-                  </columns>
-                  <VBox.margin>
-                     <Insets />
-                  </VBox.margin>
-               </TableView>
-               <JFXButton fx:id="removeCustomerButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeCustomer" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
-                  <font>
-                     <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
-               </JFXButton>
-            </children>
-         </VBox>
-      </content>
+   <Tab fx:id="customerTab" closable="false" text="Customers">
    </Tab>
-   <Tab closable="false" text="Items">
-      <content>
-         <VBox>
-            <children>
-               <JFXButton fx:id="addItemButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addItem" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
-                  <font>
-                     <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
-               </JFXButton>
-               <TableView fx:id="itemTable">
-                  <columns>
-                     <TableColumn fx:id="itemIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="Id" />
-                     <TableColumn fx:id="itemNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Name" />
-                     <TableColumn fx:id="itemPriceColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="75.0" text="Price" />
-                     <TableColumn fx:id="itemDescriptionColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="400.0" text="Description" />
-                  </columns>
-                  <VBox.margin>
-                     <Insets />
-                  </VBox.margin>
-               </TableView>
-               <JFXButton fx:id="removeItemButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeItem" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
-                  <font>
-                     <Font name="Times New Roman Bold" size="14.0" />
-                  </font>
-               </JFXButton>
-            </children>
-         </VBox>
-      </content>
+   <Tab fx:id="itemTab" closable="false" text="Items">
    </Tab>
 </JFXTabPane>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.thekiddos.manager.gui.controllers.ItemController">
+    <children>
+        <JFXButton fx:id="addItemButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addItem" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <TableView fx:id="itemTable">
+            <columns>
+                <TableColumn fx:id="itemIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="Id" />
+                <TableColumn fx:id="itemNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="itemPriceColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="75.0" text="Price" />
+                <TableColumn fx:id="itemDescriptionColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="400.0" text="Description" />
+            </columns>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </TableView>
+        <JFXButton fx:id="removeItemButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeItem" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </children>
+</VBox>

@@ -11,9 +11,9 @@ import org.thekiddos.manager.gui.controllers.Controller;
 @RequiredArgsConstructor
 public class WindowContainer {
     @NonNull
-    private Scene scene;
+    private final Scene scene;
     @NonNull
-    private Stage stage;
+    private final Stage stage;
     @NonNull
-    private Controller controller;
+    private final Controller controller;
 }

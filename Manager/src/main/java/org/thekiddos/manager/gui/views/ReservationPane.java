@@ -27,7 +27,7 @@ public class ReservationPane extends TitledPane {
     private JFXButton viewOrderButton,
             activateButton,
             checkOutButton;
-    private WindowContainer orderWindow;
+    private final WindowContainer orderWindow;
 
     public ReservationPane( Reservation reservation, Remover remover, WindowContainer orderWindow ) {
         this.reservation = reservation;

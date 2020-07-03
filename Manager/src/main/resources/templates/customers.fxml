@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root" stylesheets="@../static/style.css"
+      xmlns="http://javafx.com/javafx/"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.thekiddos.manager.gui.controllers.CustomerController">
+    <children>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <JFXTextField fx:id="customerIdField" promptText="Id" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="customerFirstNameField" layoutX="10.0" layoutY="10.0" promptText="First Name" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="customerLastNameField" layoutX="134.0" layoutY="10.0" promptText="Last Name" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+        <JFXButton fx:id="addCustomerButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addCustomer" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <TableView fx:id="customerTable">
+            <columns>
+                <TableColumn fx:id="customerIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Customer Id" />
+                <TableColumn fx:id="customerFirstNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="First Name" />
+                <TableColumn fx:id="customerLastNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Last Name" />
+            </columns>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </TableView>
+        <JFXButton fx:id="removeCustomerButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeCustomer" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </children>
+</VBox>

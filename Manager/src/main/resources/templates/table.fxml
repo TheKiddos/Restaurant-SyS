@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root" stylesheets="@../static/style.css"
+      xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.thekiddos.manager.gui.controllers.TableController">
+    <children>
+        <HBox VBox.vgrow="ALWAYS">
+            <children>
+                <JFXTextField fx:id="tableIdField" promptText="Id" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="tableMaxCapacityField" layoutX="10.0" layoutY="10.0" promptText="Max Capacity" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="tableFeeField" layoutX="134.0" layoutY="10.0" promptText="Fee" HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+        <JFXButton fx:id="addTableButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addTable" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <TableView fx:id="tableTable">
+            <columns>
+                <TableColumn fx:id="tableIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="Table Id" />
+                <TableColumn fx:id="tableMaxCapacityColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="75.0" text="Max Cap" />
+                <TableColumn fx:id="tableFeeColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="75.0" text="Table Fee" />
+            </columns>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </TableView>
+        <JFXButton fx:id="removeTableButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeTable" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </children>
+</VBox>

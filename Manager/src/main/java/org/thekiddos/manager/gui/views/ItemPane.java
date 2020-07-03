@@ -6,7 +6,7 @@ import lombok.Getter;
 
 public class ItemPane extends Label {
     @Getter
-    private Long itemId;
+    private final Long itemId;
 
     public ItemPane( Long itemId ) {
         this.itemId = itemId;

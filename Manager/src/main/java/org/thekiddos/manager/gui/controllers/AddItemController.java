@@ -32,7 +32,7 @@ public class AddItemController extends Controller {
     public JFXMasonryPane typePane;
     public GridPane root;
 
-    private FileChooser fileChooser = new FileChooser();
+    private final FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
         fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter( "Images", "*.png", "*jpg", "*.jpeg", "*.gif", "*.bmp" ) );
