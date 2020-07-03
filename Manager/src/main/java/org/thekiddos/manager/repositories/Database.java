@@ -124,7 +124,7 @@ public class Database {
     }
 
     public static Set<Long> getFreeTablesOn( LocalDate date ) {
-        Set<Long> freeTablesOnDate = getTables();
+        Set<Long> freeTablesOnDate = getTablesId();
         Set<Long> reservedTables = new HashSet<>();
         for ( List<Reservation> tableReservations : reservations.values() ) {
             tableReservations.stream().filter( reservation -> reservation.getDate().equals( date ) )
@@ -135,17 +135,17 @@ public class Database {
         return freeTablesOnDate;
     }
 
-    public static Set<Long> getTables() {
+    public static Set<Long> getTablesId() {
         return new HashSet<>( tables.keySet() );
     }
 
-    public static Set<Long> getCustomers() {
+    public static Set<Long> getCustomersId() {
         return new HashSet<>( customers.keySet() );
     }
 
     public static List<Reservation> getCurrentReservations() {
         List<Reservation> currentReservations = new ArrayList<>();
-        for ( Long tableId : getTables() ) {
+        for ( Long tableId : getTablesId() ) {
             Reservation reservation = getCurrentReservationByTableId( tableId );
             if ( reservation != null )
                 currentReservations.add( reservation );
@@ -155,6 +155,10 @@ public class Database {
 
     public static Set<Item> getItems() {
         return new HashSet<>( items.values() );
+    }
+
+    public static Set<Long> getEmployeesId() {
+        return new HashSet<>( employees.keySet() );
     }
 
     // TODO protect against nulls in all Transaction/Models

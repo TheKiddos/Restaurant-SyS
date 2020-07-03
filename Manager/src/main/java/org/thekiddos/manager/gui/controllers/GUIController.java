@@ -27,6 +27,9 @@ public class GUIController extends Controller implements Remover {
     public Tab tableTab;
     public Tab customerTab;
     public Tab itemTab;
+    public Tab employeeTab;
+    public Tab timeCardTab;
+    public Tab payrollTab;
 
     private Stage addReservationGUIStage;
     private WindowContainer orderWindow;
@@ -38,6 +41,7 @@ public class GUIController extends Controller implements Remover {
         tableTab.setContent( Util.getWindowContainer( "Tables" ).getController().getRoot() );
         customerTab.setContent( Util.getWindowContainer( "Customers" ).getController().getRoot() );
         itemTab.setContent( Util.getWindowContainer( "Items" ).getController().getRoot() );
+        employeeTab.setContent( Util.getWindowContainer( "Employees" ).getController().getRoot() );
     }
 
     @Override
@@ -64,7 +68,7 @@ public class GUIController extends Controller implements Remover {
     }
 
     private void updateReservedTableTracker() {
-        int numberOfTables = Database.getTables().size();
+        int numberOfTables = Database.getTablesId().size();
         int numberOfReservedTables = numberOfTables - Database.getFreeTablesOn( LocalDate.now() ).size();
         double ratioOfReservedTables = ((double)numberOfReservedTables) / numberOfTables;
         reservedTableTracker.setProgress( ratioOfReservedTables );

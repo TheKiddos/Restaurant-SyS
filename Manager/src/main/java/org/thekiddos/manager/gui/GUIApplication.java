@@ -6,6 +6,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Type;
+import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
+import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
 import org.thekiddos.manager.transactions.*;
 
 public class GUIApplication extends Application {
@@ -28,9 +30,13 @@ public class GUIApplication extends Application {
         Stage addItemGUIStage = Util.createWindowContainer( "templates/add_item.fxml", null, "Add Item" ).getStage();
         addItemGUIStage.initModality( Modality.NONE );
 
+        Stage addEmployeeStage = Util.createWindowContainer( "templates/add_employee.fxml", null, "Add Employee" ).getStage();
+        addEmployeeStage.initModality( Modality.NONE );
+
         Util.createWindowContainer( "templates/table.fxml", null, "Tables" );
         Util.createWindowContainer( "templates/table.fxml", null, "Customers" );
         Util.createWindowContainer( "templates/item.fxml", null, "Items" );
+        Util.createWindowContainer( "templates/employee.fxml", null, "Employees" );
 
         primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
@@ -85,6 +91,9 @@ public class GUIApplication extends Application {
         new AddItemTransaction( 9L, "Hasan's Fries", 25.0 ).execute();
         serviceTransaction.addItem( 9L );
         serviceTransaction.execute();
+
+        new AddSalariedEmployeeTransaction( 1L, "Zahlt", 1000.0 ).execute();
+        new AddHourlyEmployeeTransaction( 2L, "Django", 8.0 ).execute();
     }
 
     public static void main(String[] args) {

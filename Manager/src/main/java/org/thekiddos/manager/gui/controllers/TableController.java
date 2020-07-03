@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import org.thekiddos.manager.gui.validator.FeeValidator;
+import org.thekiddos.manager.gui.validator.MoneyValidator;
 import org.thekiddos.manager.gui.validator.PositiveIntegerValidator;
 import org.thekiddos.manager.gui.validator.TableIdValidator;
 import org.thekiddos.manager.models.Table;
@@ -31,7 +31,7 @@ public class TableController extends Controller {
     public void initialize() {
         tableIdField.setValidators( new TableIdValidator(), new RequiredFieldValidator() );
         tableMaxCapacityField.setValidators( new PositiveIntegerValidator(), new RequiredFieldValidator() );
-        tableFeeField.setValidators( new FeeValidator(), new RequiredFieldValidator() );
+        tableFeeField.setValidators( new MoneyValidator(), new RequiredFieldValidator() );
 
         tableIdColumn.setCellValueFactory( new PropertyValueFactory<>( "id" ) );
         tableMaxCapacityColumn.setCellValueFactory( new PropertyValueFactory<>( "maxCapacity" ) );
@@ -44,7 +44,7 @@ public class TableController extends Controller {
 
     private void fillTableTableView() {
         tableTable.getItems().clear();
-        for ( Long tableId : Database.getTables() ) {
+        for ( Long tableId : Database.getTablesId() ) {
             Table table = Database.getTableById( tableId );
             tableTable.getItems().add( table );
         }

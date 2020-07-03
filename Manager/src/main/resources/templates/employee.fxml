@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.EmployeeController">
+    <JFXButton fx:id="addEmployeeButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addEmployee" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
+        <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+        </font>
+    </JFXButton>
+    <JFXTextField  fx:id="searchEmployeeField" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" promptText="Search" />
+    <TableView fx:id="employeeTable">
+        <columns>
+            <TableColumn fx:id="employeeIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="50.0" text="Id" />
+            <TableColumn fx:id="employeeNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Name" />
+            <TableColumn fx:id="employeePaymentClassificationColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Salary" />
+            <TableColumn fx:id="employeePaymentScheduleColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Payment Schedule" />
+            <TableColumn fx:id="employeePaymentMethodColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Payment Method" />
+        </columns>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </TableView>
+    <JFXButton fx:id="removeEmployeeButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeEmployee" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+        <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+        </font>
+    </JFXButton>
+</VBox>

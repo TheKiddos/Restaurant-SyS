@@ -3,7 +3,7 @@ package org.thekiddos.manager.gui.validator;
 import com.jfoenix.validation.DoubleValidator;
 import javafx.scene.control.TextInputControl;
 
-public class FeeValidator extends DoubleValidator {
+public class MoneyValidator extends DoubleValidator {
     @Override
     protected void eval() {
         super.eval();
@@ -16,7 +16,7 @@ public class FeeValidator extends DoubleValidator {
 
         if ( Double.parseDouble( text ) < 0 ) {
             this.hasErrors.set( true );
-            message.setValue( "Fee must be Non-Negative" );
+            message.setValue( "Money must be Non-Negative" );
         }
     }
 }

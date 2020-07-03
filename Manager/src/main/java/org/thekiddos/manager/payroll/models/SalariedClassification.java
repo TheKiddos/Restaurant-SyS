@@ -26,4 +26,9 @@ public class SalariedClassification implements PaymentClassification {
     public String getBaseSalary() {
         return salary + " per Month";
     }
+
+    @Override
+    public String toString() {
+        return "Salary: " + salary;
+    }
 }

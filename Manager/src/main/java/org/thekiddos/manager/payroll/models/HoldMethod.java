@@ -12,4 +12,9 @@ public class HoldMethod implements PaymentMethod {
     public String getDetails() {
         return "Printed";
     }
+
+    @Override
+    public String toString() {
+        return "Payment Delivered through the paymaster";
+    }
 }

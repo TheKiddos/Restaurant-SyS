@@ -68,4 +68,9 @@ public class HourlyClassification implements PaymentClassification {
     private boolean isBeforeOrEqual( LocalDate unPaidDay, LocalDate endDate ) {
         return unPaidDay.isBefore( endDate ) || unPaidDay.isEqual( endDate );
     }
+
+    @Override
+    public String toString() {
+        return "Hourly Rate: " + hourlyRate;
+    }
 }

@@ -21,4 +21,9 @@ public class MonthlySchedule implements PaymentSchedule {
         LocalDate firstDayOfNextMonth = date.plusMonths( 1 ).withDayOfMonth( 1 );
         return date.plusDays( 1 ).equals( firstDayOfNextMonth );
     }
+
+    @Override
+    public String toString() {
+        return "Payed Every Month";
+    }
 }

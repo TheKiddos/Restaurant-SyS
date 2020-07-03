@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.AddEmployeeController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <JFXTextField fx:id="idField" layoutX="10.0" layoutY="10.0" promptText="Id" />
+      <JFXTextField fx:id="nameField" promptText="Name" GridPane.columnIndex="1" />
+      <ChoiceBox fx:id="employeePaymentClassificationChoiceBox" GridPane.columnIndex="2" onAction="#changeClassification" />
+      <JFXTextField fx:id="paymentField" layoutX="10.0" layoutY="10.0" promptText="Salary" GridPane.rowIndex="1" />
+      <JFXButton defaultButton="true" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addEmployee" text="+" textFill="WHITE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="NEVER">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</GridPane>

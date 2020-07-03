@@ -42,7 +42,7 @@ public class CustomerController extends Controller {
 
     private void fillCustomerTableView() {
         customerTable.getItems().clear();
-        for ( Long customerId : Database.getCustomers() ) {
+        for ( Long customerId : Database.getCustomersId() ) {
             Customer customer = Database.getCustomerById( customerId );
             customerTable.getItems().add( customer );
         }

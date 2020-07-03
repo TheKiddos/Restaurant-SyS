@@ -50,4 +50,8 @@ class TableTest {
     }
 
     // TODO test Delete Reserved Table NOW
+    @Test
+    void testDeleteReservedTableTransaction() {
+
+    }
 }

@@ -47,7 +47,7 @@ public class AddReservationGUIController extends Controller {
 
     private void fillCustomerSelector() {
         customerSelector.getItems().clear();
-        customerSelector.getItems().addAll( Database.getCustomers() );
+        customerSelector.getItems().addAll( Database.getCustomersId() );
     }
 
     public void activateImmediateMode( ActionEvent actionEvent ) {
