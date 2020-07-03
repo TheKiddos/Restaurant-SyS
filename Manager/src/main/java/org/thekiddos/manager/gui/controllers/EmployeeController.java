@@ -2,8 +2,12 @@ package org.thekiddos.manager.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,8 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.payroll.models.Employee;
+import org.thekiddos.manager.payroll.models.HourlyClassification;
+import org.thekiddos.manager.payroll.models.TimeCard;
+import org.thekiddos.manager.payroll.transactions.AddTimeCardTransaction;
 import org.thekiddos.manager.repositories.Database;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,9 +35,15 @@ public class EmployeeController extends Controller {
     public TableColumn<Employee, String> employeePaymentMethodColumn;
     public JFXButton removeEmployeeButton;
     public JFXTextField searchEmployeeField;
+    public JFXButton setTimeCardButton;
+    public JFXTimePicker hoursWorkedTimePicker;
+    public JFXButton viewTimeCardsButton;
 
 
     public void initialize() {
+        hoursWorkedTimePicker.set24HourView( true );
+        hoursWorkedTimePicker.setValidators( new RequiredFieldValidator() );
+
         employeeIdColumn.setCellValueFactory( new PropertyValueFactory<>( "id" ) );
         employeeNameColumn.setCellValueFactory( new PropertyValueFactory<>( "name" ) );
         employeePaymentClassificationColumn.setCellValueFactory( new PropertyValueFactory<>( "paymentClassification" ) );
@@ -40,6 +54,22 @@ public class EmployeeController extends Controller {
         removeEmployeeButton.disableProperty().bind( employeeTable.getSelectionModel().selectedItemProperty().isNull() );
 
         fillEmployeeTable( "" );
+        employeeTable.getSelectionModel().selectedItemProperty().addListener( this::disableButtonsOnWrongWrongEmployee );
+    }
+
+    private void disableButtonsOnWrongWrongEmployee( Observable observable, Employee oldValue, Employee newValue ) {
+        if ( newValue == null ) {
+            setTimeCardButton.setDisable( true );
+            viewTimeCardsButton.setDisable( true );
+            return;
+        }
+        if ( newValue.getPaymentClassification().getType().equals( "Hourly Employee" ) ) {
+            setTimeCardButton.setDisable( false );
+            viewTimeCardsButton.setDisable( false );
+        } else {
+            setTimeCardButton.setDisable( true );
+            viewTimeCardsButton.setDisable( true );
+        }
     }
 
     private void fillEmployeeTable( String filter ) {
@@ -77,13 +107,18 @@ public class EmployeeController extends Controller {
         fillEmployeeTable( "" );
     }
 
-    public void viewClassification( ActionEvent actionEvent ) {
+    public void setTimeCard( ActionEvent actionEvent ) {
+        if ( !hoursWorkedTimePicker.validate() )
+            return;
+
+        new AddTimeCardTransaction( employeeTable.getSelectionModel().getSelectedItem().getId(), LocalDate.now(), hoursWorkedTimePicker.getValue() ).execute();
     }
 
-    public void viewPaySchedule( ActionEvent actionEvent ) {
-    }
-
-    public void viewPayMethod( ActionEvent actionEvent ) {
-
+    public void viewTimeCards( ActionEvent actionEvent ) {
+        Employee employee = employeeTable.getSelectionModel().getSelectedItem();
+        HourlyClassification hourlyClassification = (HourlyClassification) employee.getPaymentClassification();
+        TimeCard timeCard = hourlyClassification.getTimeCard( LocalDate.now() );
+        String timeWorked = timeCard == null ? "0" : timeCard.getTimeWorked().getHour() + ":" + timeCard.getTimeWorked().getMinute();
+        Util.createAlert( "Time Worked", timeWorked, getScene().getWindow(), ButtonType.OK ).showAndWait();
     }
 }

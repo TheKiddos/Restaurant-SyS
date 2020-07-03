@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<GridPane fx:id="root" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.AddItemController">
+<GridPane styleClass="root" fx:id="root" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.AddItemController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

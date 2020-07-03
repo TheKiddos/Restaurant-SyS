@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox fx:id="root" stylesheets="@../static/style.css"
+<VBox styleClass="root" fx:id="root" stylesheets="@../static/style.css"
       xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.thekiddos.manager.gui.controllers.TableController">
     <children>

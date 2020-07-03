@@ -2,6 +2,10 @@
     -fx-background-color: linear-gradient( rgba(10, 10, 10, 0.9 ), rgba(30, 30, 30, 0.9 ));
 }
 
+.root {
+    -fx-background-color: linear-gradient( rgba(10, 10, 10, 0.9 ), rgba(30, 30, 30, 0.9 ));
+}
+
 #root .tab-header-background {
     -fx-background-color: #008b8b;
 }
@@ -20,6 +24,22 @@
 }
 
 .jfx-button:hover {
+    -fx-background-color: rgba(82,149,255,0.58);
+    -fx-border-color: yellow;
+    -fx-text-fill: yellow;
+}
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 3px;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-fill: white;
+}
+
+.button:hover {
     -fx-background-color: rgba(82,149,255,0.58);
     -fx-border-color: yellow;
     -fx-text-fill: yellow;

@@ -6,8 +6,11 @@ import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.thekiddos.manager.gui.controllers.Controller;
@@ -21,6 +24,7 @@ import java.util.Map;
 public class Util {
     private static final Map<String, WindowContainer> windows = new HashMap<>();
     public static final Image ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
+    public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
 
     public static URL getResource( String fileName) {
         ClassLoader classLoader = Util.class.getClassLoader();
@@ -58,7 +62,7 @@ public class Util {
 
         Controller controller = fxmlLoader.getController();
         controller.setScene( new Scene( root ) );
-        controller.getScene().getStylesheets().add( Util.getResource( "static/style.css" ).toExternalForm() );
+        controller.getScene().getStylesheets().add( STYLESHEET_PATH );
 
         Stage stage = new Stage();
         stage.initOwner( owner );
@@ -69,6 +73,17 @@ public class Util {
         WindowContainer windowContainer = new WindowContainer( controller.getScene(), stage, controller );
         addWindowContainer( title, windowContainer );
         return windowContainer;
+    }
+
+    public static Alert createAlert( String titleText, String contentText, Window owner, ButtonType... buttons ) {
+        Alert alert = new Alert( null, contentText, buttons );
+        alert.setTitle( titleText );
+        alert.initModality( Modality.WINDOW_MODAL );
+        alert.initOwner( owner );
+        alert.getDialogPane().getScene().getStylesheets().add( STYLESHEET_PATH );
+        alert.getDialogPane().getStyleClass().add( "root" );
+        ( (Stage) alert.getDialogPane().getScene().getWindow() ).getIcons().add( ICON );
+        return alert;
     }
 
     // TODO make it create Exceptions

@@ -63,8 +63,6 @@
    </Tab>
    <Tab fx:id="employeeTab" closable="false" text="Employees">
    </Tab>
-   <Tab fx:id="timeCardTab" closable="false" text="Time Cards">
-   </Tab>
    <Tab fx:id="payrollTab" closable="false" text="Payroll">
    </Tab>
 </JFXTabPane>

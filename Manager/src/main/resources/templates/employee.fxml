@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<VBox fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.EmployeeController">
+<VBox styleClass="root" fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.EmployeeController">
     <JFXButton fx:id="addEmployeeButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addEmployee" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
         <font>
             <Font name="Times New Roman Bold" size="14.0" />
@@ -25,9 +24,22 @@
             <Insets />
         </VBox.margin>
     </TableView>
-    <JFXButton fx:id="removeEmployeeButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeEmployee" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
-        <font>
-            <Font name="Times New Roman Bold" size="14.0" />
-        </font>
-    </JFXButton>
+    <HBox>
+        <JFXButton fx:id="removeEmployeeButton" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removeEmployee" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="setTimeCardButton" disable="true" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#setTimeCard" text="Add Time Card" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="viewTimeCardsButton" disable="true" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#viewTimeCards" text="View Time Cards" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXTimePicker fx:id="hoursWorkedTimePicker" defaultColor="DARKCYAN" promptText="Time Worked" HBox.hgrow="ALWAYS" />
+    </HBox>
 </VBox>

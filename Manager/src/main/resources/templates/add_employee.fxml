@@ -6,7 +6,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.AddEmployeeController">
+<GridPane styleClass="root" fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.AddEmployeeController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" />
       <ColumnConstraints hgrow="SOMETIMES" />
