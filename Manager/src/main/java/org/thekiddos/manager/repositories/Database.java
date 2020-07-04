@@ -3,7 +3,7 @@ package org.thekiddos.manager.repositories;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Reservation;
-import org.thekiddos.manager.models.Table;
+import org.thekiddos.manager.models.SittingTable;
 import org.thekiddos.manager.payroll.models.Employee;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.*;
 public class Database {
     private static final Map<Long, Employee> employees = new HashMap<>();
     private static final Map<Long, Customer> customers = new HashMap<>();
-    private static final Map<Long, Table> tables = new HashMap<>();
+    private static final Map<Long, SittingTable> tables = new HashMap<>();
     private static final Map<Long, Item> items = new HashMap<>();
     private static final Map<Long, List<Reservation>> reservations = new HashMap<>();
     // TODO rename getAll methods to include id in the name
@@ -45,11 +45,11 @@ public class Database {
         customers.remove( customerId );
     }
 
-    public static void addTable( Table table ) {
+    public static void addTable( SittingTable table ) {
         tables.put( table.getId(), table );
     }
 
-    public static Table getTableById( Long tableId ) {
+    public static SittingTable getTableById( Long tableId ) {
         return tables.get( tableId );
     }
 

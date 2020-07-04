@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TableTest {
+class SittingTableTest {
 
     @BeforeEach
     void setUpDatabase() {
@@ -25,7 +25,7 @@ class TableTest {
         addTable.setTableFee( 1.0 );
         addTable.execute();
 
-        Table table = Database.getTableById( tableId );
+        SittingTable table = Database.getTableById( tableId );
         assertNotNull( table );
         assertEquals( tableId, table.getId() );
         assertEquals( 4, table.getMaxCapacity() );
@@ -39,7 +39,7 @@ class TableTest {
         Transaction addTable = new AddTableTransaction( tableId );
         addTable.execute();
 
-        Table table = Database.getTableById( tableId );
+        SittingTable table = Database.getTableById( tableId );
         assertNotNull( table );
 
         Transaction deleteTable = new DeleteTableTransaction( tableId );

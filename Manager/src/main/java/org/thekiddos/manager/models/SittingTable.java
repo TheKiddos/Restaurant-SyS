@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Table {
+public class SittingTable {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int maxCapacity;
