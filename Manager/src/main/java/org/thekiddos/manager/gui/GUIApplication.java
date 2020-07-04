@@ -12,7 +12,7 @@ import org.thekiddos.manager.transactions.*;
 
 public class GUIApplication extends Application {
     @Override
-    public void init() throws Exception {
+    public void init() {
         fillDatabase();
     }
 
@@ -37,7 +37,7 @@ public class GUIApplication extends Application {
         addEmployeeStage.initModality( Modality.NONE );
 
         Util.createWindowContainer( "templates/table.fxml", null, "Tables" );
-        Util.createWindowContainer( "templates/table.fxml", null, "Customers" );
+        Util.createWindowContainer( "templates/customers.fxml", null, "Customers" );
         Util.createWindowContainer( "templates/item.fxml", null, "Items" );
         Util.createWindowContainer( "templates/employee.fxml", null, "Employees" );
         Util.createWindowContainer( "templates/payroll.fxml", null, "Payroll" );

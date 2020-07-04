@@ -67,9 +67,9 @@ public class ManagerTest {
 
     @Test
     void testPayForOrderWithInActiveReservation() {
-        LocalDate fifthOfNovember2020 = LocalDate.of( 2020, Month.NOVEMBER, 5 );
+        LocalDate fifthOfNovemberNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
-        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2020, eightPM ).execute();
+        new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM ).execute();
 
         assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
 

@@ -138,15 +138,15 @@ class ReservationTest {
     @Test
     void testActivateReservation() {
         LocalDate today = LocalDate.now();
-        LocalTime eightPM = LocalTime.of( 20, 0 );
-        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, today, eightPM );
+        LocalTime now = LocalTime.now();
+        Transaction reserveTable = new ScheduledReservationTransaction( tableId, customerId, today, now );
         reserveTable.execute();
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, today, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, today, now );
 
         new ActivateReservationTransaction( tableId ).execute();
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 10.0, today, eightPM );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 10.0, today, now );
     }
 
     @Test
