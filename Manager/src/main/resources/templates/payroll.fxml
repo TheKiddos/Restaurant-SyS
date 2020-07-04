@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox styleClass="root" fx:id="root" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.thekiddos.manager.gui.controllers.PayrollController">
+    <JFXTextField fx:id="searchPayCheckField" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" promptText="Search" />
+    <TableView fx:id="payCheckTable">
+        <columns>
+            <TableColumn fx:id="employeeDetailsColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Employee" />
+            <TableColumn fx:id="payCheckAmountColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Payment" />
+            <TableColumn fx:id="payCheckDateColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Date" />
+            <TableColumn fx:id="payCheckDetailsColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Details" />
+        </columns>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </TableView>
+    <HBox>
+        <JFXButton fx:id="getPayChecksButton" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#getPayChecks" text="Calculate Payment" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="removePayCheckButton" disable="true" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#removePayCheck" text="-" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="printPayCheckButton" disable="true" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#printPayCheck" text="Print" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="savePayCheckButton" disable="true" HBox.hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#savePayCheck" text="Save to Database" textFill="WHITE" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </HBox>
+</VBox>

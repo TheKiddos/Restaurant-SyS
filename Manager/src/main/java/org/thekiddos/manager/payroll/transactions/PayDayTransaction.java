@@ -6,6 +6,7 @@ import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.Transaction;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +32,9 @@ public class PayDayTransaction implements Transaction {
     public PayCheck getPayCheck( Long empId ) {
         // TODO should we return something else if the id doesn't exists?
         return payChecks.get( empId );
+    }
+
+    public List<PayCheck> getPayChecks() {
+        return new ArrayList<>( payChecks.values() );
     }
 }

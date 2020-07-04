@@ -87,7 +87,7 @@ public class ReservationPane extends TitledPane {
         invoiceController.setInvoice( checkOutTransaction.getInvoice() );
         invoiceWindow.getStage().setResizable( false );
         invoiceWindow.getStage().showAndWait();
-        Util.print( invoiceController.getRoot() );
+        Util.print( invoiceController.getRoot(), false );
         remover.remove( this );
     }
 

@@ -39,7 +39,6 @@ public class EmployeeController extends Controller {
     public JFXTimePicker hoursWorkedTimePicker;
     public JFXButton viewTimeCardsButton;
 
-
     public void initialize() {
         hoursWorkedTimePicker.set24HourView( true );
         hoursWorkedTimePicker.setValidators( new RequiredFieldValidator() );

@@ -21,6 +21,9 @@ public class GUIApplication extends Application {
         Stage invoiceStage = Util.createWindowContainer( "templates/invoice.fxml", null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
+        Stage payCheckStage = Util.createWindowContainer( "templates/paycheck.fxml", null, "Pay Check" ).getStage();
+        payCheckStage.initModality( Modality.NONE );
+
         Stage orderStage = Util.createWindowContainer( "templates/order.fxml", null, "Order Summary" ).getStage();
         orderStage.initModality( Modality.NONE );
 
@@ -37,6 +40,7 @@ public class GUIApplication extends Application {
         Util.createWindowContainer( "templates/table.fxml", null, "Customers" );
         Util.createWindowContainer( "templates/item.fxml", null, "Items" );
         Util.createWindowContainer( "templates/employee.fxml", null, "Employees" );
+        Util.createWindowContainer( "templates/payroll.fxml", null, "Payroll" );
 
         primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );

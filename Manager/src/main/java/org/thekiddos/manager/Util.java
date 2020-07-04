@@ -87,10 +87,16 @@ public class Util {
     }
 
     // TODO make it create Exceptions
-    public static void print( Node node )
+    public static void print( Node node, boolean isPayCheck )
     {
         PrinterJob job = PrinterJob.createPrinterJob();
-        PageLayout pageLayout = job.getPrinter().createPageLayout( Paper.A5, PageOrientation.PORTRAIT, Printer.MarginType.HARDWARE_MINIMUM );
+        Paper paper = Paper.A5;
+        PageOrientation pageOrientation = PageOrientation.PORTRAIT;
+        if ( isPayCheck ) {
+            paper = Paper.LEGAL;
+            pageOrientation = PageOrientation.LANDSCAPE;
+        }
+        PageLayout pageLayout = job.getPrinter().createPageLayout( paper, pageOrientation, Printer.MarginType.HARDWARE_MINIMUM );
         job.getJobSettings().setPageLayout( pageLayout );
 
         if (job == null)

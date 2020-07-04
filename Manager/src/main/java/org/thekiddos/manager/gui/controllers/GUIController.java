@@ -28,7 +28,6 @@ public class GUIController extends Controller implements Remover {
     public Tab customerTab;
     public Tab itemTab;
     public Tab employeeTab;
-    public Tab timeCardTab;
     public Tab payrollTab;
 
     private Stage addReservationGUIStage;
@@ -42,6 +41,7 @@ public class GUIController extends Controller implements Remover {
         customerTab.setContent( Util.getWindowContainer( "Customers" ).getController().getRoot() );
         itemTab.setContent( Util.getWindowContainer( "Items" ).getController().getRoot() );
         employeeTab.setContent( Util.getWindowContainer( "Employees" ).getController().getRoot() );
+        payrollTab.setContent( Util.getWindowContainer( "Payroll" ).getController().getRoot() );
     }
 
     @Override
