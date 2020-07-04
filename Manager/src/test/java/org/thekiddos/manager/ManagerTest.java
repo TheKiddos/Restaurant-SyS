@@ -2,6 +2,9 @@ package org.thekiddos.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.models.Invoice;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
@@ -14,6 +17,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith( SpringExtension.class )
+@SpringBootTest
 public class ManagerTest {
     private final Long tableId = 1L;
     private final Long customerId = 1L;

@@ -1,5 +1,6 @@
 package org.thekiddos.manager.repositories;
 
+import org.springframework.context.ApplicationContext;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Reservation;
@@ -15,7 +16,20 @@ public class Database {
     private static final Map<Long, SittingTable> tables = new HashMap<>();
     private static final Map<Long, Item> items = new HashMap<>();
     private static final Map<Long, List<Reservation>> reservations = new HashMap<>();
+
+    private static ApplicationContext applicationContext;
+    private static TableRepository tableRepository;
     // TODO rename getAll methods to include id in the name
+    // TODO use the Optional later
+
+    public static <T> T getBean(Class<T> beanClass) {
+        return applicationContext.getBean(beanClass);
+    }
+
+    public static void setUpDatabase( ApplicationContext applicationContext ) {
+        Database.applicationContext = applicationContext;
+        tableRepository = getBean( TableRepository.class );
+    }
 
     public static Employee getEmployeeById( Long employeeId ) {
         return employees.get( employeeId );
@@ -46,15 +60,16 @@ public class Database {
     }
 
     public static void addTable( SittingTable table ) {
-        tables.put( table.getId(), table );
+        tableRepository.save( table );
     }
 
     public static SittingTable getTableById( Long tableId ) {
-        return tables.get( tableId );
+        Optional<SittingTable> optionalSittingTable = tableRepository.findById( tableId );
+        return optionalSittingTable.orElse( null );
     }
 
     public static void removeTableById( Long tableId ) {
-        tables.remove( tableId );
+        tableRepository.deleteById( tableId );
     }
 
     public static void addReservation( Reservation reservation ) {

@@ -2,15 +2,19 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 import org.thekiddos.manager.transactions.DeleteTableTransaction;
-import org.thekiddos.manager.transactions.Transaction;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith( SpringExtension.class )
+@SpringBootTest
 class SittingTableTest {
 
     @BeforeEach
@@ -26,7 +30,6 @@ class SittingTableTest {
         addTable.execute();
 
         SittingTable table = Database.getTableById( tableId );
-        assertNotNull( table );
         assertEquals( tableId, table.getId() );
         assertEquals( 4, table.getMaxCapacity() );
         assertEquals( 1.0, table.getTableFee() );
@@ -35,14 +38,14 @@ class SittingTableTest {
 
     @Test
     void testDeleteTableTransaction() {
-        Long tableId = 1L;
-        Transaction addTable = new AddTableTransaction( tableId );
+        Long tableId = 2L;
+        AddTableTransaction addTable = new AddTableTransaction( tableId );
         addTable.execute();
 
         SittingTable table = Database.getTableById( tableId );
         assertNotNull( table );
 
-        Transaction deleteTable = new DeleteTableTransaction( tableId );
+        DeleteTableTransaction deleteTable = new DeleteTableTransaction( tableId );
         deleteTable.execute();
 
         table = Database.getTableById( tableId );

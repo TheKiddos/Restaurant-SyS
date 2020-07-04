@@ -2,6 +2,9 @@ package org.thekiddos.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.payroll.models.PayCheck;
 import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
@@ -18,6 +21,8 @@ import java.time.temporal.TemporalAdjusters;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith( SpringExtension.class )
+@SpringBootTest
 class PayrollTest {
     private final Long empId = 1L, empId2 = 2L;
     private final LocalDate saturdayJuneNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.JUNE, 1 ).with( TemporalAdjusters.next( DayOfWeek.SATURDAY ) );

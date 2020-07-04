@@ -21,17 +21,15 @@ public class GUIApplication extends Application {
     public void init() {
         String[] args = getParameters().getRaw().toArray( new String[0] );
 
-        fillDatabase();
-
         this.applicationContext = new SpringApplicationBuilder()
                 .sources( ManagerApplication.class )
                 .run(args);
-
-        Util.applicationContext = this.applicationContext;
     }
 
     @Override
     public void start(Stage primaryStage) {
+        fillDatabase();
+
         Stage invoiceStage = Util.createWindowContainer( InvoiceController.class, null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
@@ -65,6 +63,7 @@ public class GUIApplication extends Application {
      * This method is for testing purposes only
      */
     void fillDatabase() {
+        System.out.println("ASDASDASDASDASDASD");
         new AddTableTransaction( 1L ).execute();
         new AddTableTransaction( 2L ).execute();
         new AddTableTransaction( 3L ).execute();

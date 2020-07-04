@@ -2,6 +2,9 @@ package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.payroll.models.*;
 import org.thekiddos.manager.payroll.transactions.*;
 import org.thekiddos.manager.repositories.Database;
@@ -9,6 +12,8 @@ import org.thekiddos.manager.transactions.Transaction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith( SpringExtension.class )
+@SpringBootTest
 class EmployeeTest {
 
     @BeforeEach

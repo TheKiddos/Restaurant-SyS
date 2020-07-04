@@ -13,9 +13,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import net.rgielen.fxweaver.core.FxWeaver;
-import org.springframework.context.ApplicationContext;
 import org.thekiddos.manager.gui.controllers.Controller;
 import org.thekiddos.manager.gui.models.WindowContainer;
+import org.thekiddos.manager.repositories.Database;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -25,7 +25,6 @@ public class Util {
     private static final Map<String, WindowContainer> windows = new HashMap<>();
     public static final Image ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
     public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
-    public static ApplicationContext applicationContext;
 
     public static URL getResource( String fileName) {
         ClassLoader classLoader = Util.class.getClassLoader();
@@ -58,10 +57,10 @@ public class Util {
     }
 
     public static <C extends Controller> WindowContainer createWindowContainer( Class<C> controllerClass, Window owner, String title ) {
-        FxWeaver fxWeaver = applicationContext.getBean( FxWeaver.class );
+        FxWeaver fxWeaver = Database.getBean( FxWeaver.class );
         Parent root = fxWeaver.loadView( controllerClass );
 
-        Controller controller = applicationContext.getBean( controllerClass );
+        Controller controller = Database.getBean( controllerClass );
         controller.setScene( new Scene( root ) );
         controller.getScene().getStylesheets().add( STYLESHEET_PATH );
 
