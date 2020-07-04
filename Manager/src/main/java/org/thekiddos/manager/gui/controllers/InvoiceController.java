@@ -6,6 +6,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Invoice;
 import org.thekiddos.manager.models.Item;
@@ -13,6 +15,8 @@ import org.thekiddos.manager.repositories.Database;
 
 import java.time.format.DateTimeFormatter;
 
+@Component
+@FxmlView("invoice.fxml")
 public class InvoiceController extends Controller {
     public VBox root;
     public Label customerNameLabel;

@@ -13,6 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.payroll.models.HourlyClassification;
@@ -24,6 +26,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
+@FxmlView("employee.fxml")
 public class EmployeeController extends Controller {
     public VBox root;
     public JFXButton addEmployeeButton;

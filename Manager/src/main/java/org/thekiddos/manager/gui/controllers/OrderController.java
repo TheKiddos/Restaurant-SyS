@@ -9,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.views.ItemPane;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Order;
@@ -20,6 +22,8 @@ import org.thekiddos.manager.transactions.AddReservationServiceTransaction;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
+@FxmlView("order.fxml")
 public class OrderController extends Controller {
     // TODO i need to refresh from the database once it's implemented but for now the reference variable is alright
     public VBox root;

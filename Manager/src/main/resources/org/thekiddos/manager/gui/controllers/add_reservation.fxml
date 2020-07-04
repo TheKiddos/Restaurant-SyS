@@ -38,7 +38,7 @@
             <ChoiceBox fx:id="customerSelector" prefWidth="75.0" />
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../static/images/account.png" />
+                  <Image url="@../../../../../static/images/account.png" />
                </image>
             </ImageView>
          </children>
@@ -48,7 +48,7 @@
             <ChoiceBox fx:id="tableSelector" prefWidth="75.0" />
             <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../static/images/dining-room.png" />
+                  <Image url="@../../../../../static/images/dining-room.png" />
                </image>
             </ImageView>
          </children>

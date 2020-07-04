@@ -7,6 +7,7 @@ import org.thekiddos.manager.transactions.AddItemTransaction;
 import org.thekiddos.manager.transactions.DeleteItemTransaction;
 import org.thekiddos.manager.transactions.Transaction;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,7 +46,11 @@ class ItemTest {
         assertEquals( 0.2, frenchFries.getCarbohydrates() );
         assertEquals( imagePath, frenchFries.getImagePath() );
         assertEquals( "Well it's French Fries what else to say!", frenchFries.getDescription() );
-        Set<Type> types = Set.of( Type.FOOD, Type.STARTER, Type.HOT, Type.SNACK );
+        Set<Type> types = new HashSet<>();
+        types.add( Type.FOOD );
+        types.add( Type.STARTER );
+        types.add( Type.HOT );
+        types.add( Type.SNACK );
         assertEquals( types, frenchFries.getTypes() );
     }
 

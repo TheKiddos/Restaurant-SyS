@@ -9,6 +9,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.validator.MoneyValidator;
 import org.thekiddos.manager.gui.validator.PositiveIntegerValidator;
 import org.thekiddos.manager.gui.validator.TableIdValidator;
@@ -16,6 +18,8 @@ import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 
+@Component
+@FxmlView("table.fxml")
 public class TableController extends Controller {
     public JFXButton addTableButton;
     public JFXButton removeTableButton;

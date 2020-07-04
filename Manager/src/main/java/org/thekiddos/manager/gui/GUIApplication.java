@@ -4,45 +4,59 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.thekiddos.manager.ManagerApplication;
 import org.thekiddos.manager.Util;
+import org.thekiddos.manager.gui.controllers.*;
 import org.thekiddos.manager.models.Type;
 import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
 import org.thekiddos.manager.transactions.*;
 
 public class GUIApplication extends Application {
+    private ConfigurableApplicationContext applicationContext;
+
     @Override
-    public void init() throws Exception {
+    public void init() {
+        String[] args = getParameters().getRaw().toArray( new String[0] );
+
         fillDatabase();
+
+        this.applicationContext = new SpringApplicationBuilder()
+                .sources( ManagerApplication.class )
+                .run(args);
+
+        Util.applicationContext = this.applicationContext;
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Stage invoiceStage = Util.createWindowContainer( "templates/invoice.fxml", null, "Invoice Summary" ).getStage();
+    public void start(Stage primaryStage) {
+        Stage invoiceStage = Util.createWindowContainer( InvoiceController.class, null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
-        Stage payCheckStage = Util.createWindowContainer( "templates/paycheck.fxml", null, "Pay Check" ).getStage();
+        Stage payCheckStage = Util.createWindowContainer( PayCheckController.class, null, "Pay Check" ).getStage();
         payCheckStage.initModality( Modality.NONE );
 
-        Stage orderStage = Util.createWindowContainer( "templates/order.fxml", null, "Order Summary" ).getStage();
+        Stage orderStage = Util.createWindowContainer( OrderController.class, null, "Order Summary" ).getStage();
         orderStage.initModality( Modality.NONE );
 
-        Stage addReservationGUIStage = Util.createWindowContainer( "templates/add_reservation.fxml", null, "Add Reservation" ).getStage();
+        Stage addReservationGUIStage = Util.createWindowContainer( AddReservationGUIController.class, null, "Add Reservation" ).getStage();
         addReservationGUIStage.initModality( Modality.NONE );
 
-        Stage addItemGUIStage = Util.createWindowContainer( "templates/add_item.fxml", null, "Add Item" ).getStage();
+        Stage addItemGUIStage = Util.createWindowContainer( AddItemController.class, null, "Add Item" ).getStage();
         addItemGUIStage.initModality( Modality.NONE );
 
-        Stage addEmployeeStage = Util.createWindowContainer( "templates/add_employee.fxml", null, "Add Employee" ).getStage();
+        Stage addEmployeeStage = Util.createWindowContainer( AddEmployeeController.class, null, "Add Employee" ).getStage();
         addEmployeeStage.initModality( Modality.NONE );
 
-        Util.createWindowContainer( "templates/table.fxml", null, "Tables" );
-        Util.createWindowContainer( "templates/table.fxml", null, "Customers" );
-        Util.createWindowContainer( "templates/item.fxml", null, "Items" );
-        Util.createWindowContainer( "templates/employee.fxml", null, "Employees" );
-        Util.createWindowContainer( "templates/payroll.fxml", null, "Payroll" );
+        Util.createWindowContainer( TableController.class, null, "Tables" );
+        Util.createWindowContainer( CustomerController.class, null, "Customers" );
+        Util.createWindowContainer( ItemController.class, null, "Items" );
+        Util.createWindowContainer( EmployeeController.class, null, "Employees" );
+        Util.createWindowContainer( PayrollController.class, null,"Payroll" );
 
-        primaryStage = Util.createWindowContainer( "templates/GUI.fxml", null, "Digital Restaurant Manager" ).getStage();
+        primaryStage = Util.createWindowContainer( GUIController.class, null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();
     }
@@ -100,7 +114,13 @@ public class GUIApplication extends Application {
         new AddHourlyEmployeeTransaction( 2L, "Django", 8.0 ).execute();
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void stop() {
+        this.applicationContext.close();
+        Platform.exit();
+    }
+
+    public static void main( String[] args) {
         launch(args);
     }
 }

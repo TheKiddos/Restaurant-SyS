@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.validator.ItemIdValidator;
 import org.thekiddos.manager.models.Type;
@@ -17,6 +19,8 @@ import org.thekiddos.manager.transactions.AddItemTransaction;
 import java.io.File;
 import java.net.MalformedURLException;
 
+@Component
+@FxmlView("add_item.fxml")
 public class AddItemController extends Controller {
     public JFXTextField itemIdField;
     public JFXTextField itemNameField;

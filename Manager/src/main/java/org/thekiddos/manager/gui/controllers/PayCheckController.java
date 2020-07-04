@@ -3,8 +3,12 @@ package org.thekiddos.manager.gui.controllers;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.payroll.models.PayCheck;
 
+@Component
+@FxmlView("paycheck.fxml")
 public class PayCheckController extends Controller {
     public Label restaurantName;
     public Label paymentDate;

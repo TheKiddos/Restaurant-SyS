@@ -9,11 +9,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.validator.CustomerIdValidator;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddCustomerTransaction;
 
+@Component
+@FxmlView("customers.fxml")
 public class CustomerController extends Controller {
     public VBox root;
     public JFXButton addCustomerButton;

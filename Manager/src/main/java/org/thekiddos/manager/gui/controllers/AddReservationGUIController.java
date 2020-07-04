@@ -10,6 +10,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddReservationTransaction;
 import org.thekiddos.manager.transactions.ImmediateReservationTransaction;
@@ -19,6 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
+@Component
+@FxmlView("add_reservation.fxml")
 public class AddReservationGUIController extends Controller {
     // TODO use Alert to show errors instead of exceptions
     public ToggleGroup reservationType;

@@ -8,6 +8,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.models.WindowContainer;
 import org.thekiddos.manager.payroll.models.Employee;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
+@FxmlView("payroll.fxml")
 public class PayrollController extends Controller {
     public VBox root;
     public JFXTextField searchPayCheckField;

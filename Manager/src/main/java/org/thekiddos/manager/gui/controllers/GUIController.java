@@ -9,6 +9,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.models.WindowContainer;
@@ -19,6 +21,8 @@ import org.thekiddos.manager.repositories.Database;
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
+@FxmlView("GUI.fxml")
 public class GUIController extends Controller implements Remover {
     public JFXSpinner reservedTableTracker;
     public JFXButton addReservationButton;

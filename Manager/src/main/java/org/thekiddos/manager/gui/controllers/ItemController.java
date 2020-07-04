@@ -8,11 +8,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.DeleteItemTransaction;
 
+@Component
+@FxmlView("item.fxml")
 public class ItemController extends Controller {
     public VBox root;
     public JFXButton addItemButton;

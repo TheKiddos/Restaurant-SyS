@@ -17,7 +17,7 @@ public class PrintPayCheckTransaction implements Transaction {
     private String checkPath;
     private final LocalDate dateOfPayment;
     private static int printJob = 1;
-    private static final String PAYCHECK_TEMPLATE = "templates/check.rtf";
+    private static final String PAYCHECK_TEMPLATE = "org/thekiddos/manager/gui/controllers/check.rtf";
 
     public PrintPayCheckTransaction( Employee employee, double amount, LocalDate dateOfPayment ) {
         this.employee = employee;

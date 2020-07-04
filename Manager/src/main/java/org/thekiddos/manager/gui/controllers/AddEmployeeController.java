@@ -7,12 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.validator.EmployeeIdValidator;
 import org.thekiddos.manager.gui.validator.MoneyValidator;
 import org.thekiddos.manager.payroll.transactions.AddEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
 
+@Component
+@FxmlView("add_employee.fxml")
 public class AddEmployeeController extends Controller {
     public JFXTextField idField;
     public JFXTextField nameField;
