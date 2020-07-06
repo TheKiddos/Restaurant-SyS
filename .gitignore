@@ -23,3 +23,4 @@ Homestead.json
 .phpunit.result.cache
 /Manager/target/
 /.idea/libraries/
+/Recommendation_Engine/sandbox/data/Reviews.csv
