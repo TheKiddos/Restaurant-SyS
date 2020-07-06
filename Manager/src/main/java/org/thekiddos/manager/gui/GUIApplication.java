@@ -63,7 +63,6 @@ public class GUIApplication extends Application {
      * This method is for testing purposes only
      */
     void fillDatabase() {
-        System.out.println("ASDASDASDASDASDASD");
         new AddTableTransaction( 1L ).execute();
         new AddTableTransaction( 2L ).execute();
         new AddTableTransaction( 3L ).execute();

@@ -15,7 +15,7 @@ public class StartUpAction {
     }
 
     @EventListener( ApplicationReadyEvent.class)
-    public void doSomethingAfterStartup() {
+    public void setUpDatabase() {
         Database.setUpDatabase( applicationContext );
     }
 }
