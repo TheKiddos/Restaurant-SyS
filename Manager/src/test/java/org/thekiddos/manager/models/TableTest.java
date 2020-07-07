@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
-class SittingTableTest {
+class TableTest {
 
     @BeforeEach
     void setUpDatabase() {
@@ -29,7 +29,7 @@ class SittingTableTest {
         addTable.setTableFee( 1.0 );
         addTable.execute();
 
-        SittingTable table = Database.getTableById( tableId );
+        Table table = Database.getTableById( tableId );
         assertEquals( tableId, table.getId() );
         assertEquals( 4, table.getMaxCapacity() );
         assertEquals( 1.0, table.getTableFee() );
@@ -42,7 +42,7 @@ class SittingTableTest {
         AddTableTransaction addTable = new AddTableTransaction( tableId );
         addTable.execute();
 
-        SittingTable table = Database.getTableById( tableId );
+        Table table = Database.getTableById( tableId );
         assertNotNull( table );
 
         DeleteTableTransaction deleteTable = new DeleteTableTransaction( tableId );

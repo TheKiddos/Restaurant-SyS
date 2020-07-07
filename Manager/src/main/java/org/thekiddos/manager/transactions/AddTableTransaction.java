@@ -1,7 +1,7 @@
 package org.thekiddos.manager.transactions;
 
 import lombok.Setter;
-import org.thekiddos.manager.models.SittingTable;
+import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 
 public class AddTableTransaction implements Transaction {
@@ -22,7 +22,7 @@ public class AddTableTransaction implements Transaction {
 
     @Override
     public void execute() {
-        SittingTable table = new SittingTable( tableId, maxCapacity, tableFee );
+        Table table = new Table( tableId, maxCapacity, tableFee );
         Database.addTable( table );
     }
 }

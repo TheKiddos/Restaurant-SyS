@@ -14,7 +14,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SittingTable {
+@javax.persistence.Table(name = "SITTING_TABLE")
+public class Table {
     @Id
     private Long id;
     private int maxCapacity;

@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Reservation;
-import org.thekiddos.manager.models.SittingTable;
+import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.payroll.models.Employee;
 
 import java.time.LocalDate;
@@ -62,11 +62,11 @@ public class Database {
         customerRepository.deleteById( customerId );
     }
 
-    public static void addTable( SittingTable table ) {
+    public static void addTable( Table table ) {
         tableRepository.save( table );
     }
 
-    public static SittingTable getTableById( Long tableId ) {
+    public static Table getTableById( Long tableId ) {
         return tableRepository.findById( tableId ).orElse( null );
     }
 

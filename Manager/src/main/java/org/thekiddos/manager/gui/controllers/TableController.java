@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.validator.MoneyValidator;
 import org.thekiddos.manager.gui.validator.PositiveIntegerValidator;
 import org.thekiddos.manager.gui.validator.TableIdValidator;
-import org.thekiddos.manager.models.SittingTable;
+import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 
@@ -23,10 +23,10 @@ import org.thekiddos.manager.transactions.AddTableTransaction;
 public class TableController extends Controller {
     public JFXButton addTableButton;
     public JFXButton removeTableButton;
-    public TableView<SittingTable> tableTable;
-    public TableColumn<SittingTable, Long> tableIdColumn;
-    public TableColumn<SittingTable, Integer> tableMaxCapacityColumn;
-    public TableColumn<SittingTable, Double> tableFeeColumn;
+    public TableView<Table> tableTable;
+    public TableColumn<Table, Long> tableIdColumn;
+    public TableColumn<Table, Integer> tableMaxCapacityColumn;
+    public TableColumn<Table, Double> tableFeeColumn;
     public JFXTextField tableIdField;
     public JFXTextField tableMaxCapacityField;
     public JFXTextField tableFeeField;
@@ -49,7 +49,7 @@ public class TableController extends Controller {
     private void fillTableTableView() {
         tableTable.getItems().clear();
         for ( Long tableId : Database.getTablesId() ) {
-            SittingTable table = Database.getTableById( tableId );
+            Table table = Database.getTableById( tableId );
             tableTable.getItems().add( table );
         }
     }
@@ -77,7 +77,7 @@ public class TableController extends Controller {
     }
 
     public void removeTable( ActionEvent actionEvent ) {
-        SittingTable table = tableTable.getSelectionModel().getSelectedItem();
+        Table table = tableTable.getSelectionModel().getSelectedItem();
         Database.removeTableById( table.getId() );
 
         fillTableTableView();
