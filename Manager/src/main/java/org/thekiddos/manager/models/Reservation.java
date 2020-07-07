@@ -1,28 +1,35 @@
 package org.thekiddos.manager.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Reservation extends Service {
-    private final Long tableId;
-    private final double reservationFee;
+    private double reservationFee;
     private boolean active = false;
-    private final double tableFee;
+
+    @ManyToOne
+    private Table table;
 
     public Reservation( Long tableId, Long customerId, LocalDate reservationDate, LocalTime reservationTime, double reservationFee ) {
         super( customerId, reservationDate, reservationTime );
-        this.tableId = tableId;
+        table = Database.getTableById( tableId );
         this.reservationFee = reservationFee;
-        this.tableFee = Database.getTableById( tableId ).getTableFee(); // TODO stored more than once bad?
     }
 
     @Override
     public double getFees() {
-        return reservationFee + tableFee;
+        return reservationFee + table.getTableFee();
     }
 
     public boolean isActive() {
@@ -34,6 +41,10 @@ public class Reservation extends Service {
     }
 
     public double getTableFee() {
-        return tableFee;
+        return table.getTableFee();
+    }
+
+    public Long getReservedTableId() {
+        return table.getId();
     }
 }

@@ -65,7 +65,7 @@ public class ReservationPane extends TitledPane {
     }
 
     private void activateReservation( ActionEvent actionEvent ) {
-        new ActivateReservationTransaction( reservation.getTableId() ).execute();
+        new ActivateReservationTransaction( reservation.getReservedTableId() ).execute();
 
         activateButton.setDisable( true );
         viewOrderButton.setDisable( false );
@@ -81,7 +81,7 @@ public class ReservationPane extends TitledPane {
 
     private void checkOut( ActionEvent actionEvent ) {
         WindowContainer invoiceWindow = Util.getWindowContainer( "Invoice Summary" );
-        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getTableId() );
+        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
         checkOutTransaction.execute();
         InvoiceController invoiceController = (InvoiceController) invoiceWindow.getController();
         invoiceController.setInvoice( checkOutTransaction.getInvoice() );
@@ -100,7 +100,7 @@ public class ReservationPane extends TitledPane {
         content.setVgap( 30 );
         content.setAlignment( Pos.CENTER );
         content.add( new Label( "Customer Id: " + reservation.getCustomerId() ), 0, 0 );
-        content.add( new Label( "Table Id: " + reservation.getTableId() ), 1, 0 );
+        content.add( new Label( "Table Id: " + reservation.getReservedTableId() ), 1, 0 );
         content.add( isReservationActiveCheckBox, 2, 0 );
         content.add( new Label( "Reservation Date: " + reservation.getDate() ), 0, 1 );
         content.add( new Label( "Reservation Time: " + reservation.getTime().getHour() + ":" + reservation.getTime().getMinute() ), 1, 1 );

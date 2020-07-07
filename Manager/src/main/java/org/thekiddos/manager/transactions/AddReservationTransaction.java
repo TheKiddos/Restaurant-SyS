@@ -27,6 +27,11 @@ public abstract class AddReservationTransaction implements Transaction {
         if ( Database.getTableById( tableId ).isReserved( reservationDate ) )
             throw new IllegalArgumentException( "Table " + tableId + " is already reserved" );
 
+        for ( Reservation reservation : Database.getReservationsByCustomerId( customerId ) ) {
+            if ( reservation.getDate().equals( reservationDate ) )
+                throw new IllegalArgumentException( "Customer " + customerId + " can't make more than one reservation on the same day" );
+        }
+
         this.tableId = tableId;
         this.customerId = customerId;
         this.reservationDate = reservationDate;

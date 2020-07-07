@@ -1,28 +1,35 @@
 package org.thekiddos.manager.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@MappedSuperclass
+@Getter
+@NoArgsConstructor
 public abstract class Service {
-    protected Long customerId;
-    protected LocalDate serviceDate;
-    protected LocalTime serviceTime;
+    @EmbeddedId
+    private ServiceId serviceId;
+    private LocalTime serviceTime;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final Order order = new Order();
 
     public Service( Long customerId, LocalDate serviceDate, LocalTime serviceTime ) {
-        this.customerId = customerId;
-        this.serviceDate = serviceDate;
+        this.serviceId = new ServiceId( customerId, serviceDate );
         this.serviceTime = serviceTime;
     }
 
     public Long getCustomerId() {
-        return this.customerId;
+        return serviceId.getCustomerId();
     }
 
     public java.time.LocalDate getDate() {
-        return this.serviceDate;
+        return serviceId.getDate();
     }
 
     public java.time.LocalTime getTime() {
@@ -31,10 +38,6 @@ public abstract class Service {
 
     public void addItem( Long itemId ) {
         order.addItem( Database.getItemById( itemId ) );
-    }
-
-    public Order getOrder() {
-        return order;
     }
 
     public double getTotal() {

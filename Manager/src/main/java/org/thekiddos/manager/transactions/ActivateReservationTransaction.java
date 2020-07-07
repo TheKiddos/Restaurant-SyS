@@ -15,5 +15,6 @@ public class ActivateReservationTransaction implements Transaction {
     @Override
     public void execute() {
         reservation.activate();
+        Database.addReservation( reservation );
     }
 }

@@ -96,7 +96,6 @@ public class PayrollController extends Controller {
     public void getPayChecks( ActionEvent actionEvent ) {
         PayDayTransaction payDayTransaction = new PayDayTransaction( LocalDate.now() );
         payDayTransaction.execute();
-
         payChecks = payDayTransaction.getPayChecks();
 
         fillPayCheckTable( searchPayCheckField.getText() );

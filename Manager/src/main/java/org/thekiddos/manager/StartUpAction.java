@@ -8,7 +8,7 @@ import org.thekiddos.manager.repositories.Database;
 
 @Component
 public class StartUpAction {
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     public StartUpAction( ApplicationContext applicationContext ) {
         this.applicationContext = applicationContext;

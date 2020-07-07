@@ -46,6 +46,7 @@ public class AddReservationGUIController extends Controller {
         if ( date == null )
             return;
         Set<Long> freeTables = Database.getFreeTablesOn( date );
+
         tableSelector.getItems().addAll( freeTables );
     }
 

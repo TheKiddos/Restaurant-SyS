@@ -25,7 +25,6 @@ import java.util.Set;
 @Component
 @FxmlView("order.fxml")
 public class OrderController extends Controller {
-    // TODO i need to refresh from the database once it's implemented but for now the reference variable is alright
     public VBox root;
     public TableView<OrderedItem> orderTable;
     public TableColumn<OrderedItem, String> itemNameColumn;
@@ -62,7 +61,7 @@ public class OrderController extends Controller {
     }
 
     public void addOrderItem( ActionEvent actionEvent ) {
-        AddReservationServiceTransaction serviceTransaction = new AddReservationServiceTransaction( reservation.getTableId() );
+        AddReservationServiceTransaction serviceTransaction = new AddReservationServiceTransaction( reservation.getReservedTableId() );
         for ( ItemPane itemPane : itemsList.getSelectionModel().getSelectedItems() )
             serviceTransaction.addItem( itemPane.getItemId() );
         serviceTransaction.execute();
@@ -72,6 +71,7 @@ public class OrderController extends Controller {
     private void refresh() {
         fillItems();
         orderTable.getItems().clear();
+        reservation = Database.getReservationById( reservation.getCustomerId(), reservation.getDate() );
         Order order = reservation.getOrder();
         Set<Item> items = new HashSet<>( order.getItems().keySet() );
         for ( Item item : items ) {

@@ -1,10 +1,7 @@
 package org.thekiddos.manager.repositories;
 
 import org.springframework.context.ApplicationContext;
-import org.thekiddos.manager.models.Customer;
-import org.thekiddos.manager.models.Item;
-import org.thekiddos.manager.models.Reservation;
-import org.thekiddos.manager.models.Table;
+import org.thekiddos.manager.models.*;
 import org.thekiddos.manager.payroll.models.Employee;
 
 import java.time.LocalDate;
@@ -12,13 +9,13 @@ import java.util.*;
 
 public class Database {
     private static final Map<Long, Employee> employees = new HashMap<>();
-    private static final Map<Long, List<Reservation>> reservations = new HashMap<>();
 
     private static ApplicationContext applicationContext;
 
     private static TableRepository tableRepository;
     private static CustomerRepository customerRepository;
     private static ItemRepository itemRepository;
+    private static ReservationsRepository reservationsRepository;
     // TODO rename getAll methods to include id in the name
     // TODO use the Optional later
     // TODO Maybe getIds is bad for performance
@@ -32,6 +29,7 @@ public class Database {
         tableRepository = getBean( TableRepository.class );
         customerRepository = getBean( CustomerRepository.class );
         itemRepository = getBean( ItemRepository.class );
+        reservationsRepository = getBean( ReservationsRepository.class );
     }
 
     public static Employee getEmployeeById( Long employeeId ) {
@@ -75,33 +73,22 @@ public class Database {
     }
 
     public static void addReservation( Reservation reservation ) {
-        List<Reservation> tableReservations = reservations.get( reservation.getTableId() );
-        if ( tableReservations == null )
-            tableReservations = new ArrayList<>();
-
-        tableReservations.add( reservation );
-
-        reservations.put( reservation.getTableId(), tableReservations );
+        reservationsRepository.save( reservation );
     }
 
     public static List<Reservation> getReservationsByTableId( Long tableId ) {
-        return reservations.computeIfAbsent( tableId, k -> new ArrayList<>() );
+        return reservationsRepository.findByTableId( tableId );
     }
 
     public static List<Reservation> getReservationsByCustomerId( Long customerId ) {
-        List<Reservation> customerReservations = new ArrayList<>();
-        for ( List<Reservation> tableReservations : reservations.values() )
-            for ( Reservation reservation : tableReservations )
-                if ( reservation.getCustomerId().equals( customerId ) )
-                    customerReservations.add( reservation );
-        return customerReservations;
+        return reservationsRepository.findByServiceIdCustomerId( customerId );
     }
 
     public static void deleteReservation( Long tableId, LocalDate reservationDate ) {
         List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
-        for ( int i = 0; i < tableReservation.size(); ++i )
-            if ( tableReservation.get( i ).getDate().equals( reservationDate ) ) {
-                tableReservation.remove( i );
+        for ( Reservation reservation : tableReservation )
+            if ( reservation.getDate().equals( reservationDate ) ) {
+                reservationsRepository.delete( reservation );
                 return;
             }
     }
@@ -137,20 +124,18 @@ public class Database {
     }
 
     public static void init() {
+        reservationsRepository.deleteAll();
         tableRepository.deleteAll();
         customerRepository.deleteAll();
         itemRepository.deleteAll();
-        reservations.clear();
         employees.clear();
     }
 
     public static Set<Long> getFreeTablesOn( LocalDate date ) {
         Set<Long> freeTablesOnDate = getTablesId();
         Set<Long> reservedTables = new HashSet<>();
-        for ( List<Reservation> tableReservations : reservations.values() ) {
-            tableReservations.stream().filter( reservation -> reservation.getDate().equals( date ) )
-                    .forEach( reservation -> reservedTables.add( reservation.getTableId() ) );
-        }
+
+        reservationsRepository.findByServiceIdDate( date ).forEach( reservation -> reservedTables.add( reservation.getReservedTableId() ) );
 
         freeTablesOnDate.removeAll( reservedTables );
         return freeTablesOnDate;
@@ -159,7 +144,7 @@ public class Database {
     public static Set<Long> getTablesId() {
         HashSet<Long> ids = new HashSet<>();
 
-        tableRepository.findAll().forEach( sittingTable -> ids.add( sittingTable.getId() ) );
+        tableRepository.findAll().forEach( table -> ids.add( table.getId() ) );
 
         return ids;
     }
@@ -174,11 +159,9 @@ public class Database {
 
     public static List<Reservation> getCurrentReservations() {
         List<Reservation> currentReservations = new ArrayList<>();
-        for ( Long tableId : getTablesId() ) {
-            Reservation reservation = getCurrentReservationByTableId( tableId );
-            if ( reservation != null )
-                currentReservations.add( reservation );
-        }
+
+        reservationsRepository.findByServiceIdDate( LocalDate.now() ).forEach( currentReservations::add );
+
         return currentReservations;
     }
 
@@ -192,6 +175,10 @@ public class Database {
 
     public static Set<Long> getEmployeesId() {
         return new HashSet<>( employees.keySet() );
+    }
+
+    public static Reservation getReservationById( Long customerId, LocalDate date ) {
+        return reservationsRepository.findById( new ServiceId( customerId, date ) ).orElse( null );
     }
 
     // TODO protect against nulls in all Transaction/Models

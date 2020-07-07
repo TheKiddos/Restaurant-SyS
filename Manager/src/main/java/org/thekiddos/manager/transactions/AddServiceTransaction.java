@@ -13,10 +13,12 @@ public abstract class AddServiceTransaction implements Transaction {
     public void execute() {
         for ( Long item : items )
             service.addItem( item );
-        // TODO save to database
+        saveToDatabase();
     }
 
     public void addItem( Long itemId ) {
         items.add( itemId );
     }
+
+    abstract void saveToDatabase();
 }

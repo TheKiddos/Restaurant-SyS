@@ -17,12 +17,12 @@ public class Order {
     @Column(name = "ID")
     private Long id;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ORDER_ITEMS",
             joinColumns = {@JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")})
     @MapKeyJoinColumn(name = "ITEM_ID")
     @Column(name = "Quantity")
-    private Map<Item, Integer> items = new HashMap<>();
+    private final Map<Item, Integer> items = new HashMap<>();
 
     public Map<Item, Integer> getItems() {
         return items;

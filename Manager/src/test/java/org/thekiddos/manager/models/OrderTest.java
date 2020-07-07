@@ -90,6 +90,7 @@ class OrderTest {
         service.addItem( itemId );
         service.execute();
 
+        tableReservations = Database.getReservationsByTableId( tableId );
         Reservation reservation = validateReservation( tableReservations, 1, 0, tableId, customerId, true, 20.0 );
 
         validateOrder( reservation.getOrder(), 1, 10.0 );
@@ -120,7 +121,7 @@ class OrderTest {
         Reservation reservation = reservations.get( indexToCheck );
         assertNotNull( reservation );
         assertEquals( customerId, reservation.getCustomerId() );
-        assertEquals( tableId, reservation.getTableId() );
+        assertEquals( tableId, reservation.getReservedTableId() );
         assertEquals( total, reservation.getTotal() );
         assertEquals( isActive, reservation.isActive() );
         return reservation;

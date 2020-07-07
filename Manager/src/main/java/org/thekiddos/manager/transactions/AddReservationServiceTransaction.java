@@ -13,4 +13,9 @@ public class AddReservationServiceTransaction extends AddServiceTransaction {
             throw new IllegalArgumentException( "No Current Reservations for the selected table" );
         super.service = reservation;
     }
+
+    @Override
+    void saveToDatabase() {
+        Database.addReservation( reservation );
+    }
 }
