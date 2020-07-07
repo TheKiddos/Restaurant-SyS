@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SittingTable {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private Long id;
     private int maxCapacity;
     private double tableFee;

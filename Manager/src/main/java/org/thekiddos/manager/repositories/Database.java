@@ -12,15 +12,16 @@ import java.util.*;
 
 public class Database {
     private static final Map<Long, Employee> employees = new HashMap<>();
-    private static final Map<Long, Customer> customers = new HashMap<>();
-    private static final Map<Long, SittingTable> tables = new HashMap<>();
-    private static final Map<Long, Item> items = new HashMap<>();
     private static final Map<Long, List<Reservation>> reservations = new HashMap<>();
 
     private static ApplicationContext applicationContext;
+
     private static TableRepository tableRepository;
+    private static CustomerRepository customerRepository;
+    private static ItemRepository itemRepository;
     // TODO rename getAll methods to include id in the name
     // TODO use the Optional later
+    // TODO Maybe getIds is bad for performance
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -29,6 +30,8 @@ public class Database {
     public static void setUpDatabase( ApplicationContext applicationContext ) {
         Database.applicationContext = applicationContext;
         tableRepository = getBean( TableRepository.class );
+        customerRepository = getBean( CustomerRepository.class );
+        itemRepository = getBean( ItemRepository.class );
     }
 
     public static Employee getEmployeeById( Long employeeId ) {
@@ -48,15 +51,15 @@ public class Database {
     }
 
     public static void addCustomer( Customer customer ) {
-        customers.put( customer.getId(), customer );
+        customerRepository.save( customer );
     }
 
     public static Customer getCustomerById( Long customerId ) {
-        return customers.get( customerId );
+        return customerRepository.findById( customerId ).orElse( null );
     }
 
     public static void removeCustomerById( Long customerId ) {
-        customers.remove( customerId );
+        customerRepository.deleteById( customerId );
     }
 
     public static void addTable( SittingTable table ) {
@@ -64,8 +67,7 @@ public class Database {
     }
 
     public static SittingTable getTableById( Long tableId ) {
-        Optional<SittingTable> optionalSittingTable = tableRepository.findById( tableId );
-        return optionalSittingTable.orElse( null );
+        return tableRepository.findById( tableId ).orElse( null );
     }
 
     public static void removeTableById( Long tableId ) {
@@ -105,19 +107,23 @@ public class Database {
     }
 
     public static Set<Long> getItemsId() {
-        return new HashSet<>( items.keySet() );
+        HashSet<Long> ids = new HashSet<>();
+
+        itemRepository.findAll().forEach( item -> ids.add( item.getId() ) );
+
+        return ids;
     }
 
     public static Item getItemById( Long itemId ) {
-        return items.get( itemId );
+        return itemRepository.findById( itemId ).orElse( null );
     }
 
     public static void addItem( Item item ) {
-        items.put( item.getId(), item );
+        itemRepository.save( item );
     }
 
     public static void removeItemById( Long itemId ) {
-        items.remove( itemId );
+        itemRepository.deleteById( itemId );
     }
 
     public static Reservation getCurrentReservationByTableId( Long tableId ) {
@@ -131,11 +137,11 @@ public class Database {
     }
 
     public static void init() {
-        employees.clear();
-        customers.clear();
-        tables.clear();
-        items.clear();
+        tableRepository.deleteAll();
+        customerRepository.deleteAll();
+        itemRepository.deleteAll();
         reservations.clear();
+        employees.clear();
     }
 
     public static Set<Long> getFreeTablesOn( LocalDate date ) {
@@ -151,11 +157,19 @@ public class Database {
     }
 
     public static Set<Long> getTablesId() {
-        return new HashSet<>( tables.keySet() );
+        HashSet<Long> ids = new HashSet<>();
+
+        tableRepository.findAll().forEach( sittingTable -> ids.add( sittingTable.getId() ) );
+
+        return ids;
     }
 
     public static Set<Long> getCustomersId() {
-        return new HashSet<>( customers.keySet() );
+        HashSet<Long> ids = new HashSet<>();
+
+        customerRepository.findAll().forEach( customer -> ids.add( customer.getId() ) );
+
+        return ids;
     }
 
     public static List<Reservation> getCurrentReservations() {
@@ -169,7 +183,11 @@ public class Database {
     }
 
     public static Set<Item> getItems() {
-        return new HashSet<>( items.values() );
+        HashSet<Item> items = new HashSet<>();
+
+        itemRepository.findAll().forEach( items::add );
+
+        return items;
     }
 
     public static Set<Long> getEmployeesId() {
