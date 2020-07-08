@@ -3,6 +3,7 @@ package org.thekiddos.manager.payroll.transactions;
 import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.payroll.models.HourlyClassification;
 import org.thekiddos.manager.payroll.models.TimeCard;
+import org.thekiddos.manager.payroll.models.TimeCardId;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.Transaction;
 
@@ -31,8 +32,8 @@ public class AddTimeCardTransaction implements Transaction {
 
         //if( hourlyClassification == null )
         //    throw new IllegalArgumentException( "Can't add a TimeCard to a non-hourly employee" );
-
-        hourlyClassification.addTimeCard( new TimeCard( date, timeWorked ) );
-        // TODO make sure the database is updated when implementing the real database.
+        TimeCard timeCard = new TimeCard( new TimeCardId( hourlyClassification.getId(), date ), timeWorked );
+        hourlyClassification.addTimeCard( timeCard );
+        Database.addEmployee( emp );
     }
 }

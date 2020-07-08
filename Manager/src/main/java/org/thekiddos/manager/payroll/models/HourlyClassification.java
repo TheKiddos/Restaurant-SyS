@@ -1,24 +1,33 @@
 package org.thekiddos.manager.payroll.models;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
+@Entity
+@NoArgsConstructor
+@Data
 @RequiredArgsConstructor
-public class HourlyClassification implements PaymentClassification {
+@Table(name = "HOURLY_CLASSIFICATION")
+public class HourlyClassification extends PaymentClassification {
     @NonNull
-    private final double hourlyRate;
+    private double hourlyRate;
     @NonNull
-    private final double overHoursBonusRate;
+    private double overHoursBonusRate;
     @NonNull
-    private final int overHoursThreshold;
-    private final Map<LocalDate, TimeCard> timeCards = new HashMap<>();
+    private int overHoursThreshold;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "HOURLY_CLASSIFICATION_ID", referencedColumnName = "ID")
+    @MapKey(name = "timeCardId.date")
+    private Map<LocalDate, TimeCard> timeCards = new HashMap<>();
 
     public TimeCard getTimeCard( LocalDate date ) {
         return timeCards.get( date );

@@ -1,14 +1,18 @@
 package org.thekiddos.manager.payroll.models;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
-@Getter
+@Entity
+@Data
 @RequiredArgsConstructor
-public class SalariedClassification implements PaymentClassification {
+@NoArgsConstructor
+public class SalariedClassification extends PaymentClassification {
     @NonNull
     double salary;
 

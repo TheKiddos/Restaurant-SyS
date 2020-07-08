@@ -1,8 +1,10 @@
 package org.thekiddos.manager.payroll.models;
 
+import javax.persistence.Entity;
 import java.time.LocalDate;
 
-public class MonthlySchedule implements PaymentSchedule {
+@Entity
+public class MonthlySchedule extends PaymentSchedule {
     @Override
     public boolean isPayDay( LocalDate payDay ) {
         return isLastDayOfMonth( payDay );

@@ -115,6 +115,7 @@ public class EmployeeController extends Controller {
             return;
 
         new AddTimeCardTransaction( employeeTable.getSelectionModel().getSelectedItem().getId(), LocalDate.now(), hoursWorkedTimePicker.getValue() ).execute();
+        fillEmployeeTable( searchEmployeeField.getText() );
     }
 
     public void viewTimeCards( ActionEvent actionEvent ) {

@@ -18,5 +18,6 @@ public abstract class ChangeEmployeeTransaction implements Transaction {
         Employee emp = Database.getEmployeeById( empId );
         // TODO EXCEPTION IF NOT FOUND HOW EVER THESE STUFF SHOULD BE IN THE DATABASE
         change( emp );
+        Database.addEmployee( emp );
     }
 }

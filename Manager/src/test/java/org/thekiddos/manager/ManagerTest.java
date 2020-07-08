@@ -26,7 +26,7 @@ public class ManagerTest {
 
     @BeforeEach
     void setUpDatabase() {
-        Database.init();
+        Database.deleteAll();
         fillDatabase();
     }
 

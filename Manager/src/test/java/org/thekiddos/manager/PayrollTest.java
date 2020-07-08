@@ -29,7 +29,7 @@ class PayrollTest {
 
     @BeforeEach
     void setUpDatabase() {
-        Database.init();
+        Database.deleteAll();
         fillDatabase();
     }
 

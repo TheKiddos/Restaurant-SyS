@@ -1,10 +1,12 @@
 package org.thekiddos.manager.payroll.models;
 
+import javax.persistence.Entity;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-public class WeeklySchedule implements PaymentSchedule {
-    private final DayOfWeek paymentDay = DayOfWeek.SATURDAY;
+@Entity
+public class WeeklySchedule extends PaymentSchedule {
+    private DayOfWeek paymentDay = DayOfWeek.SATURDAY;
 
     @Override
     public boolean isPayDay( LocalDate payDay ) {

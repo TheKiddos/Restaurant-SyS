@@ -18,7 +18,7 @@ class CustomerTest {
 
     @BeforeEach
     void setUpDatabase() {
-        Database.init();
+        Database.deleteAll();
     }
 
     @Test

@@ -1,11 +1,21 @@
 package org.thekiddos.manager.payroll.models;
 
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
-public interface PaymentClassification {
-    double calculatePay( LocalDate startData, LocalDate endDate );
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Getter
+public abstract class PaymentClassification {
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    public Long id;
 
-    String getType();
+    public abstract double calculatePay( LocalDate startData, LocalDate endDate );
 
-    String getBaseSalary();
+    public abstract String getType();
+
+    public abstract String getBaseSalary();
 }
