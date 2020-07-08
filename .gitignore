@@ -24,3 +24,4 @@ Homestead.json
 /Manager/target/
 /.idea/libraries/
 /Recommendation_Engine/sandbox/data/Reviews.csv
+/.idea/statistic.xml
