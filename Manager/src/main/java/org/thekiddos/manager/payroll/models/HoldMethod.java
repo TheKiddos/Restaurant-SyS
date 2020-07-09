@@ -17,9 +17,7 @@ public class HoldMethod extends PaymentMethod {
 
     @Override
     public void pay( PayCheck payCheck ) {
-        // TODO remove these comments
-        //PrintPayCheckTransaction check = new PrintPayCheckTransaction( payCheck.getEmployee(), payCheck.getAmount(), payCheck.getPayDate() );
-        //check.execute();
+        // TODO what to do here (Saving the paycheck to database?)
     }
 
     @Override
