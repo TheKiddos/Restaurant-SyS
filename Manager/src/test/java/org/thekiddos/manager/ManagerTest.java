@@ -40,7 +40,7 @@ public class ManagerTest {
     void testPayForOrder() {
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
-        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 
@@ -76,7 +76,7 @@ public class ManagerTest {
         LocalTime eightPM = LocalTime.of( 20, 0 );
         new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM ).execute();
 
-        assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddItemsToReservationTransaction( tableId ) );
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         assertEquals( 1, tableReservations.size() );

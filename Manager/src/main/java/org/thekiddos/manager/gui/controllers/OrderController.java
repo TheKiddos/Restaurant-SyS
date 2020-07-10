@@ -17,7 +17,7 @@ import org.thekiddos.manager.models.Order;
 import org.thekiddos.manager.models.OrderedItem;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
-import org.thekiddos.manager.transactions.AddReservationServiceTransaction;
+import org.thekiddos.manager.transactions.AddItemsToReservationTransaction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,7 +61,7 @@ public class OrderController extends Controller {
     }
 
     public void addOrderItem( ActionEvent actionEvent ) {
-        AddReservationServiceTransaction serviceTransaction = new AddReservationServiceTransaction( reservation.getReservedTableId() );
+        AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( reservation.getReservedTableId() );
         for ( ItemPane itemPane : itemsList.getSelectionModel().getSelectedItems() )
             serviceTransaction.addItem( itemPane.getItemId() );
         serviceTransaction.execute();

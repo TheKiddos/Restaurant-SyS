@@ -36,7 +36,7 @@ class OrderTest {
     void testAddOrderToReservation() {
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
-        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 
@@ -54,7 +54,7 @@ class OrderTest {
         LocalTime eightPM = LocalTime.of( 20, 0 );
         new ScheduledReservationTransaction( tableId, customerId, fifthOfNovemberNextYear, eightPM ).execute();
 
-        assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddItemsToReservationTransaction( tableId ) );
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         Reservation reservation = validateReservation( tableReservations, 1, 0, tableId, customerId, false, 10.0 );
@@ -66,7 +66,7 @@ class OrderTest {
     void testAddOrderToNonActiveReservationToday() {
         new ScheduledReservationTransaction( tableId, customerId, LocalDate.now(), LocalTime.now() ).execute();
 
-        assertThrows( IllegalArgumentException.class, () -> new AddReservationServiceTransaction( tableId ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddItemsToReservationTransaction( tableId ) );
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         Reservation reservation = validateReservation( tableReservations, 1, 0, tableId, customerId, false, 10.0 );
@@ -86,7 +86,7 @@ class OrderTest {
 
         tableReservations = Database.getReservationsByTableId( tableId );
 
-        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 
@@ -100,11 +100,11 @@ class OrderTest {
     void testAddTwoOrderToReservation() {
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
-        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 
-        service = new AddReservationServiceTransaction( tableId );
+        service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 

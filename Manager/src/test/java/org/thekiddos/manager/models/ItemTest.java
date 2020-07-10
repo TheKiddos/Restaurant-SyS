@@ -91,7 +91,7 @@ class ItemTest {
         new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
-        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
 

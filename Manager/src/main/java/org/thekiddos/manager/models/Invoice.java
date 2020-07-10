@@ -7,6 +7,9 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Invoice that contains all information about the reservation and ordered items.
+ */
 @Getter
 public class Invoice {
     private final double total;

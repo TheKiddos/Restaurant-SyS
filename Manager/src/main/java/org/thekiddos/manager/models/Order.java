@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.Objects;
 
 //TODO This creates an order table with only an id field redundant fix it.
+
+/**
+ * An order holds the items that the customer requested, along side their total value and information
+ */
 @Entity
 @Table(name = "ORDERS")
 public class Order {
@@ -26,10 +30,16 @@ public class Order {
     @Column(name = "Quantity")
     private final Map<Item, Integer> items = new HashMap<>();
 
+    /**
+     * @return A Map that maps the items to their quantity
+     */
     public Map<Item, Integer> getItems() {
         return Collections.unmodifiableMap( items );
     }
 
+    /**
+     * @return total worth of the ordered items
+     */
     public double getTotal() {
         double total = 0;
         for ( Item item : items.keySet() )
@@ -37,11 +47,19 @@ public class Order {
         return total;
     }
 
+    /**
+     * @param item
+     * @return true if the item is in the order, false otherwise
+     */
     public boolean containsItem( Item item ) {
         Integer count = items.get( item );
         return count != null && count > 0;
     }
 
+    /**
+     * Adds an item to the order
+     * @param item
+     */
     public void addItem( Item item ) {
         Integer count = items.get( item );
         items.put( item, count == null ? 1 : count + 1 );

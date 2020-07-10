@@ -79,7 +79,7 @@ public class TableController extends Controller {
 
     public void removeTable( ActionEvent actionEvent ) {
         Table table = tableTable.getSelectionModel().getSelectedItem();
-        new DeleteTableTransaction( table.getId() );
+        new DeleteTableTransaction( table.getId() ).execute();
 
         fillTableTableView();
     }

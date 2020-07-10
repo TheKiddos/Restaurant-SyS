@@ -9,10 +9,13 @@ import java.util.List;
  * This is used as a generic way of providing {@link org.thekiddos.manager.models.Item}
  * to the costumer (in tables, outside deliveries, ...etc)
  */
-public abstract class AddServiceTransaction implements Transaction {
+public abstract class AddItemsToServiceTransaction implements Transaction {
     protected Service service;
     private final List<Long> items = new ArrayList<>();
 
+    /**
+     * Adds the items to the order
+     */
     @Override
     public void execute() {
         for ( Long item : items )
@@ -28,5 +31,8 @@ public abstract class AddServiceTransaction implements Transaction {
         items.add( itemId );
     }
 
+    /**
+     * Updates the database
+     */
     abstract void saveToDatabase();
 }

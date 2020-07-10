@@ -87,7 +87,7 @@ public final class GUIApplication extends Application {
         new AddItemTransaction( 2L, "Syrian Fries", 15.0 ).execute();
         new AddItemTransaction( 3L, "Hasan's Fries", 25.0 ).execute();
 
-        AddReservationServiceTransaction serviceTransaction = new AddReservationServiceTransaction( 1L );
+        AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( 1L );
         serviceTransaction.addItem( 1L );
         serviceTransaction.addItem( 1L );
         serviceTransaction.addItem( 1L );
