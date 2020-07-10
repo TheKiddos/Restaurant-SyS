@@ -4,6 +4,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import lombok.Getter;
 
+/**
+ * A label that stores and display information about an {@link org.thekiddos.manager.models.Item}
+ * used to display the item in a parent node like a {@link javafx.scene.control.ListView}
+ */
 public final class ItemPane extends Label {
     @Getter
     private final Long itemId;

@@ -14,18 +14,21 @@ public class AddHourlyEmployeeTransaction extends AddEmployeeTransaction {
     private double overHoursBonusRate = 1.5;
     private int overHoursThreshold = 8;
 
+    /**
+     * @throws IllegalArgumentException if an employee with this id already exists
+     */
     public AddHourlyEmployeeTransaction( Long empId, String name, double hourlyRate ) {
         super( empId, name );
         this.hourlyRate = hourlyRate;
     }
 
     @Override
-    protected PaymentClassification getPaymentClassification() {
+    PaymentClassification getPaymentClassification() {
         return new HourlyClassification( hourlyRate, overHoursBonusRate, overHoursThreshold );
     }
 
     @Override
-    protected PaymentSchedule getPaymentSchedule() {
+    PaymentSchedule getPaymentSchedule() {
         return new WeeklySchedule();
     }
 }

@@ -11,9 +11,9 @@ public abstract class ChangeMethodTransaction extends ChangeEmployeeTransaction 
     }
 
     @Override
-    protected void change( Employee emp ) {
+    void change( Employee emp ) {
         emp.setPaymentMethod( getPaymentMethod() );
     }
 
-    protected abstract PaymentMethod getPaymentMethod();
+    abstract PaymentMethod getPaymentMethod();
 }

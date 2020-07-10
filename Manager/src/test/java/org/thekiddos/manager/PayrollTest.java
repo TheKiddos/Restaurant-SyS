@@ -39,6 +39,11 @@ class PayrollTest {
     }
 
     @Test
+    void testPayOnWrongDay() {
+        assertThrows( IllegalArgumentException.class, () -> new PayDayTransaction( LocalDate.now().minusDays( 1 ) ) );
+    }
+
+    @Test
     void testPaySingleSalariedEmployee() {
         LocalDate endOfJuneNextYear = LocalDate.of( LocalDate.now().plusYears( 1 ).getYear(), Month.JUNE, 30 );
         PayDayTransaction payDay = new PayDayTransaction( endOfJuneNextYear );

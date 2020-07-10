@@ -9,6 +9,7 @@ import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.payroll.models.HourlyClassification;
 import org.thekiddos.manager.payroll.models.TimeCard;
 import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
+import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddTimeCardTransaction;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.Transaction;
@@ -17,8 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
@@ -50,5 +50,17 @@ class TimeCardTest {
         assertNotNull( timeCard );
 
         assertEquals( threeHoursAndThirtyMinutes, timeCard.getTimeWorked() );
+    }
+
+    @Test
+    void testAddTimeCardToEmployeeThatDoesNotExists() {
+        assertThrows( IllegalArgumentException.class, () -> new AddTimeCardTransaction( 1L, LocalDate.now(), LocalTime.now() ) );
+    }
+
+    @Test
+    void testAddTimeCardToNonHourlyEmployee() {
+        Long empId = 1L;
+        new AddSalariedEmployeeTransaction( empId, "asda", 10.0 ).execute();
+        assertThrows( IllegalArgumentException.class, () -> new AddTimeCardTransaction( empId, LocalDate.now(), LocalTime.now() ) );
     }
 }

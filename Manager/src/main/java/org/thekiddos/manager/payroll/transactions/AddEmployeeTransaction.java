@@ -8,7 +8,12 @@ public abstract class AddEmployeeTransaction implements Transaction {
     private final Long id;
     private final String name;
 
+    /**
+     * @throws IllegalArgumentException if an employee with this id already exists
+     */
     public AddEmployeeTransaction( Long id, String name ) {
+        if ( Database.getEmployeeById( id ) != null )
+            throw new IllegalArgumentException( "An employee with this id already exists" );
         this.id = id;
         this.name = name;
     }
@@ -27,6 +32,6 @@ public abstract class AddEmployeeTransaction implements Transaction {
         Database.addEmployee( emp );
     }
 
-    protected abstract PaymentClassification getPaymentClassification();
-    protected abstract PaymentSchedule getPaymentSchedule();
+    abstract PaymentClassification getPaymentClassification();
+    abstract PaymentSchedule getPaymentSchedule();
 }

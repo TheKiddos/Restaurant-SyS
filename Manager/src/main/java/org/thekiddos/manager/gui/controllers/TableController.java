@@ -5,12 +5,14 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.validator.MoneyValidator;
 import org.thekiddos.manager.gui.validator.PositiveIntegerValidator;
 import org.thekiddos.manager.gui.validator.TableIdValidator;
@@ -68,6 +70,12 @@ public class TableController extends Controller {
         addTableTransaction.execute();
 
         fillTableTableView();
+        updateMainGUI();
+    }
+
+    private void updateMainGUI() {
+        GUIController guiController = (GUIController) Util.getWindowContainer( "Digital Restaurant Manager" ).getController();
+        guiController.refreshMainGUI();
     }
 
     private boolean validateTableFields() {
@@ -79,9 +87,16 @@ public class TableController extends Controller {
 
     public void removeTable( ActionEvent actionEvent ) {
         Table table = tableTable.getSelectionModel().getSelectedItem();
-        new DeleteTableTransaction( table.getId() ).execute();
 
-        fillTableTableView();
+        try {
+            new DeleteTableTransaction( table.getId() ).execute();
+        }
+        catch ( IllegalArgumentException ex ) {
+            Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
+        }
+        finally {
+            fillTableTableView();
+        }
     }
 
     @Override

@@ -10,11 +10,11 @@ public abstract class ChangeClassificationTransaction extends ChangeEmployeeTran
     }
 
     @Override
-    protected void change( Employee emp ) {
+    void change( Employee emp ) {
         emp.setPaymentClassification( getPaymentClassification() );
         emp.setPaymentSchedule( getPaymentSchedule() );
     }
 
-    protected abstract PaymentClassification getPaymentClassification();
-    protected abstract PaymentSchedule getPaymentSchedule();
+    abstract PaymentClassification getPaymentClassification();
+    abstract PaymentSchedule getPaymentSchedule();
 }

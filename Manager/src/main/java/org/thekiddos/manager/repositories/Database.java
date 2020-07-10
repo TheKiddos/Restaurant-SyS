@@ -7,6 +7,7 @@ import org.thekiddos.manager.payroll.models.HourlyClassification;
 import org.thekiddos.manager.payroll.models.PaymentClassification;
 import org.thekiddos.manager.payroll.models.TimeCard;
 import org.thekiddos.manager.payroll.repositories.EmployeeRepository;
+import org.thekiddos.manager.payroll.repositories.TimeCardRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -251,5 +252,9 @@ public final class Database {
 
     public static void removeTable( Table table ) {
         tableRepository.delete( table );
+    }
+
+    public static void addTimeCard( TimeCard timeCard ) {
+        timeCardRepository.save( timeCard );
     }
 }

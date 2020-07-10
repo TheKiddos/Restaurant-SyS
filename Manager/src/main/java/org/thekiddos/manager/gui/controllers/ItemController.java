@@ -3,6 +3,7 @@ package org.thekiddos.manager.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -51,9 +52,15 @@ public class ItemController extends Controller {
 
     public void removeItem( ActionEvent actionEvent ) {
         Long itemId = itemTable.getSelectionModel().getSelectedItem().getId();
-
-        new DeleteItemTransaction( itemId ).execute();
-        fillItemTableView();
+        try {
+            new DeleteItemTransaction( itemId ).execute();
+        }
+        catch ( IllegalArgumentException ex ) {
+            Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
+        }
+        finally {
+            fillItemTableView();
+        }
     }
 
     @Override

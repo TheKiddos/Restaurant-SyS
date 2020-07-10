@@ -5,16 +5,19 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.validator.CustomerIdValidator;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddCustomerTransaction;
+import org.thekiddos.manager.transactions.DeleteCustomerTransaction;
 
 @Component
 @FxmlView("customers.fxml")
@@ -70,8 +73,15 @@ public class CustomerController extends Controller {
 
     public void removeCustomer( ActionEvent actionEvent ) {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
-        Database.removeCustomerById( customer.getId() );
-        fillCustomerTableView();
+        try {
+            new DeleteCustomerTransaction( customer.getId() ).execute();
+        }
+        catch ( IllegalArgumentException ex ) {
+            Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
+        }
+        finally {
+            fillCustomerTableView();
+        }
     }
 
     @Override

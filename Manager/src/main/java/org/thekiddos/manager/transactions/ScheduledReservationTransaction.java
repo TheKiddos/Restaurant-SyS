@@ -20,6 +20,10 @@ public class ScheduledReservationTransaction extends AddReservationTransaction {
         super( tableId, customerId, reservationDate, reservationTime );
         setReservationFee( 10.0 );
 
+        if ( reservationDate == null || reservationTime == null )
+            throw new IllegalArgumentException( "Both date and time are required" );
+
+
         if ( !presentOrFuture( reservationDate, reservationTime ) )
             throw new IllegalArgumentException( "Can't make reservations in the past" );
     }

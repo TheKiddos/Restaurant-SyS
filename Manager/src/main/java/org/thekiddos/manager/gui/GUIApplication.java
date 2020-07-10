@@ -15,6 +15,7 @@ import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction
 import org.thekiddos.manager.transactions.*;
 
 // TODO some Controllers are not using the transactions make sure all of them do
+// TODO a lot of the controllers share the same logic abstract it
 public final class GUIApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
 
@@ -41,7 +42,7 @@ public final class GUIApplication extends Application {
         orderStage.initModality( Modality.NONE );
 
         Stage addReservationGUIStage = Util.createWindowContainer( AddReservationGUIController.class, null, "Add Reservation" ).getStage();
-        addReservationGUIStage.initModality( Modality.NONE );
+        addReservationGUIStage.initModality( Modality.WINDOW_MODAL );
 
         Stage addItemGUIStage = Util.createWindowContainer( AddItemController.class, null, "Add Item" ).getStage();
         addItemGUIStage.initModality( Modality.NONE );

@@ -40,18 +40,22 @@ public class AddEmployeeController extends Controller {
     }
 
     public void addEmployee( ActionEvent actionEvent ) {
-        if ( !validate() )
+        if ( !validateEmployee() )
             return;
 
         AddEmployeeTransaction addEmployeeTransaction = getAddEmployeeTransaction();
-
         addEmployeeTransaction.execute();
+
+        closeWindow();
+    }
+
+    private void closeWindow() {
         Stage stage = (Stage)getScene().getWindow();
         stage.getOnCloseRequest().handle( null );
         stage.close();
     }
 
-    private boolean validate() {
+    private boolean validateEmployee() {
         return idField.validate() && paymentField.validate() && paymentField.validate();
     }
 

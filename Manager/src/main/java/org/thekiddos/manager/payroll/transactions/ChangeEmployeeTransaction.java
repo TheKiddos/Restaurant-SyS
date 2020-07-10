@@ -11,7 +11,7 @@ public abstract class ChangeEmployeeTransaction implements Transaction {
         this.empId = empId;
     }
 
-    protected abstract void change( Employee emp );
+    abstract void change( Employee emp );
 
     @Override
     public void execute() {

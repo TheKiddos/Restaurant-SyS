@@ -8,18 +8,21 @@ import org.thekiddos.manager.payroll.models.SalariedClassification;
 public class AddSalariedEmployeeTransaction extends AddEmployeeTransaction {
     private final double salary;
 
+    /**
+     * @throws IllegalArgumentException if an employee with this id already exists
+     */
     public AddSalariedEmployeeTransaction( Long empId, String name, double salary ) {
         super( empId, name );
         this.salary = salary;
     }
 
     @Override
-    protected PaymentClassification getPaymentClassification() {
+    PaymentClassification getPaymentClassification() {
         return new SalariedClassification( salary );
     }
 
     @Override
-    protected PaymentSchedule getPaymentSchedule() {
+    PaymentSchedule getPaymentSchedule() {
         return new MonthlySchedule();
     }
 }

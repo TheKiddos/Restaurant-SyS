@@ -57,17 +57,16 @@ public class GUIController extends Controller implements Remover {
         orderWindow = Util.getWindowContainer( "Order Summary" );
         orderWindow.getStage().setOnCloseRequest( e -> refreshMainGUI() );
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
-        // TODO do I need the remover?
-        currentReservationsBox.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ), this, orderWindow ) );
+        currentReservationsBox.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ) ) );
         updateReservedTableTracker();
     }
 
-    private void refreshMainGUI() {
+    public void refreshMainGUI() {
         ReservationPane.resetCounter();
         currentReservationsBox.getChildren().clear();
         List<Reservation> currentReservations = Database.getCurrentReservations();
         for ( Reservation reservation : currentReservations )
-            currentReservationsBox.getChildren().add( new ReservationPane( reservation, this, orderWindow ) );
+            currentReservationsBox.getChildren().add( new ReservationPane( reservation ) );
         updateReservedTableTracker();
     }
 

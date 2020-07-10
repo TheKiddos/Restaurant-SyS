@@ -13,6 +13,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
+/**
+ * A time card holds information about hours worked on a date for an employee
+ * it has a direct relation with the {@link HourlyClassification}
+ */
 @Entity
 @Getter
 @RequiredArgsConstructor

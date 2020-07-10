@@ -6,12 +6,14 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddReservationTransaction;
 import org.thekiddos.manager.transactions.ImmediateReservationTransaction;
@@ -72,10 +74,14 @@ public class AddReservationGUIController extends Controller {
         Long tableId = tableSelector.getValue();
         Long customerId = customerSelector.getValue();
 
-        AddReservationTransaction addReservationTransaction = getReservationTransaction( tableId, customerId );
-
-        addReservationTransaction.execute();
-        close( actionEvent );
+        try {
+            AddReservationTransaction addReservationTransaction = getReservationTransaction( tableId, customerId );
+            addReservationTransaction.execute();
+            close( actionEvent );
+        }
+        catch ( IllegalArgumentException ex ) {
+            Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
+        }
     }
 
     private AddReservationTransaction getReservationTransaction( Long tableId, Long customerId ) {

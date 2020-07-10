@@ -11,11 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This transaction finds all employees that can be paid on the passed date
+ * it stores all paychecks in it so they can be verified.
+ */
 public class PayDayTransaction implements Transaction {
     private final LocalDate payDate;
     private final Map<Long, PayCheck> payChecks;
 
+    /**
+     *
+     * @param payDate
+     * @throws IllegalArgumentException if the passed date is in the past
+     */
     public PayDayTransaction( LocalDate payDate ) {
+        if ( LocalDate.now().isAfter( payDate ) )
+            throw new IllegalArgumentException( "Can't pay for past days" );
+
         this.payDate = payDate;
         this.payChecks = new HashMap<>();
     }
@@ -29,10 +41,17 @@ public class PayDayTransaction implements Transaction {
                 payChecks.put( employee.getId(), employee.payDay( payDate ) );
     }
 
+    /**
+     * @param empId
+     * @return returns the paycheck for the employee specified by the id, or null if the employee was not payed
+     */
     public PayCheck getPayCheck( Long empId ) {
         return payChecks.get( empId );
     }
 
+    /**
+     * @return All paychecks that were created by this transaction
+     */
     public List<PayCheck> getPayChecks() {
         return new ArrayList<>( payChecks.values() );
     }

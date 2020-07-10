@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * A paycheck that is giving to an employee as a payment
+ */
 @Getter
 @RequiredArgsConstructor
 public class PayCheck {

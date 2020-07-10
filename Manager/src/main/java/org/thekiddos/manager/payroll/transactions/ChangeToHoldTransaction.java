@@ -9,7 +9,7 @@ public class ChangeToHoldTransaction extends ChangeMethodTransaction {
     }
 
     @Override
-    protected PaymentMethod getPaymentMethod() {
+    PaymentMethod getPaymentMethod() {
         return new HoldMethod();
     }
 }

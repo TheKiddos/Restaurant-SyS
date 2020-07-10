@@ -14,12 +14,12 @@ public class ChangeToSalariedTransaction extends ChangeClassificationTransaction
     }
 
     @Override
-    protected PaymentClassification getPaymentClassification() {
+    PaymentClassification getPaymentClassification() {
         return new SalariedClassification( salary );
     }
 
     @Override
-    protected PaymentSchedule getPaymentSchedule() {
+    PaymentSchedule getPaymentSchedule() {
         return new MonthlySchedule();
     }
 }

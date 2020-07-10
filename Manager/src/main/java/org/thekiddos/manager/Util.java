@@ -108,6 +108,7 @@ public final class Util {
         Scene scene = createScene( root );
         Stage stage = createStage( owner, title, scene );
         Controller controller = Database.getBean( controllerClass );
+        controller.setScene( scene );
 
         WindowContainer windowContainer = new WindowContainer( scene, stage, controller );
         addWindowContainer( title, windowContainer );

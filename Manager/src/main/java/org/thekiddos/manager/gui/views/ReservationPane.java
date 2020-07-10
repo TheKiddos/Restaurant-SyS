@@ -8,41 +8,63 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.thekiddos.manager.Util;
-import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.controllers.InvoiceController;
 import org.thekiddos.manager.gui.controllers.OrderController;
 import org.thekiddos.manager.gui.models.WindowContainer;
+import org.thekiddos.manager.models.Invoice;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.transactions.ActivateReservationTransaction;
 import org.thekiddos.manager.transactions.CheckOutTransaction;
 
+/**
+ * A {@link TitledPane} that contains a {@link Reservation}
+ * It contains all the necessary functions for managing the reservation by the GUI
+ */
 public final class ReservationPane extends TitledPane {
     private static int reservationNumber = 0;
     private final Reservation reservation;
     private final GridPane content = new GridPane();
     private final Label totalLabel = new Label();
     private final JFXCheckBox isReservationActiveCheckBox = new JFXCheckBox( "Active" );
-    private final Remover remover;
     private JFXButton viewOrderButton,
             activateButton,
             checkOutButton;
     private final WindowContainer orderWindow;
 
-    public ReservationPane( Reservation reservation, Remover remover, WindowContainer orderWindow ) {
+    /**
+     *
+     * @param reservation The reservation to display
+     */
+    public ReservationPane( Reservation reservation ) {
         this.reservation = reservation;
-        this.remover = remover;
-        this.orderWindow = orderWindow;
+        this.orderWindow = Util.getWindowContainer( "Order Summary" );
         setup();
     }
 
     private void setup() {
         setText( nextReservationNumber() );
+        // First I wanted all reservation panes to be collapsed then
+        // when it was being refreshed from the database it collapsed all expanded reservationPanes which got annoying quickly so I commented it
         //setExpanded( false );
         setContent( content );
-        isReservationActiveCheckBox.setDisable( true );
+
+        disableUserControlOfActivatingAndDeactivatingTheReservation();
+
         isReservationActiveCheckBox.setSelected( reservation.isActive() );
+
         totalLabel.setText( String.valueOf( reservation.getTotal() ) );
+
+        createButtons();
+        createLayout();
+    }
+
+    private void disableUserControlOfActivatingAndDeactivatingTheReservation() {
+        isReservationActiveCheckBox.setDisable( true );
+    }
+
+    private void createButtons() {
         viewOrderButton = Util.createButton( "View Order", "static/images/order.png" );
         activateButton = Util.createButton( "Customer Arrived", "static/images/arrived.png" );
         checkOutButton = Util.createButton( "Check", "static/images/check.png" );
@@ -55,8 +77,6 @@ public final class ReservationPane extends TitledPane {
         viewOrderButton.setOnAction( this::viewOrder );
         activateButton.setOnAction( this::activateReservation );
         checkOutButton.setOnAction( this::checkOut );
-
-        createLayout();
     }
 
     private String nextReservationNumber() {
@@ -79,15 +99,24 @@ public final class ReservationPane extends TitledPane {
     }
 
     private void checkOut( ActionEvent actionEvent ) {
-        WindowContainer invoiceWindow = Util.getWindowContainer( "Invoice Summary" );
         CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
         checkOutTransaction.execute();
+        showAndPrintInvoice( checkOutTransaction.getInvoice() );
+        removeSelf();
+    }
+
+    private void removeSelf() {
+        VBox parent = (VBox) getParent();
+        parent.getChildren().remove( this );
+    }
+
+    private void showAndPrintInvoice( Invoice invoice ) {
+        WindowContainer invoiceWindow = Util.getWindowContainer( "Invoice Summary" );
         InvoiceController invoiceController = (InvoiceController) invoiceWindow.getController();
-        invoiceController.setInvoice( checkOutTransaction.getInvoice() );
+        invoiceController.setInvoice( invoice );
         invoiceWindow.getStage().setResizable( false );
         invoiceWindow.getStage().showAndWait();
         Util.tryPrintNode( invoiceController.getRoot() );
-        remover.remove( this );
     }
 
     public static void resetCounter() {

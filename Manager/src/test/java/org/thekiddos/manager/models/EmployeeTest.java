@@ -73,6 +73,20 @@ class EmployeeTest {
     }
 
     @Test
+    void testAddEmployeeWithSameId() {
+        Long empId = 1L;
+        new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 ).execute();
+        Long empId2 = 2L;
+        new AddHourlyEmployeeTransaction( empId2, "Zahlt", 1000.0 ).execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddHourlyEmployeeTransaction( empId, "Zahlt", 10.0 ) );
+
+        assertThrows( IllegalArgumentException.class, () -> new AddSalariedEmployeeTransaction( empId2, "Zahlt", 1000.0 ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddHourlyEmployeeTransaction( empId2, "Zahlt", 10.0 ) );
+    }
+
+    @Test
     void testDeleteEmployee() {
         Long empId = 1L;
         Transaction addEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
@@ -86,6 +100,11 @@ class EmployeeTest {
 
         Employee emp2 = Database.getEmployeeById( empId );
         assertNull( emp2 );
+    }
+
+    @Test
+    void testDeleteEmployeeThatDoesNotExists() {
+        assertThrows( IllegalArgumentException.class, () -> new DeleteEmployeeTransaction( 1L ) );
     }
 
     @Test
