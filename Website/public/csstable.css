@@ -1,0 +1,20 @@
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}
+.autocomplete {
+    position: relative;
+    display: inline-block;
+
+}
+#boxx{
+    width: 100%;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 2px 1px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    text-align: center;
+}

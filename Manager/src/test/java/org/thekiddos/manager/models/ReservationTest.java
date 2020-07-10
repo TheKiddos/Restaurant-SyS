@@ -39,6 +39,8 @@ class ReservationTest {
         LocalDate fifthOfNovember2019 = LocalDate.of( 2019, Month.NOVEMBER, 5 );
         LocalTime eightPM = LocalTime.of( 20, 0 );
         assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2019, eightPM ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId, null, eightPM ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, customerId, fifthOfNovember2019, null ) );
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         assertEquals( 0, tableReservations.size() );

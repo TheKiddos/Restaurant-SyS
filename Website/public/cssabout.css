@@ -1,0 +1,26 @@
+#address{
+    font-size: 60px;
+    position: relative;
+    left: 550px;
+}
+#image{
+    position: relative;
+    left: 170px;
+}
+.ulabout{
+    list-style-type: none;
+    position: relative;
+    left: 50px;
+
+}
+.ulabout li{
+    float: left;
+    padding: 50px;
+
+}
+
+.desc {
+    padding: 15px;
+    text-align: left;
+}
+

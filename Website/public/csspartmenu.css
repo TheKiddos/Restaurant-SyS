@@ -1,0 +1,11 @@
+.boximage2{
+    color:black;
+    background-color: white;
+    width: 350px;
+    height: 300px;
+    position: relative;
+    top: -280px;
+    left: 900px;
+    border-radius: 5px;
+    padding: 20px;
+}
