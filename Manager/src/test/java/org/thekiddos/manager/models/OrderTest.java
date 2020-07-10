@@ -81,7 +81,7 @@ class OrderTest {
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
         validateReservation( tableReservations, 1, 0, tableId, customerId, false, 10.0 );
 
-        Transaction activateReservation = new ActivateReservationTransaction( tableId ); // TODO Maybe we should rely on the customer Id
+        Transaction activateReservation = new ActivateReservationTransaction( tableId );
         activateReservation.execute();
 
         tableReservations = Database.getReservationsByTableId( tableId );

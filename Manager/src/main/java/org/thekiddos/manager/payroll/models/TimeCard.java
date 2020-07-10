@@ -1,6 +1,6 @@
 package org.thekiddos.manager.payroll.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,10 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Table(name = "TIMECARD")
@@ -26,5 +27,18 @@ public class TimeCard implements Serializable {
 
     public LocalDate getDate() {
         return timeCardId.getDate();
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+        TimeCard timeCard = (TimeCard) o;
+        return timeCardId.equals( timeCard.timeCardId );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( timeCardId );
     }
 }

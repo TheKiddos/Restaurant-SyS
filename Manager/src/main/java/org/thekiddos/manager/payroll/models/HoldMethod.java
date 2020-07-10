@@ -1,6 +1,6 @@
 package org.thekiddos.manager.payroll.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -10,14 +10,14 @@ import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
-@Data
+@Getter
 public class HoldMethod extends PaymentMethod {
     @Id @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @Override
     public void pay( PayCheck payCheck ) {
-        // TODO what to do here (Saving the paycheck to database?)
+        // TODO what to do here (Saving the paycheck to database? and remove this call from Employee)
     }
 
     @Override

@@ -86,9 +86,4 @@ public class ManagerTest {
         tableReservations = Database.getReservationsByTableId( tableId );
         assertEquals( 1, tableReservations.size() );
     }
-
-    // TODO s
-    // Database should be transparent to all classes
-    // paying orders should move the reservation
-    // test two reservation and add orders to them and pay
 }

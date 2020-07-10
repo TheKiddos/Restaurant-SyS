@@ -6,34 +6,47 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * An item represents food and beverages that a {@link Customer} can {@link Order}
+ */
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Item {
-    @NonNull @Id
+    @NonNull @Id @Getter
     private Long id;
-    @NonNull
+    @NonNull @Getter
     private String name;
-    @NonNull
+    @NonNull @Getter
     private double price;
+    @Getter
     private double calories;
+    @Getter
     private double fat;
+    @Getter
     private double protein;
+    @Getter
     private double carbohydrates;
+    @Getter
     private String imagePath;
+    @Getter
     private String description;
 
     @ElementCollection(targetClass = Type.class, fetch = FetchType.EAGER)
     private Set<Type> types = new HashSet<>();
 
-    public void addType( Type type ) {
-        types.add( type );
+    /**
+     * Returns a set of this items {@link Type}s
+     * @return
+     */
+    public Set<Type> getTypes() {
+        return Collections.unmodifiableSet( types );
     }
 
     @Override

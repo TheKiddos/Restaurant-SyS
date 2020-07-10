@@ -17,6 +17,7 @@ import org.thekiddos.manager.gui.validator.TableIdValidator;
 import org.thekiddos.manager.models.Table;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddTableTransaction;
+import org.thekiddos.manager.transactions.DeleteTableTransaction;
 
 @Component
 @FxmlView("table.fxml")
@@ -78,7 +79,7 @@ public class TableController extends Controller {
 
     public void removeTable( ActionEvent actionEvent ) {
         Table table = tableTable.getSelectionModel().getSelectedItem();
-        Database.removeTableById( table.getId() );
+        new DeleteTableTransaction( table.getId() );
 
         fillTableTableView();
     }

@@ -14,7 +14,8 @@ import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
 import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
 import org.thekiddos.manager.transactions.*;
 
-public class GUIApplication extends Application {
+// TODO some Controllers are not using the transactions make sure all of them do
+public final class GUIApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
 
     @Override

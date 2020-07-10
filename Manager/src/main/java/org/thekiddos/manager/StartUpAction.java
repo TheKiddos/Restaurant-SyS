@@ -6,8 +6,12 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.repositories.Database;
 
+/**
+ * This class is used to initialize the Database on spring {@link ApplicationReadyEvent}
+ * it passes the context to the database
+ */
 @Component
-public class StartUpAction {
+public final class StartUpAction {
     private final ApplicationContext applicationContext;
 
     public StartUpAction( ApplicationContext applicationContext ) {

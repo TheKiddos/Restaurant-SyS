@@ -5,36 +5,32 @@ import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDate;
-import java.util.List;
 
+/**
+ * Deletes a non-active reservation
+ */
 public class DeleteReservationTransaction implements Transaction {
-    private static final Long NO_CUSTOMER = -1L;
-    private final Long tableId;
-    private final LocalDate reservationDate;
     @Getter
-    private final Long customerId;
-    private boolean reservationExists = false;
+    private final Reservation reservation;
 
+    /**
+     * @throws IllegalArgumentException if no reservation was found for the selected table and date, or if the reservation is active
+     */
     public DeleteReservationTransaction( Long tableId, LocalDate reservationDate ) {
-        this.tableId = tableId;
-        this.reservationDate = reservationDate;
-        this.customerId = getReserveId();
-        if ( this.customerId != null )
-            reservationExists = true;
+        this.reservation = Database.getTableReservationOnDate( tableId, reservationDate );
+
+        if ( reservation == null )
+            throw new IllegalArgumentException( "No reservation for the selected table was found" );
+
+        if ( reservation.isActive() )
+            throw new IllegalArgumentException( "Can't delete an active reservation from here, you need to CheckOut" );
     }
 
-    private Long getReserveId() {
-        List<Reservation> tableReservation = Database.getReservationsByTableId( tableId );
-        for ( Reservation reservation : tableReservation )
-            if ( reservation.getDate().equals( reservationDate ) )
-                return reservation.getCustomerId();
-        return NO_CUSTOMER;
-    }
-
+    /**
+     * Deletes the reservation
+     */
     @Override
     public void execute() {
-        // TODO use index to delete after using the equals and hash methods
-        if ( reservationExists )
-            Database.deleteReservation( tableId, reservationDate );
+        Database.deleteReservation( reservation );
     }
 }

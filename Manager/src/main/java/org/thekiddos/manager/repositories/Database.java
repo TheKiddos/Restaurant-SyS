@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Database {
+public final class Database {
     private static ApplicationContext applicationContext;
 
     private static TableRepository tableRepository;
@@ -23,10 +23,6 @@ public class Database {
     private static ReservationsRepository reservationsRepository;
     private static TimeCardRepository timeCardRepository;
     private static EmployeeRepository employeeRepository;
-    // TODO rename getAll methods to include id in the name
-    // TODO use the Optional later
-    // TODO Maybe getIds is bad for performance
-    // TODO Resolve when stuff are allowed to be deleted
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -185,11 +181,7 @@ public class Database {
     }
 
     public static List<Reservation> getCurrentReservations() {
-        List<Reservation> currentReservations = new ArrayList<>();
-
-        reservationsRepository.findByServiceIdDate( LocalDate.now() ).forEach( currentReservations::add );
-
-        return currentReservations;
+        return new ArrayList<>( reservationsRepository.findByServiceIdDate( LocalDate.now() ) );
     }
 
     public static Set<Item> getItems() {
@@ -212,5 +204,52 @@ public class Database {
         return reservationsRepository.findById( new ServiceId( customerId, date ) ).orElse( null );
     }
 
-    // TODO protect against nulls in all Transaction/Models
+    public static void deleteReservation( Reservation reservation ) {
+        reservationsRepository.delete( reservation );
+    }
+
+    public static boolean customerHasReservations( Long customerId ) {
+        return getReservationsByCustomerId( customerId ).size() > 0;
+    }
+
+    public static void removeCustomer( Customer customer ) {
+        customerRepository.delete( customer );
+    }
+
+    public static void removeItem( Item item ) {
+        itemRepository.delete( item );
+    }
+
+    public static boolean isItemInAnyOrder( Item item ) {
+        List<Reservation> currentReservations = getCurrentReservations();
+
+        for ( Reservation reservation : currentReservations ) {
+            if ( reservation.getOrder().containsItem( item ) )
+                return true;
+        }
+
+        return false;
+    }
+
+    public static boolean tableHasReservations( Long id ) {
+        return getReservationsByTableId( id ).size() > 0;
+    }
+
+    public static Reservation getTableReservationOnDate( Long id, LocalDate on ) {
+        List<Reservation> tableReservations = Database.getReservationsByTableId( id );
+
+        if ( tableReservations.size() == 0 )
+            return null;
+
+        for ( Reservation reservation : tableReservations ) {
+            if ( reservation.getDate().equals( on ) )
+                return reservation;
+        }
+
+        return null;
+    }
+
+    public static void removeTable( Table table ) {
+        tableRepository.delete( table );
+    }
 }

@@ -86,7 +86,7 @@ public class PayrollController extends Controller {
         payCheckController.setPayCheck( selectedPayCheck );
         payCheckWindow.getStage().setResizable( false );
         payCheckWindow.getStage().showAndWait();
-        Util.print( payCheckController.getRoot(), true );
+        Util.tryPrintPayCheck();
     }
 
     public void savePayCheck( ActionEvent actionEvent ) {

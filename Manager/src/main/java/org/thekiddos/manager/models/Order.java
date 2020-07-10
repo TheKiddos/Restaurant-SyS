@@ -4,17 +4,19 @@ import lombok.Getter;
 
 import javax.persistence.Table;
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 //TODO This creates an order table with only an id field redundant fix it.
 @Entity
-@Getter
 @Table(name = "ORDERS")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
+    @Getter
     private Long id;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -25,7 +27,7 @@ public class Order {
     private final Map<Item, Integer> items = new HashMap<>();
 
     public Map<Item, Integer> getItems() {
-        return items;
+        return Collections.unmodifiableMap( items );
     }
 
     public double getTotal() {
@@ -35,8 +37,26 @@ public class Order {
         return total;
     }
 
+    public boolean containsItem( Item item ) {
+        Integer count = items.get( item );
+        return count != null && count > 0;
+    }
+
     public void addItem( Item item ) {
         Integer count = items.get( item );
         items.put( item, count == null ? 1 : count + 1 );
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+        Order order = (Order) o;
+        return id.equals( order.id );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( id );
     }
 }

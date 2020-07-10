@@ -9,7 +9,7 @@ import org.thekiddos.manager.gui.controllers.Controller;
 
 @Getter
 @RequiredArgsConstructor
-public class WindowContainer {
+public final class WindowContainer {
     @NonNull
     private final Scene scene;
     @NonNull

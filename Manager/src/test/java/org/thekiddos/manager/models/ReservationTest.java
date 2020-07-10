@@ -107,6 +107,14 @@ class ReservationTest {
     }
 
     @Test
+    void testReserveWithNoCustomerOrTable() {
+        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( tableId, -1L ) );
+        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( -1L, customerId ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( -1L, customerId, LocalDate.now(), LocalTime.now() ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( -1L, customerId, LocalDate.now(), LocalTime.now() ) );
+    }
+
+    @Test
     void testImmediateReservationTransactionOnReservedTableSameDay() {
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
@@ -156,12 +164,11 @@ class ReservationTest {
 
     @Test
     void testDeleteReservation() {
-        new ImmediateReservationTransaction( tableId, customerId ).execute();
+        new ScheduledReservationTransaction( tableId, customerId, LocalDate.now(), LocalTime.now() ).execute();
 
-        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 0.0, LocalDate.now(), null );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, false, 10.0, LocalDate.now(), null );
 
         DeleteReservationTransaction deleteReservation = new DeleteReservationTransaction( tableId, LocalDate.now() );
-        assertEquals( customerId, deleteReservation.getCustomerId() );
         deleteReservation.execute();
 
         List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
@@ -169,13 +176,19 @@ class ReservationTest {
     }
 
     @Test
-    void testDeleteFalseReservation() {
-        DeleteReservationTransaction deleteReservation = new DeleteReservationTransaction( tableId, LocalDate.now() );
-        deleteReservation.execute();
-        assertEquals( -1, deleteReservation.getCustomerId() );
+    void testDeleteActiveReservation() {
+        new ImmediateReservationTransaction( tableId, customerId ).execute();
 
-        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
-        assertEquals( 0, tableReservations.size() );
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 0.0, LocalDate.now(), null );
+
+        assertThrows( IllegalArgumentException.class, () -> new DeleteReservationTransaction( tableId, LocalDate.now() ) );
+
+        validateReservation( Database.getReservationsByTableId( tableId ), 1, 0, tableId, customerId, true, 0.0, LocalDate.now(), null );
+    }
+
+    @Test
+    void testDeleteFalseReservation() {
+        assertThrows( IllegalArgumentException.class, () -> new DeleteReservationTransaction( tableId, LocalDate.now() ) );
     }
 
     private void validateReservation( List<Reservation> reservations, int expectedSize, int indexToCheck, Long tableId, Long customerId, boolean isActive, double total, LocalDate date, LocalTime time ) {
@@ -189,7 +202,7 @@ class ReservationTest {
 
         if ( date != null )
             assertEquals( date, reservation.getDate() );
-        // TODO make sure not a bug
+
         if ( time != null )
             assertEquals( 0, time.until( reservation.getTime(), MINUTES ) );
     }

@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import lombok.Getter;
 
-public class ItemPane extends Label {
+public final class ItemPane extends Label {
     @Getter
     private final Long itemId;
 

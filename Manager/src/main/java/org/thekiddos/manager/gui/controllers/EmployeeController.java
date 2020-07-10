@@ -100,7 +100,7 @@ public class EmployeeController extends Controller {
 
     public void addEmployee( ActionEvent actionEvent ) {
         Stage addEmployeeStage = Util.getWindowContainer( "Add Employee" ).getStage();
-        addEmployeeStage.setOnCloseRequest( e -> fillEmployeeTable( searchEmployeeField.getText() ) ); // TODO make sure this is never null
+        addEmployeeStage.setOnCloseRequest( e -> fillEmployeeTable( searchEmployeeField.getText() ) );
         addEmployeeStage.show();
     }
 

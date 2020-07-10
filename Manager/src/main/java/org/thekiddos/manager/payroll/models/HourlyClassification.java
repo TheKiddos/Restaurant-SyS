@@ -1,6 +1,6 @@
 package org.thekiddos.manager.payroll.models;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Entity
 @NoArgsConstructor
-@Data
+@Getter
 @RequiredArgsConstructor
 @Table(name = "HOURLY_CLASSIFICATION")
 public class HourlyClassification extends PaymentClassification {

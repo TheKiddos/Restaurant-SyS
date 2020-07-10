@@ -8,8 +8,11 @@ import org.thekiddos.manager.repositories.Database;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
+/**
+ * A table that can be reserved by a {@link Customer}
+ */
 @Entity
 @Getter
 @AllArgsConstructor
@@ -21,17 +24,32 @@ public class Table {
     private int maxCapacity;
     private double tableFee;
 
+    /**
+     * Check if the table has any reservations on the specified date
+     * @param on The date to check
+     * @return true if that table is reserved on the specified date
+     */
     public boolean isReserved( LocalDate on ) {
-        List<Reservation> tableReservations = Database.getReservationsByTableId( id );
+        return Database.getTableReservationOnDate( id, on ) != null;
+    }
 
-        if ( tableReservations.size() == 0 )
-            return false;
+    /**
+     * @return true if the table has any reservation
+     */
+    public boolean hasReservation() {
+        return Database.tableHasReservations( id );
+    }
 
-        for ( Reservation reservation : tableReservations ) {
-            if ( reservation.getDate().equals( on ) )
-                return true;
-        }
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+        Table table = (Table) o;
+        return id.equals( table.id );
+    }
 
-        return false;
+    @Override
+    public int hashCode() {
+        return Objects.hash( id );
     }
 }

@@ -6,10 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.AddCustomerTransaction;
 import org.thekiddos.manager.transactions.AddTableTransaction;
 import org.thekiddos.manager.transactions.DeleteTableTransaction;
+import org.thekiddos.manager.transactions.ScheduledReservationTransaction;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +40,15 @@ class TableTest {
     }
 
     @Test
+    void testAddTableWithSameId() {
+        Long tableId = 1L;
+        AddTableTransaction addTable = new AddTableTransaction( tableId );
+        addTable.execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new AddTableTransaction( tableId ) );
+    }
+
+    @Test
     void testDeleteTableTransaction() {
         Long tableId = 2L;
         AddTableTransaction addTable = new AddTableTransaction( tableId );
@@ -52,9 +64,21 @@ class TableTest {
         assertNull( table );
     }
 
-    // TODO test Delete Reserved Table NOW
+    @Test
+    void testDeleteTableThatDoesNotExists() {
+        assertThrows( IllegalArgumentException.class, () -> new DeleteTableTransaction( 1L ) );
+    }
+
     @Test
     void testDeleteReservedTableTransaction() {
+        Long customerId = 1L;
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
 
+        Long tableId = 1L;
+        new AddTableTransaction( tableId ).execute();
+
+        new ScheduledReservationTransaction( tableId, customerId, LocalDate.now(), LocalTime.now() ).execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new DeleteTableTransaction( tableId ) );
     }
 }

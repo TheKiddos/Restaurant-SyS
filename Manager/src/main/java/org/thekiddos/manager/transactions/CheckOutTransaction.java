@@ -13,22 +13,13 @@ public class CheckOutTransaction implements Transaction {
         this.tableId = tableId;
         this.reservation = Database.getCurrentReservationByTableId( tableId );
         if ( reservation == null || !reservation.isActive() )
-            throw new IllegalArgumentException( "Die" ); // TODO change the message
+            throw new IllegalArgumentException( "The reservations is't active or doesn't exists" );
     }
 
     @Override
     public void execute() {
         Database.deleteReservation( tableId, reservation.getDate() );
-        invoice = new Invoice();
-        invoice.setCustomerId( reservation.getCustomerId() );
-        invoice.setTableId( tableId );
-        invoice.setReservationFee( reservation.getReservationFee() );
-        invoice.setDiscount( 0.0 ); // TODO implement these
-        invoice.setOrderTotal( reservation.getOrder().getTotal() );
-        invoice.setTotal( reservation.getTotal() );
-        invoice.setTableFee( reservation.getTableFee() );
-        invoice.setNetAmount( reservation.getTotal() - 0.0 ); // Discount
-        invoice.setItems( reservation.getOrder().getItems() );
+        invoice = new Invoice( reservation, 0.0 );
     }
 
     public Invoice getInvoice() {

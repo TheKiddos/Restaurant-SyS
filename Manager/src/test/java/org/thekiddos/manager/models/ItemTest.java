@@ -6,9 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.repositories.Database;
-import org.thekiddos.manager.transactions.AddItemTransaction;
-import org.thekiddos.manager.transactions.DeleteItemTransaction;
-import org.thekiddos.manager.transactions.Transaction;
+import org.thekiddos.manager.transactions.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,6 +58,15 @@ class ItemTest {
     }
 
     @Test
+    void testAddItemWithSameId() {
+        Long itemId = 1L;
+        AddItemTransaction addItem = new AddItemTransaction( itemId, "French Fries", 10.0 );
+        addItem.execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new AddItemTransaction( itemId, "French Fries", 10.0 ) );
+    }
+
+    @Test
     void testDeleteItemTransaction() {
         Long itemId = 14L;
         new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
@@ -71,5 +78,23 @@ class ItemTest {
         assertNull( frenchFries );
     }
 
-    // TODO test delete item in use now
+    @Test
+    void testDeleteItemThatDoesNotExists() {
+        assertThrows( IllegalArgumentException.class, () -> new DeleteItemTransaction( 1L ) );
+    }
+
+    @Test
+    void testDeleteOrderedItem() {
+        Long tableId = 1L, customerId = 1L, itemId = 1L;
+        new AddTableTransaction( tableId ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+        new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
+        new ImmediateReservationTransaction( tableId, customerId ).execute();
+
+        AddServiceTransaction service = new AddReservationServiceTransaction( tableId );
+        service.addItem( itemId );
+        service.execute();
+
+        assertThrows( IllegalArgumentException.class, () -> new DeleteItemTransaction( itemId ) );
+    }
 }

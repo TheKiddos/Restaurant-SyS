@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class OrderedItem {
+public final class OrderedItem {
     private final SimpleStringProperty itemName;
     private final SimpleIntegerProperty quantity;
     private final SimpleDoubleProperty unitPrice;

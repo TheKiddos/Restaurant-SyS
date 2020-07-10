@@ -2,7 +2,7 @@ package org.thekiddos.manager.payroll.models;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Embeddable
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class TimeCardId implements Serializable {
