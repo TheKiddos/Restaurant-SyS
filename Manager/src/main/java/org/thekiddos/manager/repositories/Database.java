@@ -10,10 +10,7 @@ import org.thekiddos.manager.payroll.repositories.EmployeeRepository;
 import org.thekiddos.manager.payroll.repositories.TimeCardRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public final class Database {
     private static ApplicationContext applicationContext;
@@ -24,6 +21,7 @@ public final class Database {
     private static ReservationsRepository reservationsRepository;
     private static TimeCardRepository timeCardRepository;
     private static EmployeeRepository employeeRepository;
+    private static TypeRepository typeRepository;
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -37,6 +35,7 @@ public final class Database {
         reservationsRepository = getBean( ReservationsRepository.class );
         timeCardRepository = getBean( TimeCardRepository.class );
         employeeRepository = getBean( EmployeeRepository.class );
+        typeRepository = getBean( TypeRepository.class );
     }
 
     public static void deleteAll() {
@@ -256,5 +255,23 @@ public final class Database {
 
     public static void addTimeCard( TimeCard timeCard ) {
         timeCardRepository.save( timeCard );
+    }
+
+    public static Customer getCustomerByEmail( String email ) {
+        return customerRepository.findByEmail( email ).orElse( null );
+    }
+
+    public static Type getTypeId( String typeName ) {
+        return typeRepository.findById( typeName ).orElse( null );
+    }
+
+    public static void addType( Type type ) {
+        typeRepository.save( type );
+    }
+
+    public static Collection<Type> getTypes() {
+        ArrayList<Type> types = new ArrayList<>();
+        typeRepository.findAll().forEach( types::add );
+        return types;
     }
 }

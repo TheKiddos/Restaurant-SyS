@@ -53,11 +53,15 @@ public class GUIController extends Controller implements Remover {
         return root;
     }
 
+    @Override
+    public void refresh() {
+        refreshMainGUI();
+    }
+
     private void initializeMainGUI() {
         orderWindow = Util.getWindowContainer( "Order Summary" );
         orderWindow.getStage().setOnCloseRequest( e -> refreshMainGUI() );
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
-        currentReservationsBox.getChildren().add( new ReservationPane( Database.getReservationsByTableId( 1L ).get( 0 ) ) );
         updateReservedTableTracker();
     }
 

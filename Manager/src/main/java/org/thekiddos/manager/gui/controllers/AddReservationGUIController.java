@@ -10,7 +10,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
@@ -106,9 +105,7 @@ public class AddReservationGUIController extends Controller {
     public void close( ActionEvent actionEvent ) {
         customerSelector.setValue( null );
         tableSelector.setValue( null );
-        Stage stage = (Stage)getScene().getWindow();
-        stage.getOnCloseRequest().handle( null );
-        stage.close();
+        closeWindow();
     }
 
     public void updateTableSelector( ActionEvent actionEvent ) {
@@ -118,5 +115,10 @@ public class AddReservationGUIController extends Controller {
     @Override
     public Node getRoot() {
         return root;
+    }
+
+    @Override
+    public void refresh() {
+
     }
 }

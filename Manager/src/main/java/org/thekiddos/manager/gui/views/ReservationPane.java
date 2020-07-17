@@ -71,8 +71,10 @@ public final class ReservationPane extends TitledPane {
 
         if ( isReservationActiveCheckBox.isSelected() )
             activateButton.setDisable( true );
-        else
+        else {
             viewOrderButton.setDisable( true );
+            checkOutButton.setDisable( true );
+        }
 
         viewOrderButton.setOnAction( this::viewOrder );
         activateButton.setOnAction( this::activateReservation );
@@ -89,6 +91,7 @@ public final class ReservationPane extends TitledPane {
 
         activateButton.setDisable( true );
         viewOrderButton.setDisable( false );
+        checkOutButton.setDisable( false );
         isReservationActiveCheckBox.setSelected( true );
     }
 
@@ -101,8 +104,8 @@ public final class ReservationPane extends TitledPane {
     private void checkOut( ActionEvent actionEvent ) {
         CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
         checkOutTransaction.execute();
-        showAndPrintInvoice( checkOutTransaction.getInvoice() );
         removeSelf();
+        showAndPrintInvoice( checkOutTransaction.getInvoice() );
     }
 
     private void removeSelf() {

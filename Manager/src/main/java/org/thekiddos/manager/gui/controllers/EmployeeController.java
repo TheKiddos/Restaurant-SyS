@@ -98,6 +98,11 @@ public class EmployeeController extends Controller {
         return root;
     }
 
+    @Override
+    public void refresh() {
+        fillEmployeeTable( searchEmployeeField.getText() );
+    }
+
     public void addEmployee( ActionEvent actionEvent ) {
         Stage addEmployeeStage = Util.getWindowContainer( "Add Employee" ).getStage();
         addEmployeeStage.setOnCloseRequest( e -> fillEmployeeTable( searchEmployeeField.getText() ) );

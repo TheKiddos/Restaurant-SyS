@@ -67,4 +67,9 @@ public class ItemController extends Controller {
     public Node getRoot() {
         return root;
     }
+
+    @Override
+    public void refresh() {
+        fillItemTableView();
+    }
 }

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>www.HungerS7.com</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -65,13 +65,13 @@
                             </form>
 
                     </li>
-                    <li><a href="http://127.0.0.1:8000/en/home/main/comment" style="text-decoration: none;font-size: 15px">contact us<i class='far fa-comments'></i></a></li>
+                    <li><a href="/home/main/comment" style="text-decoration: none;font-size: 15px">contact us<i class='far fa-comments'></i></a></li>
                 </ul>
             <ul>
-                <li><a href="http://127.0.0.1:8000/en/home/main/menu" style="text-decoration: none;font-size: 25px">Menu</a></li>
-                <li><a href="http://127.0.0.1:8000/en/home/main/about" style="text-decoration: none;font-size: 25px">ِAbout Our Food</a></li>
-                <li><a href="http://127.0.0.1:8000/en/home/main/deals" style="text-decoration: none;font-size: 25px">Deals & Our App</a></li>
-                <li><a href="http://127.0.0.1:8000/en/home/sitechange" style="text-decoration: none;font-size: 25px"><i class="fa fa-map-marker w3-xxlarge " style="color: #e3342f"></i>Change Your Site </a></li>
+                <li><a href="/home/main/menu" style="text-decoration: none;font-size: 25px">Menu</a></li>
+                <li><a href="/home/main/about" style="text-decoration: none;font-size: 25px">ِAbout Our Food</a></li>
+                <li><a href="/home/main/deals" style="text-decoration: none;font-size: 25px">Deals & Our App</a></li>
+                <li><a href="/home/sitechange" style="text-decoration: none;font-size: 25px"><i class="fa fa-map-marker w3-xxlarge " style="color: #e3342f"></i>Change Your Site </a></li>
 
             </ul>
 
@@ -88,7 +88,7 @@
         <div class="w3-third">
             <h3>FOOTER</h3>
             <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-            <p>Powered by:HungerS7 </p>
+            <p>Powered by: {{ config('app.name', 'Laravel') }} </p>
         </div>
 
         <div class="w3-third">
@@ -128,7 +128,7 @@
             <i class="fa fa-pinterest-p w3-hover-opacity"></i>
             <i class="fa fa-twitter w3-hover-opacity"></i>
             <i class="fa fa-linkedin w3-hover-opacity"></i>
-            <p class="w3-medium">Powered by <a href="http://localhost:8000/ar/home" target="_blank">HungerS7</a></p>
+            <p class="w3-medium">Powered by <a href="/home" target="_blank">{{ config('app.name', 'Laravel') }}</a></p>
         </div>
     </div>
 </footer>
@@ -144,7 +144,7 @@
                 <ul>
                     <li>
                         <div class="panel-group" style="width:140px;height: 15px;font-size: 15px">
-                            <a data-toggle="collapse" href="#collapse1" style="text-decoration: none;">الغة<span class="caret"></span></a>
+                            <a data-toggle="collapse" href="#collapse1" style="text-decoration: none;">اللغة<span class="caret"></span></a>
                         </div>
                         <div id="collapse1" class=" collapse" style=" color: black">
                             <ul>
@@ -172,14 +172,14 @@
                         </form>
 
                     </li>
-                    <li><a href="http://127.0.0.1:8000/ar/home/main/comment" style="text-decoration: none;font-size: 15px">تواصل معنا<i class='far fa-comments'></i></a></li>
+                    <li><a href="home/main/comment" style="text-decoration: none;font-size: 15px">تواصل معنا<i class='far fa-comments'></i></a></li>
                 </ul>
                 <br>
                 <ul>
-                    <li><a href="http://127.0.0.1:8000/ar/home/main/menu" style="text-decoration: none;font-size: 25px">قائمة الطعام</a></li>
-                    <li><a href="http://127.0.0.1:8000/ar/home/main/about" style="text-decoration: none;font-size: 25px">ِحول الماكولات</a></li>
-                    <li><a href="http://127.0.0.1:8000/ar/home/main/deals" style="text-decoration: none;font-size: 25px">التفاصيل و تطبيقنا</a></li>
-                    <li><a href="http://127.0.0.1:8000/ar/home/sitechange" style="text-decoration: none;font-size: 25px"> <i class="fa fa-map-marker w3-xlarge " style="color: #e3342f"></i>غير موقعك </a></li>
+                    <li><a href="/home/main/menu" style="text-decoration: none;font-size: 25px">قائمة الطعام</a></li>
+                    <li><a href="/home/main/about" style="text-decoration: none;font-size: 25px">ِحول الماكولات</a></li>
+                    <li><a href="/home/main/deals" style="text-decoration: none;font-size: 25px">التفاصيل و تطبيقنا</a></li>
+                    <li><a href="/home/sitechange" style="text-decoration: none;font-size: 25px"> <i class="fa fa-map-marker w3-xlarge " style="color: #e3342f"></i>غير موقعك </a></li>
 
                 </ul>
             </div>
@@ -195,7 +195,7 @@
                 <div class="w3-third">
                     <h3>FOOTER</h3>
                     <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-                    <p>Powered by:HungerS7 </p>
+                    <p>Powered by: {{ config('app.name', 'Laravel') }} </p>
                 </div>
 
                 <div class="w3-third">
@@ -235,7 +235,7 @@
                     <i class="fa fa-pinterest-p w3-hover-opacity"></i>
                     <i class="fa fa-twitter w3-hover-opacity"></i>
                     <i class="fa fa-linkedin w3-hover-opacity"></i>
-                    <p class="w3-medium">انشا من قبل <a href="http://localhost:8000/ar/home" target="_blank">HungerS7</a></p>
+                    <p class="w3-medium">انشا من قبل <a href="/home" target="_blank">{{ config('app.name', 'Laravel') }}</a></p>
                 </div>
             </div>
         </footer>

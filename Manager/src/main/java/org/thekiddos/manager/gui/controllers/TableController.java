@@ -42,7 +42,7 @@ public class TableController extends Controller {
 
         tableIdColumn.setCellValueFactory( new PropertyValueFactory<>( "id" ) );
         tableMaxCapacityColumn.setCellValueFactory( new PropertyValueFactory<>( "maxCapacity" ) );
-        tableFeeColumn.setCellValueFactory( new PropertyValueFactory<>( "tableFee" ) );
+        tableFeeColumn.setCellValueFactory( new PropertyValueFactory<>( "fee" ) );
 
         removeTableButton.disableProperty().bind( tableTable.getSelectionModel().selectedItemProperty().isNull() );
 
@@ -102,5 +102,10 @@ public class TableController extends Controller {
     @Override
     public Node getRoot() {
         return root;
+    }
+
+    @Override
+    public void refresh() {
+        fillTableTableView();
     }
 }

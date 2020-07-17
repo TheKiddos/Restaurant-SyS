@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.gui.validator.EmployeeIdValidator;
@@ -27,7 +26,7 @@ public class AddEmployeeController extends Controller {
     public void initialize() {
         idField.setValidators( new EmployeeIdValidator(), new RequiredFieldValidator() );
         nameField.setValidators( new RequiredFieldValidator() );
-        paymentField.setValidators( new MoneyValidator() );
+        paymentField.setValidators( new MoneyValidator(), new RequiredFieldValidator() );
 
         employeePaymentClassificationChoiceBox.getItems().add( "Salaried" );
         employeePaymentClassificationChoiceBox.getItems().add( "Hourly" );
@@ -39,24 +38,21 @@ public class AddEmployeeController extends Controller {
         return root;
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
     public void addEmployee( ActionEvent actionEvent ) {
         if ( !validateEmployee() )
             return;
 
-        AddEmployeeTransaction addEmployeeTransaction = getAddEmployeeTransaction();
-        addEmployeeTransaction.execute();
-
+        getAddEmployeeTransaction().execute();
         closeWindow();
     }
 
-    private void closeWindow() {
-        Stage stage = (Stage)getScene().getWindow();
-        stage.getOnCloseRequest().handle( null );
-        stage.close();
-    }
-
     private boolean validateEmployee() {
-        return idField.validate() && paymentField.validate() && paymentField.validate();
+        return idField.validate() && nameField.validate() && paymentField.validate();
     }
 
     private AddEmployeeTransaction getAddEmployeeTransaction() {
@@ -65,7 +61,7 @@ public class AddEmployeeController extends Controller {
         double payment = Double.parseDouble( paymentField.getText() );
 
         AddEmployeeTransaction addEmployeeTransaction;
-        if ( employeePaymentClassificationChoiceBox.getSelectionModel().getSelectedIndex() == 0 )
+        if ( isSalariedChosen() )
             addEmployeeTransaction = new AddSalariedEmployeeTransaction( id, name, payment );
         else
             addEmployeeTransaction = new AddHourlyEmployeeTransaction( id, name, payment );
@@ -73,9 +69,12 @@ public class AddEmployeeController extends Controller {
         return addEmployeeTransaction;
     }
 
+    private boolean isSalariedChosen() {
+        return employeePaymentClassificationChoiceBox.getSelectionModel().getSelectedIndex() == 0;
+    }
+
     public void changeClassification( ActionEvent actionEvent ) {
-        int selectedIndex = employeePaymentClassificationChoiceBox.getSelectionModel().getSelectedIndex();
-        String prompt = selectedIndex == 0 ? "Salary" : "Hourly Rate";
+        String prompt = isSalariedChosen() ? "Salary" : "Hourly Rate";
         paymentField.setPromptText( prompt );
     }
 }

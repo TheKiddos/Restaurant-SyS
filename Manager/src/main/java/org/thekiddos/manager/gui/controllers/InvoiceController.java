@@ -37,7 +37,7 @@ public class InvoiceController extends Controller {
     public void setInvoice( Invoice invoice ) {
         Customer customer = Database.getCustomerById( invoice.getCustomerId() );
 
-        customerNameLabel.setText( "Customer Id: " + customer.getId() + "\tCustomer Name: " + customer.getFirstName() + " " + customer.getLastName() );
+        customerNameLabel.setText( "Customer Id: " + customer.getId() + "\tCustomer Name: " + customer.getName() );
         tableIdLabel.setText( "Table Id: " + invoice.getTableId() );
         String time = invoice.getTime().format( DateTimeFormatter.ofPattern( "hh:mm a" ) );
         reservationDateTimeLabel.setText( "Reservation Date: " + invoice.getDate() + " At: " + time );
@@ -73,5 +73,10 @@ public class InvoiceController extends Controller {
     @Override
     public Node getRoot() {
         return root;
+    }
+
+    @Override
+    public void refresh() {
+
     }
 }

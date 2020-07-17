@@ -13,14 +13,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import net.rgielen.fxweaver.core.FxWeaver;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.thekiddos.manager.gui.controllers.Controller;
 import org.thekiddos.manager.gui.controllers.PayCheckController;
 import org.thekiddos.manager.gui.models.WindowContainer;
 import org.thekiddos.manager.repositories.Database;
 
 import java.net.URL;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class has several helper methods used throughout the application
@@ -28,10 +33,14 @@ import java.util.Map;
 public final class Util {
     private static final Map<String, WindowContainer> WINDOWS = new HashMap<>();
     private static final ClassLoader CLASS_LOADER = Util.class.getClassLoader();
+    private static BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
 
-    public static final Image ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
+    public static Image ICON; // Initialized in GUIApplication for now so tests can work without graphics getting initialized
     public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
     public static final String ROOT_STYLE_CLASS = "root";
+    private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+
 
     /**
      * This method is used to retrieve the URL of a file in the Resources folder
@@ -56,6 +65,10 @@ public final class Util {
      */
     public static WindowContainer getWindowContainer( String name ) {
         return WINDOWS.get( name );
+    }
+
+    public static Collection<WindowContainer> getWindowContainers() {
+        return Collections.unmodifiableCollection( WINDOWS.values() );
     }
 
     /**
@@ -233,5 +246,14 @@ public final class Util {
 
     public static PageLayout createPageLayout( Paper paper, PageOrientation pageOrientation ) {
         return Printer.getDefaultPrinter().createPageLayout( paper, pageOrientation, Printer.MarginType.HARDWARE_MINIMUM );
+    }
+
+    public static boolean validateEmail( String text ) {
+        Matcher matcher = Util.EMAIL_PATTERN.matcher(text);
+        return matcher.matches();
+    }
+
+    public static String hashPassword( String password ) {
+        return hasher.encode( password );
     }
 }

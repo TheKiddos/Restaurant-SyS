@@ -2,6 +2,7 @@ package org.thekiddos.manager.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,15 +10,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.thekiddos.manager.ManagerApplication;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.*;
-import org.thekiddos.manager.models.Type;
-import org.thekiddos.manager.payroll.transactions.AddHourlyEmployeeTransaction;
-import org.thekiddos.manager.payroll.transactions.AddSalariedEmployeeTransaction;
-import org.thekiddos.manager.transactions.*;
+import org.thekiddos.manager.gui.models.WindowContainer;
 
-// TODO some Controllers are not using the transactions make sure all of them do
+// TODO create refreshable interface or something
 // TODO a lot of the controllers share the same logic abstract it
 public final class GUIApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
+    private Thread refreshThread;
 
     @Override
     public void init() {
@@ -30,8 +29,7 @@ public final class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        fillDatabase();
-
+        Util.ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
         Stage invoiceStage = Util.createWindowContainer( InvoiceController.class, null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
@@ -42,7 +40,7 @@ public final class GUIApplication extends Application {
         orderStage.initModality( Modality.NONE );
 
         Stage addReservationGUIStage = Util.createWindowContainer( AddReservationGUIController.class, null, "Add Reservation" ).getStage();
-        addReservationGUIStage.initModality( Modality.WINDOW_MODAL );
+        addReservationGUIStage.initModality( Modality.NONE );
 
         Stage addItemGUIStage = Util.createWindowContainer( AddItemController.class, null, "Add Item" ).getStage();
         addItemGUIStage.initModality( Modality.NONE );
@@ -59,63 +57,31 @@ public final class GUIApplication extends Application {
         primaryStage = Util.createWindowContainer( GUIController.class, null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();
+
+        refreshThread = new Thread( () -> {
+            while ( true ) {
+                Platform.runLater( () -> refresh() );
+                try {
+                    Thread.sleep( 3000 );
+                } catch ( InterruptedException e ) {
+                    refreshThread = null;
+                    break;
+                }
+            }
+        });
+
+        refreshThread.start();
     }
 
-    /**
-     * This method is for testing purposes only
-     */
-    void fillDatabase() {
-        new AddTableTransaction( 1L ).execute();
-        new AddTableTransaction( 2L ).execute();
-        new AddTableTransaction( 3L ).execute();
-        new AddCustomerTransaction( 1L, "Z", "X" ).execute();
-        new AddCustomerTransaction( 2L, "A", "B" ).execute();
-        new ImmediateReservationTransaction( 1L, 1L ).execute();
-
-        String imagePath = "https://cms.splendidtable.org/sites/default/files/styles/w2000/public/french-fries.jpg?itok=FS-YwUYH";
-        AddItemTransaction addItem = new AddItemTransaction( 1L, "French Fries", 10.0 );
-        addItem.withDescription( "Well it's French Fries what else to say!" )
-                .withType( Type.FOOD )
-                .withType( Type.STARTER )
-                .withType( Type.HOT )
-                .withType( Type.SNACK )
-                .withCalories( 10000.0 )
-                .withFat( 51.0 )
-                .withProtein( 0.4 )
-                .withCarbohydrates( 0.2 )
-                .withImage( imagePath );
-        addItem.execute();
-        new AddItemTransaction( 2L, "Syrian Fries", 15.0 ).execute();
-        new AddItemTransaction( 3L, "Hasan's Fries", 25.0 ).execute();
-
-        AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( 1L );
-        serviceTransaction.addItem( 1L );
-        serviceTransaction.addItem( 1L );
-        serviceTransaction.addItem( 1L );
-        serviceTransaction.addItem( 2L );
-        serviceTransaction.addItem( 3L );
-        serviceTransaction.addItem( 3L );
-
-        new AddItemTransaction( 4L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 4L );
-        new AddItemTransaction( 5L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 5L );
-        new AddItemTransaction( 6L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 6L );
-        new AddItemTransaction( 7L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 7L );
-        new AddItemTransaction( 8L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 8L );
-        new AddItemTransaction( 9L, "Hasan's Fries", 25.0 ).execute();
-        serviceTransaction.addItem( 9L );
-        serviceTransaction.execute();
-
-        new AddSalariedEmployeeTransaction( 1L, "Zahlt", 1000.0 ).execute();
-        new AddHourlyEmployeeTransaction( 2L, "Django", 8.0 ).execute();
+    private void refresh() {
+        for ( WindowContainer windowContainer : Util.getWindowContainers() ) {
+            windowContainer.getController().refresh();
+        }
     }
 
     @Override
     public void stop() {
+        refreshThread.interrupt();
         this.applicationContext.close();
         Platform.exit();
     }

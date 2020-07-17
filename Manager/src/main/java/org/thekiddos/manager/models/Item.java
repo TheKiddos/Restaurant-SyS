@@ -2,10 +2,8 @@ package org.thekiddos.manager.models;
 
 import lombok.*;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Table(name = "items")
 public class Item {
     @NonNull @Id @Getter
     private Long id;
@@ -33,12 +32,12 @@ public class Item {
     private double protein;
     @Getter
     private double carbohydrates;
-    @Getter
+    @Getter @Column(name = "image")
     private String imagePath;
     @Getter
     private String description;
 
-    @ElementCollection(targetClass = Type.class, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Type> types = new HashSet<>();
 
     /**

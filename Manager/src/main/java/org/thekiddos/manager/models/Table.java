@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -17,12 +18,14 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@javax.persistence.Table(name = "SITTING_TABLE")
+@javax.persistence.Table(name = "tables")
 public class Table {
-    @Id
+    @Id @Column(name = "id")
     private Long id;
+    @Column(name = "capacity")
     private int maxCapacity;
-    private double tableFee;
+    @Column(name = "fee")
+    private double fee;
 
     /**
      * Check if the table has any reservations on the specified date

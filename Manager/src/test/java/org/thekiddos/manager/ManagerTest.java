@@ -32,7 +32,7 @@ public class ManagerTest {
 
     private void fillDatabase() {
         new AddTableTransaction( tableId ).execute();
-        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ).execute();
         new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
     }
 

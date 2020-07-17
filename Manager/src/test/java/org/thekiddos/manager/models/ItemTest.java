@@ -28,10 +28,10 @@ class ItemTest {
         String imagePath = "https://cms.splendidtable.org/sites/default/files/styles/w2000/public/french-fries.jpg?itok=FS-YwUYH";
         AddItemTransaction addItem = new AddItemTransaction( itemId, "French Fries", 10.0 );
         addItem.withDescription( "Well it's French Fries what else to say!" )
-                .withType( Type.FOOD )
-                .withType( Type.STARTER )
-                .withType( Type.HOT )
-                .withType( Type.SNACK )
+                .withType( Type.type( "FOOD" ) )
+                .withType( Type.type( "STARTER" ) )
+                .withType( Type.type( "HOT" ) )
+                .withType( Type.type( "SNACK" ) )
                 .withCalories( 10000.0 )
                 .withFat( 51.0 )
                 .withProtein( 0.4 )
@@ -50,10 +50,10 @@ class ItemTest {
         assertEquals( imagePath, frenchFries.getImagePath() );
         assertEquals( "Well it's French Fries what else to say!", frenchFries.getDescription() );
         Set<Type> types = new HashSet<>();
-        types.add( Type.FOOD );
-        types.add( Type.STARTER );
-        types.add( Type.HOT );
-        types.add( Type.SNACK );
+        types.add( Type.type( "FOOD" ) );
+        types.add( Type.type( "STARTER" ) );
+        types.add( Type.type( "HOT" ) );
+        types.add( Type.type( "SNACK" ) );
         assertEquals( types, frenchFries.getTypes() );
     }
 
@@ -87,7 +87,7 @@ class ItemTest {
     void testDeleteOrderedItem() {
         Long tableId = 1L, customerId = 1L, itemId = 1L;
         new AddTableTransaction( tableId ).execute();
-        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ).execute();
         new AddItemTransaction( itemId, "French Fries", 10.0 ).execute();
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 

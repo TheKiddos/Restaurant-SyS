@@ -35,7 +35,7 @@ class TableTest {
         Table table = Database.getTableById( tableId );
         assertEquals( tableId, table.getId() );
         assertEquals( 4, table.getMaxCapacity() );
-        assertEquals( 1.0, table.getTableFee() );
+        assertEquals( 1.0, table.getFee() );
         assertFalse( table.isReserved( LocalDate.now() ) );
     }
 
@@ -72,7 +72,7 @@ class TableTest {
     @Test
     void testDeleteReservedTableTransaction() {
         Long customerId = 1L;
-        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ).execute();
 
         Long tableId = 1L;
         new AddTableTransaction( tableId ).execute();

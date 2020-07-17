@@ -1,5 +1,6 @@
 package org.thekiddos.manager.transactions;
 
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.repositories.Database;
 
@@ -9,16 +10,32 @@ import org.thekiddos.manager.repositories.Database;
  * constructor
  */
 public class AddCustomerTransaction implements Transaction {
-    private Customer customer;
+    private Long customerId;
+    private String name;
+    private String password;
+    private String email;
 
     /**
      * @param customerId Must be unique
      * @throws IllegalArgumentException if the a customer with the provided id already exists
      */
-    public AddCustomerTransaction( Long customerId, String firstName, String lastName ) {
+    public AddCustomerTransaction( Long customerId, String name, String email, String password ) {
         if ( Database.getCustomerById( customerId ) != null )
             throw new IllegalArgumentException( "A customer with " + customerId + " already exists" );
-        customer = new Customer( customerId, firstName, lastName );
+
+        if ( !Util.validateEmail( email ) )
+            throw new IllegalArgumentException( "Please enter a valid email" );
+
+        if ( Database.getCustomerByEmail( email ) != null )
+            throw new IllegalArgumentException( "The Email must be unique" );
+
+        if ( password.length() < 8 )
+            throw new IllegalArgumentException( "Password length must be at least 8" );
+
+        this.customerId = customerId;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     /**
@@ -26,6 +43,7 @@ public class AddCustomerTransaction implements Transaction {
      */
     @Override
     public void execute() {
+        Customer customer = new Customer( customerId, name, email, Util.hashPassword( password ) );
         Database.addCustomer( customer );
     }
 }

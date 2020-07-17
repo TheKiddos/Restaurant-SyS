@@ -15,19 +15,19 @@ import java.util.Objects;
  * An order holds the items that the customer requested, along side their total value and information
  */
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "id")
     @Getter
     private Long id;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "ORDER_ITEMS",
-            joinColumns = {@JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")})
-    @MapKeyJoinColumn(name = "ITEM_ID")
-    @Column(name = "Quantity")
+    @CollectionTable(name = "order_items",
+            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")})
+    @MapKeyJoinColumn(name = "item_id")
+    @Column(name = "quantity")
     private final Map<Item, Integer> items = new HashMap<>();
 
     /**

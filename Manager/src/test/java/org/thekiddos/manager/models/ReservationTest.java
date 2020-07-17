@@ -30,8 +30,8 @@ class ReservationTest {
     private void fillDatabase() {
         new AddTableTransaction( tableId ).execute();
         new AddTableTransaction( tableId2 ).execute();
-        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
-        new AddCustomerTransaction( customerId2, "Kiddo", "Django" ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ).execute();
+        new AddCustomerTransaction( customerId2, "Kiddo2", "mp412cs5@outlook.com", "12345678" ).execute();
     }
 
     @Test
@@ -95,9 +95,12 @@ class ReservationTest {
         reserveTable = new ScheduledReservationTransaction( tableId, customerId2, sixthOfNovemberNextYear, eightPM );
         reserveTable.execute();
 
-        List<Reservation> tableReservations = Database.getReservationsByTableId( tableId );
-        validateReservation( tableReservations, 2, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
-        validateReservation( tableReservations, 2, 1, tableId, customerId2, false, 10.0, sixthOfNovemberNextYear, eightPM );
+        assertEquals( 2, Database.getReservationsByTableId( tableId ).size() );
+
+        List<Reservation> customerReservations = Database.getReservationsByCustomerId( customerId );
+        List<Reservation> customer2Reservations = Database.getReservationsByCustomerId( customerId2 );
+        validateReservation( customerReservations, 1, 0, tableId, customerId, false, 10.0, fifthOfNovemberNextYear, eightPM );
+        validateReservation( customer2Reservations, 1, 0, tableId, customerId2, false, 10.0, sixthOfNovemberNextYear, eightPM );
     }
 
     @Test

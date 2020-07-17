@@ -14,8 +14,9 @@
         <HBox VBox.vgrow="ALWAYS">
             <children>
                 <JFXTextField fx:id="customerIdField" promptText="Id" HBox.hgrow="ALWAYS" />
-                <JFXTextField fx:id="customerFirstNameField" layoutX="10.0" layoutY="10.0" promptText="First Name" HBox.hgrow="ALWAYS" />
-                <JFXTextField fx:id="customerLastNameField" layoutX="134.0" layoutY="10.0" promptText="Last Name" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="customerNameField" layoutX="10.0" layoutY="10.0" promptText="Name" HBox.hgrow="ALWAYS" />
+                <JFXTextField fx:id="customerEmailField" layoutX="134.0" layoutY="10.0" promptText="Email" HBox.hgrow="ALWAYS" />
+                <JFXPasswordField fx:id="customerPasswordField" layoutX="134.0" layoutY="10.0" promptText="Password" HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
         <JFXButton fx:id="addCustomerButton" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#addCustomer" text="+" textFill="WHITE" VBox.vgrow="ALWAYS">
@@ -26,8 +27,8 @@
         <TableView fx:id="customerTable">
             <columns>
                 <TableColumn fx:id="customerIdColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="100.0" text="Customer Id" />
-                <TableColumn fx:id="customerFirstNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="First Name" />
-                <TableColumn fx:id="customerLastNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Last Name" />
+                <TableColumn fx:id="customerNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Name" />
+                <TableColumn fx:id="customerEmailColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Email" />
             </columns>
             <VBox.margin>
                 <Insets />

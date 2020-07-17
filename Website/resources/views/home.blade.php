@@ -3,8 +3,8 @@
 @section('content')
 @if(app()->getLocale()=='en')
     <div class="container-fluid ">
-        <div style="float: right;position: relative;top: -150px"><a  href="http://localhost:8000/en/home/main/orderpage/{{$x}}" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
-        <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="http://localhost:8000/en/home/main/rtable/{{$x}}" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
+        <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
+        <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
 
         <br>   <br>
 <div id="demo" class="carousel slide" data-ride="carousel">
@@ -43,7 +43,7 @@
     <br>
     <a href="#news" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning"> Order Your App From Google play</button></a>
     <br>    <br>
-    <p style="font-size: 10px">*HungerS7 App download and registration required. Mobile Order & Pay available at participating Hnger Station. </p>
+    <p style="font-size: 10px">*{{ config('app.name', 'Laravel') }} App download and registration required. Mobile Order & Pay available at participating Hnger Station. </p>
 </div>
 
 <div class="boximage2">
@@ -56,7 +56,7 @@
     <br>
     <a href="#news" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-danger"> Learn More</button></a>
     <br>    <br>
-    <p style="font-size: 10px">*HungerS7 App download and registration required. Mobile Order & Pay available at participating Hnger Station. </p>
+    <p style="font-size: 10px">*{{ config('app.name', 'Laravel') }} App download and registration required. Mobile Order & Pay available at participating {{ config('app.name', 'Laravel') }} Station. </p>
 </div>
 <div class="underboximage1" >
     <img src="{{asset('food7.jpg')}}" alt="Chicago" width="40%" height="500">
@@ -65,7 +65,7 @@
 <div class="underboximage2" >
 <p style="font-size: 30px"><strong>Nutrition Calculator</strong></p>
 <p style="font-size: 15px"> Explore our nutrition facts and learn more about your favorite McDonald’s menu items.</p>
-    <a href="http://127.0.0.1:8000/en/home/main/calcolate" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning"> Get Nutrition Details</button></a>
+    <a href="/home/main/calculate" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning"> Get Nutrition Details</button></a>
 </div>
 <div class="underboximage3" >
     <p style="font-size: 30px"><strong>Championing Communities from Coast to Coast</strong></p>
@@ -78,8 +78,8 @@
 @else
 
 
-    <div style="float: right;position: relative;top: -150px"><a  href="http://localhost:8000/ar/home/main/orderpage/{{$x}}" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
-    <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="http://localhost:8000/ar/home/main/rtable/{{$x}}" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
+    <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
+    <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
 
     <br> <br>
     <div id="demo" class="carousel slide" data-ride="carousel">
@@ -123,7 +123,7 @@
         <br>    <br>
         <p style="font-size: 10px">
 
-            * يلزم تنزيل تطبيق HungerS7 وتسجيله. خدمة الدفع والدفع عبر الهاتف المحمول متاحة في محطة Hnger المشاركة</p>
+            * يلزم تنزيل تطبيق {{ config('app.name', 'Laravel') }} وتسجيله. خدمة الدفع والدفع عبر الهاتف المحمول متاحة في محطة {{ config('app.name', 'Laravel') }} المشاركة</p>
     </div>
 
     <div class="boximage2">
@@ -138,7 +138,7 @@
         <br>
         <a href="#news" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-danger">اقرا المزيد</button></a>
         <br>    <br>
-        <p style="font-size: 10px">*HungerS7 App download and registration required. Mobile Order & Pay available at participating Hnger Station. </p>
+        <p style="font-size: 10px">*{{ config('app.name', 'Laravel') }} App download and registration required. Mobile Order & Pay available at participating {{ config('app.name', 'Laravel') }} Station. </p>
     </div>
     <div class="underboximage1" >
         <img src="{{asset('food7.jpg')}}" alt="Chicago" width="40%" height="500">
@@ -148,14 +148,14 @@
         <p style="font-size: 30px"><strong>حاسبة التغذية</strong></p>
         <p style="font-size: 15px">
             استكشف حقائق التغذية لدينا وتعرف على المزيد حول عناصر قائمة ماكدونالدز المفضلة لديك.</p>
-        <a href="http://127.0.0.1:8000/ar/home/main/calcolate" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">
+        <a href="/home/main/calculate" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">
                 احصل على تفاصيل التغذية</button></a>
     </div>
     <div class="underboximage3" >
         <p style="font-size: 30px"><strong>مناصرة المجتمعات من الساحل إلى الساحل</strong></p>
         <p style="font-size: 15px">
 
-            لطالما كان HungerS7 قاعدة منزلية للمجتمعات ،
+            لطالما كان {{ config('app.name', 'Laravel') }} قاعدة منزلية للمجتمعات ،
             ونحن فخورون بدعمهم خلال هذه الأزمة. تعرف على المزيد حول كيفية عمل عائلة Hfamily
             معًا لإحداث تأثير إيجابي في جميع أنحاء البلاد وحول العالم.
 

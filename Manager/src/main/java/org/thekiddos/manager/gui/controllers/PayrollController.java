@@ -74,6 +74,11 @@ public class PayrollController extends Controller {
         return root;
     }
 
+    @Override
+    public void refresh() {
+        fillPayCheckTable( searchPayCheckField.getText() );
+    }
+
     public void removePayCheck( ActionEvent actionEvent ) {
         PayCheck selectedPayCheck = payCheckTable.getSelectionModel().getSelectedItem();
         payChecks.remove( selectedPayCheck );

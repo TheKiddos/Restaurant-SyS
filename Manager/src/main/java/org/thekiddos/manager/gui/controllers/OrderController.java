@@ -68,9 +68,12 @@ public class OrderController extends Controller {
         refresh();
     }
 
-    private void refresh() {
+    @Override
+    public void refresh() {
         fillItems();
         orderTable.getItems().clear();
+        if ( reservation == null )
+            return;
         reservation = Database.getReservationById( reservation.getCustomerId(), reservation.getDate() );
         Order order = reservation.getOrder();
         Set<Item> items = new HashSet<>( order.getItems().keySet() );

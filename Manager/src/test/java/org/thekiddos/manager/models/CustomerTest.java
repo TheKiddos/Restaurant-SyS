@@ -25,29 +25,28 @@ class CustomerTest {
     @Test
     void testAddCustomerTransaction() {
         Long customerId = 1L;
-        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" );
+        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" );
         addCustomer.execute();
 
         Customer customer = Database.getCustomerById( customerId );
         assertNotNull( customer );
         assertEquals( customerId, customer.getId() );
-        assertEquals( "Kiddo", customer.getFirstName() );
-        assertEquals( "Zahlt", customer.getLastName() );
+        assertEquals( "Kiddo", customer.getName() );
     }
 
     @Test
     void testAddCustomerWithSameId() {
         Long customerId = 1L;
-        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" );
+        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" );
         addCustomer.execute();
 
-        assertThrows( IllegalArgumentException.class, () -> new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ) );
+        assertThrows( IllegalArgumentException.class, () -> new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ) );
     }
 
     @Test
     void testDeleteCustomerTransaction() {
         Long customerId = 1L;
-        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" );
+        Transaction addCustomer = new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" );
         addCustomer.execute();
 
         Customer customer = Database.getCustomerById( customerId );
@@ -68,7 +67,7 @@ class CustomerTest {
     @Test
     void testDeleteCustomerWithReservation() {
         Long customerId = 1L;
-        new AddCustomerTransaction( customerId, "Kiddo", "Zahlt" ).execute();
+        new AddCustomerTransaction( customerId, "Kiddo", "mp4-12cs5@outlook.com", "12345678" ).execute();
 
         Long tableId = 1L;
         new AddTableTransaction( tableId ).execute();

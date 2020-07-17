@@ -11,9 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.validator.ItemIdValidator;
 import org.thekiddos.manager.models.Type;
+import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddItemTransaction;
 
 import java.io.File;
@@ -39,10 +39,14 @@ public class AddItemController extends Controller {
     private final FileChooser fileChooser = new FileChooser();
 
     public void initialize() {
-        fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter( "Images", "*.png", "*jpg", "*.jpeg", "*.gif", "*.bmp" ) );
-        fileChooser.setTitle( "Select Item Image" );
+        setImageFileChooser();
         fillTypeBoxes();
         setupValidators();
+    }
+
+    private void setImageFileChooser() {
+        fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter( "Images", "*.png", "*jpg", "*.jpeg", "*.gif", "*.bmp" ) );
+        fileChooser.setTitle( "Select Item Image" );
     }
 
     private void setupValidators() {
@@ -62,8 +66,8 @@ public class AddItemController extends Controller {
 
     private void fillTypeBoxes() {
         typePane.getChildren().clear();
-        for ( Type type : Type.values() ) {
-            JFXCheckBox itemBox = new JFXCheckBox( type.toString() );
+        for ( Type type : Database.getTypes() ) {
+            JFXCheckBox itemBox = new JFXCheckBox( type.getName() );
             typePane.getChildren().add( itemBox );
         }
     }
@@ -73,12 +77,21 @@ public class AddItemController extends Controller {
         return root;
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
     public void browseImage( ActionEvent actionEvent ) throws MalformedURLException {
         File selectedImage = fileChooser.showOpenDialog( getScene().getWindow() );
         if ( selectedImage != null ) {
             imagePreview.setImage( new Image( selectedImage.toURI().toURL().toExternalForm() ) );
-            fileChooser.setInitialDirectory( selectedImage.getParentFile() );
+            saveLastDirectoryAsStartDirectory( selectedImage );
         }
+    }
+
+    private void saveLastDirectoryAsStartDirectory( File selectedImage ) {
+        fileChooser.setInitialDirectory( selectedImage.getParentFile() );
     }
 
     public void addItem( ActionEvent actionEvent ) {
@@ -111,14 +124,13 @@ public class AddItemController extends Controller {
         }
 
         for ( Node node : typePane.getChildren() ) {
-            JFXCheckBox type = (JFXCheckBox) node;
-            if ( type.isSelected() )
-                addItemTransaction.withType( Type.valueOf( type.getText() ) );
+            JFXCheckBox typeBox = (JFXCheckBox) node;
+            if ( typeBox.isSelected() )
+                addItemTransaction.withType( Type.type( typeBox.getText() ) );
         }
 
         addItemTransaction.execute();
 
-        getScene().getWindow().getOnCloseRequest().handle( null );
-        Util.getWindowContainer( "Add Item" ).getStage().close();
+        closeWindow();
     }
 }

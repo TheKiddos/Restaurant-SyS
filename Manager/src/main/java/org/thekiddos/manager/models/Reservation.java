@@ -18,6 +18,7 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@javax.persistence.Table(name = "reservations")
 public class Reservation extends Service {
     private double reservationFee;
     private boolean active = false;
@@ -46,7 +47,7 @@ public class Reservation extends Service {
      */
     @Override
     public double getFees() {
-        return reservationFee + table.getTableFee();
+        return reservationFee + table.getFee();
     }
 
     /**
@@ -68,7 +69,7 @@ public class Reservation extends Service {
      * @return The fee for using the table
      */
     public double getTableFee() {
-        return table.getTableFee();
+        return table.getFee();
     }
 
     /**

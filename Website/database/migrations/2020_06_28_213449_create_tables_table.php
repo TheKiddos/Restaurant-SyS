@@ -15,8 +15,8 @@ class CreateTablesTable extends Migration
     {
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
-            $table->integer('capacity');
-            $table->integer('tablefee');
+            $table->integer('capacity')->nullable( false );
+            $table->double('fee')->nullable( false );
             $table->timestamps();
         });
     }

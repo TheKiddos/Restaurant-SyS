@@ -8,18 +8,30 @@ import org.thekiddos.manager.repositories.Database;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class Customer {
     @NonNull @Id
     private Long id;
     @NonNull
-    private String firstName;
-    @NonNull
-    private String lastName;
+    private String name;
+    private String email;
+    private LocalDateTime email_verified_at;
+    private String password;
+    private String remember_token;
+
+    public Customer( Long id, String name, String email, String password ) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     /**
      * Check if the customer has any current or future reservations

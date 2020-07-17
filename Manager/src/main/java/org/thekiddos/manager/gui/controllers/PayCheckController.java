@@ -24,6 +24,11 @@ public class PayCheckController extends Controller {
         return root;
     }
 
+    @Override
+    public void refresh() {
+
+    }
+
     public void setPayCheck( PayCheck selectedPayCheck ) {
         paymentDate.setText( selectedPayCheck.getPayDate().toString() );
         employeeId.setText( String.valueOf( selectedPayCheck.getEmployee().getId() ) );
