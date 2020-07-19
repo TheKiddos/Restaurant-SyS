@@ -25,3 +25,4 @@ Website/.phpunit.result.cache
 /.idea/libraries/
 /Recommendation_Engine/sandbox/data/Reviews.csv
 /.idea/statistic.xml
+/Manager/src/main/resources/application.yml

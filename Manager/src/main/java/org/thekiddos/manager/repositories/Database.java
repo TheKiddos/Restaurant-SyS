@@ -22,6 +22,7 @@ public final class Database {
     private static TimeCardRepository timeCardRepository;
     private static EmployeeRepository employeeRepository;
     private static TypeRepository typeRepository;
+    private static TelegramUserRepository telegramUserRepository;
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -36,6 +37,7 @@ public final class Database {
         timeCardRepository = getBean( TimeCardRepository.class );
         employeeRepository = getBean( EmployeeRepository.class );
         typeRepository = getBean( TypeRepository.class );
+        telegramUserRepository = getBean( TelegramUserRepository.class );
     }
 
     public static void deleteAll() {
@@ -273,5 +275,19 @@ public final class Database {
         ArrayList<Type> types = new ArrayList<>();
         typeRepository.findAll().forEach( types::add );
         return types;
+    }
+
+    public static TelegramUser getTelegramUser( Integer userID ) {
+        TelegramUser telegramUser = new TelegramUser( userID );
+        Optional<TelegramUser> fromDatabase = telegramUserRepository.findById( userID );
+        if ( fromDatabase.isPresent() )
+            return fromDatabase.get();
+
+        telegramUserRepository.save( telegramUser );
+        return telegramUser;
+    }
+
+    public static void updateTelegramUser( TelegramUser currentTelegramUser ) {
+        telegramUserRepository.save( currentTelegramUser );
     }
 }
