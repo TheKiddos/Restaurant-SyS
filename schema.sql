@@ -284,3 +284,13 @@ create table if not exists weekly_schedule
 )
     collate=utf8mb4_unicode_ci;
 
+create table restaurant.telegram_users
+(
+    id int not null
+        primary key,
+    email varchar(191) null,
+    last_command varchar(191) null,
+    verification_code int null,
+    is_verified tinyint(1) null
+);
+
