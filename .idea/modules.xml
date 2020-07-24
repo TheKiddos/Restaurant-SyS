@@ -5,8 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/Manager/Manager.iml" filepath="$PROJECT_DIR$/Manager/Manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/Recommendation_Engine/Recommendation_Engine.iml" filepath="$PROJECT_DIR$/Recommendation_Engine/Recommendation_Engine.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Restaurant-SyS.iml" filepath="$PROJECT_DIR$/.idea/Restaurant-SyS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Waiter/Waiter.iml" filepath="$PROJECT_DIR$/Waiter/Waiter.iml" />
       <module fileurl="file://$PROJECT_DIR$/Website/Website.iml" filepath="$PROJECT_DIR$/Website/Website.iml" />
-      <module fileurl="file://$PROJECT_DIR$/waiter/waiter.iml" filepath="$PROJECT_DIR$/waiter/waiter.iml" />
     </modules>
   </component>
 </project>
