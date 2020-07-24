@@ -9,6 +9,19 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/projectlombok/lombok/1.18.12/lombok-1.18.12.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/mapstruct/mapstruct-processor/1.3.1.Final/mapstruct-processor-1.3.1.Final.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/com/jolira/hickory/1.0.0/hickory-1.0.0.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/mapstruct/mapstruct/1.3.1.Final/mapstruct-1.3.1.Final.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/junit/junit/4.12/junit-4.12.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/assertj/assertj-core/3.11.1/assertj-core-3.11.1.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/com/google/guava/guava/19.0/guava-19.0.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/com/puppycrawl/tools/checkstyle/8.14/checkstyle-8.14.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/javax/inject/javax.inject/1/javax.inject-1.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/codehaus/plexus/plexus-container-default/1.6/plexus-container-default-1.6.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/springframework/spring-test/4.0.3.RELEASE/spring-test-4.0.3.RELEASE.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/springframework/spring-beans/4.0.3.RELEASE/spring-beans-4.0.3.RELEASE.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/org/springframework/spring-context/4.0.3.RELEASE/spring-context-4.0.3.RELEASE.jar" />
+          <entry name="$PROJECT_DIR$/../../../../../ProgramData/.m2/joda-time/joda-time/2.9/joda-time-2.9.jar" />
         </processorPath>
         <module name="Manager" />
       </profile>
