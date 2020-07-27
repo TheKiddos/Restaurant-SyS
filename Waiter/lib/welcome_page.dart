@@ -54,7 +54,7 @@ class _WelcomeMenuState extends State<WelcomeMenu> {
   final Image welcomeImage = Image.asset('images/im1.png', height: 300 ,fit: BoxFit.fitWidth,);
 
   final welcomeMessage = Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(20.0),
     child: Text(
       'Welcome to the restaurant'
           ' please put your table number',
