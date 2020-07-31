@@ -40,4 +40,28 @@ class Item {
     typesClone.addAll( _types );
     return typesClone;
   }
+
+  Map<String, dynamic> toJson() =>
+  {
+    "id": _id,
+    "name": _name,
+    "price": _price,
+    "calories": _calories,
+    "fat": _fat,
+    "protein": _protein,
+    "carbohydrates": _carbohydrates,
+    "imagePath": _imagePath,
+    "description": _description,
+    "types": convertTypesToJson()
+  };
+
+  convertTypesToJson() {
+    List<Map<String, dynamic>> typesJson = [];
+
+    _types.forEach( (type) {
+      typesJson.add( type.toJson() );
+    });
+
+    return typesJson;
+  }
 }

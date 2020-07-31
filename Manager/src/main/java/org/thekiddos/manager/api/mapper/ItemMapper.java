@@ -12,4 +12,25 @@ public interface ItemMapper {
     ItemMapper INSTANCE = Mappers.getMapper( ItemMapper.class );
 
     ItemDTO itemToItemDTO( Item item );
+
+    default Item itemDTOToItem(ItemDTO itemDTO) {
+        if ( itemDTO == null ) {
+            return null;
+        }
+
+        Item item = new Item(
+                itemDTO.getId(),
+                itemDTO.getName(),
+                itemDTO.getPrice(),
+                itemDTO.getCalories(),
+                itemDTO.getFat(),
+                itemDTO.getProtein(),
+                itemDTO.getCarbohydrates(),
+                itemDTO.getImagePath(),
+                itemDTO.getDescription(),
+                itemDTO.getTypes()
+        );
+
+        return item;
+    }
 }

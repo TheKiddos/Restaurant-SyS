@@ -4,13 +4,12 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.views.ItemPane;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Order;
@@ -20,6 +19,8 @@ import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.AddItemsToReservationTransaction;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -80,6 +81,25 @@ public class OrderController extends Controller {
         for ( Item item : items ) {
             int quantity = order.getItems().get( item );
             orderTable.getItems().add( new OrderedItem( item.getName(), quantity, item.getPrice() ) );
+        }
+    }
+
+    public void showAddItemsToOrderDialog( Long tableId, List<Item> orderedItems ) {
+        StringBuilder orderedItemsMessage = new StringBuilder();
+        orderedItemsMessage.append( "For Table: " ).append( tableId ).append( "\n\n" );
+        for ( Item item : orderedItems )
+            orderedItemsMessage.append( item.getName() ).append( " " ).append( item.getPrice() ).append( "\n" );
+
+        Alert alert = Util.createAlert("Add Order?", orderedItemsMessage.toString(), getScene().getWindow(), ButtonType.OK, ButtonType.CANCEL );
+        Optional<ButtonType> clickedButton = alert.showAndWait();
+
+        // Can be refactored with one of the above methods
+        if ( clickedButton.isPresent() && clickedButton.get().equals( ButtonType.OK ) ) {
+            AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( reservation.getReservedTableId() );
+            for ( Item item : orderedItems )
+                serviceTransaction.addItem( item.getId() );
+            serviceTransaction.execute();
+            refresh();
         }
     }
 }

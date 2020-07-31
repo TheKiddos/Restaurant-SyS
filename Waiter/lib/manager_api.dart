@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Waiter/ordered_items_list.dart';
 import 'package:http/http.dart' as http;
 
 import 'auth.dart';
@@ -31,7 +32,8 @@ Future<List<Item>> fetchItems() async {
 
     List<dynamic> responseItems = jsonDecode(response.body)['items'];
     responseItems.forEach( (item) {
-      items.add( Item( item[ 'id' ],
+      Item decodedItem = Item(
+        item[ 'id' ],
         item[ 'name' ],
         item[ 'price' ],
         item[ 'description' ],
@@ -40,7 +42,9 @@ Future<List<Item>> fetchItems() async {
         item[ 'carbohydrates' ],
         item[ 'fat' ],
         item[ 'protein' ],
-        getItemTypes( item[ 'types' ] ),) );
+        getItemTypes( item[ 'types' ] )
+      );
+      items.add( decodedItem );
     });
 
     return items;
@@ -89,5 +93,20 @@ Future<List<Type>> fetchTypes() async {
   }
   catch ( e ) {
     return [];
+  }
+}
+
+Future<bool> postOrder( int tableId, List<Item> items ) async {
+  try {
+    OrderedItemsList orderedItemsList = OrderedItemsList( tableId, items );
+    var response = await http.post( manager_api + 'items/', headers: jsonHeaders, body: jsonEncode( orderedItemsList.toJson() ) ).timeout( Duration( seconds: 5 ) );
+
+    if ( response.statusCode == HttpStatus.created )
+      return true;
+
+    return false;
+  }
+  catch( e ) {
+    return false;
   }
 }

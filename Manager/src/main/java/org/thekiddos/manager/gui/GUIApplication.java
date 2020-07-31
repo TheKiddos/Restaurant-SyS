@@ -14,6 +14,7 @@ import org.thekiddos.manager.gui.models.WindowContainer;
 
 // TODO create refreshable interface or something
 // TODO a lot of the controllers share the same logic abstract it
+// TODO what happens to reservations in the past
 public final class GUIApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
     private Thread refreshThread;
@@ -60,7 +61,7 @@ public final class GUIApplication extends Application {
 
         refreshThread = new Thread( () -> {
             while ( true ) {
-                Platform.runLater( () -> refresh() );
+                Platform.runLater( this::refresh );
                 try {
                     Thread.sleep( 3000 );
                 } catch ( InterruptedException e ) {

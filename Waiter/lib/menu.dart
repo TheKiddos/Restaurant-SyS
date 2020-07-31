@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:Waiter/ordered_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -40,8 +41,12 @@ class _MenuState extends State<Menu> {
       child: Text("View Order", style: etextstyle,),
       shape: RoundedRectangleBorder(),
       onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder:(context) =>  ViewOrder()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder:(context) =>  ViewOrder(
+              widget._tableId, convertToOrderedItems( _itemWidgetsMap.values.toList() ),
+            ),)
+        );
         },
     );
 
@@ -117,5 +122,16 @@ class _MenuState extends State<Menu> {
     });
 
     return itemsOfType;
+  }
+
+  List<OrderedItem> convertToOrderedItems( List<ItemWidget> itemWidgets ) {
+    List<OrderedItem> orderedItems = [];
+
+    itemWidgets.forEach( (itemWidget) {
+      if ( itemWidget.quantity.get() > 0 )
+        orderedItems.add( OrderedItem( itemWidget.item, itemWidget.quantity ) );
+    });
+
+    return orderedItems;
   }
 }

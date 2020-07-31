@@ -12,4 +12,9 @@ class Type {
 
   @override
   int get hashCode => _name.hashCode;
+
+  Map<String, dynamic> toJson() =>
+  {
+    "name": _name
+  };
 }
