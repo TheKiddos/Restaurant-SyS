@@ -19,10 +19,9 @@ import org.thekiddos.manager.services.EmailServiceImpl;
 import javax.annotation.PostConstruct;
 import java.util.concurrent.ThreadLocalRandom;
 
-// TODO each telegram user must have his (id, lastCommand, email, isVerified, isRegistered ) in the database
 @Component
 public class KDRSBot extends TelegramLongPollingBot {
-    private static final Logger logger = LoggerFactory.getLogger(KDRSBot.class);
+    private static final Logger logger = LoggerFactory.getLogger( KDRSBot.class );
     private TelegramUser currentTelegramUser;
     private SendMessage response;
 
@@ -50,102 +49,125 @@ public class KDRSBot extends TelegramLongPollingBot {
     }
 
     @Override
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage()) {
-            Message message = update.getMessage();
-            String messageText = message.getText();
-            Long chatId = message.getChatId();
+    public void onUpdateReceived( Update update ) {
+        if ( !update.hasMessage() ) {
+            return;
+        }
 
-            response = new SendMessage();
-            response.setChatId( chatId );
+        Message message = update.getMessage();
+        String messageText = message.getText();
+        Long chatId = message.getChatId();
 
-            logger.info( String.valueOf( message.getFrom().getId() ) );
-            currentTelegramUser = Database.getTelegramUser( message.getFrom().getId() );
+        response = new SendMessage();
+        response.setChatId( chatId );
 
-            processRequestMessage( messageText );
+        logger.info( String.valueOf( message.getFrom().getId() ) );
+        currentTelegramUser = Database.getTelegramUser( message.getFrom().getId() );
 
-            try {
-                execute(response);
-                logger.info( "Sent message \"{}\" to {}", messageText, chatId );
-            } catch (TelegramApiException e) {
-                logger.error( "Failed to send message \"{}\" to {} due to error: {}", messageText, chatId, e.getMessage() );
-            }
+        processRequestMessage( messageText );
+
+        try {
+            execute( response ) ;
+            logger.info( "Sent message \"{}\" to {}", messageText, chatId );
+        } catch (TelegramApiException e) {
+            logger.error( "Failed to send message \"{}\" to {} due to error: {}", messageText, chatId, e.getMessage() );
         }
     }
 
     private void processRequestMessage( String messageText ) {
         // Commands must come before checking for last commands.
         if ( messageText.equals( Commands.EMAIL ) ) {
-            response.setText( "Please enter the same email you used to create account at our website." );
-            currentTelegramUser.setLastCommand( Commands.EMAIL );
-            Database.updateTelegramUser( currentTelegramUser );
+            sendInstructions( "Please enter the same email you used to create account at our website.", Commands.EMAIL );
         }
         else if ( messageText.equals( Commands.VERIFY ) ) {
-            String email = currentTelegramUser.getEmail();
-            if ( email == null || email.length() == 0 ) {
-                response.setText( "Please enter your email first using the /email command" );
-                currentTelegramUser.setLastCommand( Commands.NOTHING );
-                Database.updateTelegramUser( currentTelegramUser );
-                return;
-            }
-
-            if ( currentTelegramUser.isVerified() ) {
-                response.setText( "Your account is already verified." );
-                currentTelegramUser.setLastCommand( Commands.NOTHING );
-                Database.updateTelegramUser( currentTelegramUser );
-                return;
-            }
-
-            int code = ThreadLocalRandom.current().nextInt( 12345, 99999 );
-            currentTelegramUser.setVerificationCode( code );
-            currentTelegramUser.setLastCommand( Commands.VERIFY );
-            Database.updateTelegramUser( currentTelegramUser );
-            emailService.sendEmail( email, "Verify your email", "Please enter the following code in telegram\n" + code );
-
-            response.setText( "Please enter the code sent to your email" );
+            processVerificationRequest();
         }
         else if ( currentTelegramUser.getLastCommand().equals( Commands.EMAIL ) ) {
-            String email = messageText;
-            if ( !Util.validateEmail( email ) ) {
-                response.setText( "Enter your email in the correct format." );
-                return;
-            }
-
-            Customer customer = Database.getCustomerByEmail( email );
-            if ( customer == null ) {
-                response.setText( "Please register first using our website." );
-                return;
-            }
-
-            response.setText( "Your email was successfully saved. please verify it with the /verify command" );
-            currentTelegramUser.setEmail( email );
-            currentTelegramUser.setVerified( false );
-            currentTelegramUser.setLastCommand( Commands.NOTHING );
-            Database.updateTelegramUser( currentTelegramUser );
+            setEmail( messageText );
         }
         else if ( currentTelegramUser.getLastCommand().equals( Commands.VERIFY ) ) {
-            try {
+            try{
                 int code = Integer.parseInt( messageText );
-                if ( code != currentTelegramUser.getVerificationCode() ) {
-                    response.setText( "Code doesn't match, try again" );
-                    currentTelegramUser.setLastCommand( Commands.NOTHING );
-                    currentTelegramUser.setVerificationCode( null );
-                    Database.updateTelegramUser( currentTelegramUser );
-                    return;
-                }
-
-                currentTelegramUser.setVerified( true );
-                currentTelegramUser.setLastCommand( Commands.NOTHING );
-                Database.updateTelegramUser( currentTelegramUser );
-                response.setText( "Your account was verified!.\n your account is now linked." );
+                verifyCode( code );
             }
             catch ( NumberFormatException e ) {
-                response.setText( "Please enter the correct verification code" );
+                sendInstructions( "That's not a number dumb ass" );
             }
         }
         else {
-            response.setText( "Go to HELL!" );
+            sendInstructions( "Go to HELL!" );
         }
+    }
+
+    private void processVerificationRequest() {
+        String email = currentTelegramUser.getEmail();
+
+        if ( !emailExists( email ) ) {
+            sendInstructions( "Please enter your email first using the /email command", Commands.NOTHING );
+            return;
+        }
+
+        if ( currentTelegramUser.isVerified() ) {
+            sendInstructions( "Your account is already verified.", Commands.NOTHING );
+            return;
+        }
+
+        int code = generateVerificationCode();
+        currentTelegramUser.setVerificationCode( code ); // the send instruction will update the user in the database
+        emailService.sendEmail( email, "Verify your email", "Please enter the following code in telegram\n" + code );
+
+        response.setText( "Please enter the code sent to your email" );
+        sendInstructions( "Please enter the code sent to your email", Commands.VERIFY );
+    }
+
+    private int generateVerificationCode() {
+        return ThreadLocalRandom.current().nextInt( 12345, 99999 );
+    }
+
+    private boolean emailExists( String email ) {
+        return email == null || email.length() == 0;
+    }
+
+    private void setEmail( String email ) {
+        if ( !Util.validateEmail( email ) ) {
+            sendInstructions( "Enter your email in the correct format." );
+            return;
+        }
+
+        Customer customer = Database.getCustomerByEmail( email );
+        if ( customer == null ) {
+            sendInstructions( "Please register first using our website." );
+            return;
+        }
+
+        currentTelegramUser.setEmail( email );
+        currentTelegramUser.setVerified( false );
+        sendInstructions( "Your email was successfully saved. please verify it with the /verify command", Commands.NOTHING ); // updates the user
+    }
+
+    private void verifyCode( int code ) {
+        if ( code != currentTelegramUser.getVerificationCode() ) {
+            clearOldVerificationCode();
+            sendInstructions( "Code doesn't match, try again", Commands.NOTHING );
+            return;
+        }
+
+        currentTelegramUser.setVerified( true );
+        sendInstructions( "Your account was verified!.\n your account is now linked.", Commands.NOTHING );
+    }
+
+    private void clearOldVerificationCode() {
+        currentTelegramUser.setVerificationCode( null );
+    }
+
+    private void sendInstructions( String instructions, String lastCommand ) {
+        sendInstructions( instructions );
+        currentTelegramUser.setLastCommand( lastCommand );
+        Database.updateTelegramUser( currentTelegramUser );
+    }
+
+    private void sendInstructions( String instructions ) {
+        response.setText( instructions );
     }
 
     @PostConstruct
