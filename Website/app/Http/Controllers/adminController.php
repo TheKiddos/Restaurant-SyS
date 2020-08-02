@@ -206,7 +206,8 @@ class adminController extends Controller
     public function recommendForUser() {
         $user_id = Auth::user()[ 'id' ];
 
-        $recommendedItems = DB::select( 'SELECT item_id from restaurant.recommendations WHERE user_id = ?', [ $user_id ] );
+        $recommendedItems = DB::select( 'SELECT * from restaurant.items WHERE items.id in
+                                     ( SELECT item_id from restaurant.recommendations WHERE user_id = ? )', [ $user_id ] );
         return view( 'recommendations' )->with( 'items', $recommendedItems );
     }
 }

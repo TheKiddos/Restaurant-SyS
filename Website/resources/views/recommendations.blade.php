@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class=container-fluid">
-        <div style="margin-left:30%;padding:1px 16px;height:1000px;">
+        <div style="padding:1px 16px;height:1000px;">
             <h1 style="text-align: center;font-size: 50px"><strong>Recommendations</strong></h1>
 
             @foreach($items as $item)
