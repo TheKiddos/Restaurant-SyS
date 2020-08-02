@@ -35,6 +35,7 @@ public final class Util {
     private static final ClassLoader CLASS_LOADER = Util.class.getClassLoader();
     private static BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
 
+    public static final Long INVALID_ID = -1L;
     public static Image ICON; // Initialized in GUIApplication for now so tests can work without graphics getting initialized
     public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
     public static final String ROOT_STYLE_CLASS = "root";

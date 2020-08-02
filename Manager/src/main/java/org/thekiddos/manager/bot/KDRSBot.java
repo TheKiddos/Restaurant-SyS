@@ -7,16 +7,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Customer;
+import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.TelegramUser;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.services.EmailServiceImpl;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -24,6 +28,7 @@ public class KDRSBot extends TelegramLongPollingBot {
     private static final Logger logger = LoggerFactory.getLogger( KDRSBot.class );
     private TelegramUser currentTelegramUser;
     private SendMessage response;
+    private SendPhoto responseWithImage;
 
     private EmailServiceImpl emailService;
 
@@ -67,7 +72,10 @@ public class KDRSBot extends TelegramLongPollingBot {
         processRequestMessage( messageText );
 
         try {
-            execute( response ) ;
+            if ( response == null )
+                execute( responseWithImage ) ;
+            else
+                execute( response );
             logger.info( "Sent message \"{}\" to {}", messageText, chatId );
         } catch (TelegramApiException e) {
             logger.error( "Failed to send message \"{}\" to {} due to error: {}", messageText, chatId, e.getMessage() );
@@ -81,6 +89,9 @@ public class KDRSBot extends TelegramLongPollingBot {
         }
         else if ( messageText.equals( Commands.VERIFY ) ) {
             processVerificationRequest();
+        }
+        else if ( messageText.startsWith( Commands.ITEMS ) ) {
+            sendItemsDetails( messageText );
         }
         else if ( currentTelegramUser.getLastCommand().equals( Commands.EMAIL ) ) {
             setEmail( messageText );
@@ -96,6 +107,47 @@ public class KDRSBot extends TelegramLongPollingBot {
         }
         else {
             sendInstructions( "Go to HELL!" );
+        }
+    }
+
+    private void sendItemsDetails( String messageText ) {
+        Long itemId = extractItemId( messageText );
+        if ( itemId.equals( Util.INVALID_ID ) ) {
+            sendAllItems();
+        }
+        else {
+            sendItemDetails( itemId );
+        }
+        currentTelegramUser.setLastCommand( Commands.ITEMS );
+        Database.updateTelegramUser( currentTelegramUser );
+    }
+
+    private void sendAllItems() {
+        Set<Item> items = Database.getItems();
+
+        StringBuilder itemsInfo = new StringBuilder();
+        items.forEach( item -> itemsInfo.append( item.getId() ).append( "." ).append( item.getName() )
+                .append( ", Price: " ).append( item.getPrice() ).append( "\n\n" ) );
+        response.setText( itemsInfo.toString() );
+    }
+
+    private void sendItemDetails( Long itemId ) {
+        Item item = Database.getItemById( itemId );
+
+        SendPhoto responsePhoto = new SendPhoto();
+        responsePhoto.setChatId( response.getChatId() );
+        responsePhoto.setPhoto( new File( item.getImagePath() ) ); // TODO test it
+        responsePhoto.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
+
+        response = null;
+    }
+
+    private Long extractItemId( String messageText ) {
+        try {
+            return Long.parseLong( messageText.split( "\\s" )[ 1 ] );
+        }
+        catch ( Exception e ) {
+            return Util.INVALID_ID;
         }
     }
 
