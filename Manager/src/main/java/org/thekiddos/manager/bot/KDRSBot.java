@@ -93,6 +93,9 @@ public class KDRSBot extends TelegramLongPollingBot {
         else if ( messageText.startsWith( Commands.ITEMS ) ) {
             sendItemsDetails( messageText );
         }
+        else if ( messageText.equals( Commands.RECOMMEND ) ) {
+            recommendItemsForUser();
+        }
         else if ( currentTelegramUser.getLastCommand().equals( Commands.EMAIL ) ) {
             setEmail( messageText );
         }
@@ -110,45 +113,14 @@ public class KDRSBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendItemsDetails( String messageText ) {
-        Long itemId = extractItemId( messageText );
-        if ( itemId.equals( Util.INVALID_ID ) ) {
-            sendAllItems();
-        }
-        else {
-            sendItemDetails( itemId );
-        }
-        currentTelegramUser.setLastCommand( Commands.ITEMS );
+    private void sendInstructions( String instructions, String lastCommand ) {
+        sendInstructions( instructions );
+        currentTelegramUser.setLastCommand( lastCommand );
         Database.updateTelegramUser( currentTelegramUser );
     }
 
-    private void sendAllItems() {
-        Set<Item> items = Database.getItems();
-
-        StringBuilder itemsInfo = new StringBuilder();
-        items.forEach( item -> itemsInfo.append( item.getId() ).append( "." ).append( item.getName() )
-                .append( ", Price: " ).append( item.getPrice() ).append( "\n\n" ) );
-        response.setText( itemsInfo.toString() );
-    }
-
-    private void sendItemDetails( Long itemId ) {
-        Item item = Database.getItemById( itemId );
-
-        SendPhoto responsePhoto = new SendPhoto();
-        responsePhoto.setChatId( response.getChatId() );
-        responsePhoto.setPhoto( new File( item.getImagePath() ) ); // TODO test it
-        responsePhoto.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
-
-        response = null;
-    }
-
-    private Long extractItemId( String messageText ) {
-        try {
-            return Long.parseLong( messageText.split( "\\s" )[ 1 ] );
-        }
-        catch ( Exception e ) {
-            return Util.INVALID_ID;
-        }
+    private void sendInstructions( String instructions ) {
+        response.setText( instructions );
     }
 
     private void processVerificationRequest() {
@@ -172,12 +144,64 @@ public class KDRSBot extends TelegramLongPollingBot {
         sendInstructions( "Please enter the code sent to your email", Commands.VERIFY );
     }
 
+    private boolean emailExists( String email ) {
+        return email == null || email.length() == 0;
+    }
+
     private int generateVerificationCode() {
         return ThreadLocalRandom.current().nextInt( 12345, 99999 );
     }
 
-    private boolean emailExists( String email ) {
-        return email == null || email.length() == 0;
+    private void sendItemsDetails( String messageText ) {
+        Long itemId = extractItemId( messageText );
+        if ( itemId.equals( Util.INVALID_ID ) ) {
+            sendAllItems();
+        }
+        else {
+            sendItemDetails( itemId );
+        }
+        currentTelegramUser.setLastCommand( Commands.ITEMS );
+        Database.updateTelegramUser( currentTelegramUser );
+    }
+
+    private Long extractItemId( String messageText ) {
+        try {
+            return Long.parseLong( messageText.split( "\\s" )[ 1 ] );
+        }
+        catch ( Exception e ) {
+            return Util.INVALID_ID;
+        }
+    }
+
+    private void sendAllItems() {
+        Set<Item> items = Database.getItems();
+        response.setText( getItemsDetails( items ) );
+    }
+
+    private String getItemsDetails( Set<Item> items ) {
+        StringBuilder itemDetails = new StringBuilder();
+        items.forEach( item -> itemDetails.append( item.getId() ).append( "." ).append( item.getName() )
+                .append( ", Price: " ).append( item.getPrice() ).append( "\n\n" ) );
+        return itemDetails.toString();
+    }
+
+    private void sendItemDetails( Long itemId ) {
+        Item item = Database.getItemById( itemId );
+
+        SendPhoto responsePhoto = new SendPhoto();
+        responsePhoto.setChatId( response.getChatId() );
+        responsePhoto.setPhoto( new File( item.getImagePath() ) ); // TODO test it
+        responsePhoto.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
+
+        response = null;
+    }
+
+    private void recommendItemsForUser() {
+        Set<Item> recommendedItems = Database.getRecommendationsFor( currentTelegramUser.getEmail() );
+        response.setText( getItemsDetails( recommendedItems ) );
+
+        currentTelegramUser.setLastCommand( Commands.RECOMMEND );
+        Database.updateTelegramUser( currentTelegramUser );
     }
 
     private void setEmail( String email ) {
@@ -210,16 +234,6 @@ public class KDRSBot extends TelegramLongPollingBot {
 
     private void clearOldVerificationCode() {
         currentTelegramUser.setVerificationCode( null );
-    }
-
-    private void sendInstructions( String instructions, String lastCommand ) {
-        sendInstructions( instructions );
-        currentTelegramUser.setLastCommand( lastCommand );
-        Database.updateTelegramUser( currentTelegramUser );
-    }
-
-    private void sendInstructions( String instructions ) {
-        response.setText( instructions );
     }
 
     @PostConstruct

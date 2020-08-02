@@ -6,10 +6,10 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,6 +25,11 @@ public class Customer {
     private LocalDateTime email_verified_at;
     private String password;
     private String remember_token;
+
+    @ManyToMany
+    @JoinTable( name = "recommendations", joinColumns = @JoinColumn( name = "user_id" ),
+    inverseJoinColumns = @JoinColumn( name = "item_id" ) )
+    private Set<Item> recommendations;
 
     public Customer( Long id, String name, String email, String password ) {
         this.id = id;

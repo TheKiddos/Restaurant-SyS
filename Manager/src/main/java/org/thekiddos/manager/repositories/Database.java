@@ -290,4 +290,17 @@ public final class Database {
     public static void updateTelegramUser( TelegramUser currentTelegramUser ) {
         telegramUserRepository.save( currentTelegramUser );
     }
+
+    public static Set<Item> getRecommendationsFor( String email ) {
+        Customer customer = getCustomerByEmail( email );
+        return customer.getRecommendations();
+    }
+
+    // TODO WHEN I GET HOME
+    // Check the bot works as expected
+    // Check the recommendation table in the Manager (ManyToMany relation for the Customer)
+    // Check the recommendations work in the website
+    // Add deals button to the app
+    // Finish Bot
+    // Create the delivery table and connect it to the manager, website and bot (when a customer order something outside using the website or the bot the manager receives it and prints it)
 }
