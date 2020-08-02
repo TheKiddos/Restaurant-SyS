@@ -49,5 +49,7 @@ Route::group(
     Route::post('/home/main/rate/{item_id}', 'adminController@evaluationadd');
 
     Route::post('/home/main/orderpage/', 'adminController@orderadd');
+
+    Route::get( '/home/main/recommendations/', 'adminController@recommendForUser');
 });
 

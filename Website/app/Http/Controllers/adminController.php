@@ -202,4 +202,11 @@ class adminController extends Controller
         $x->save();*/
         return redirect('/home/main');
     }
+
+    public function recommendForUser() {
+        $user_id = Auth::user()[ 'id' ];
+
+        $recommendedItems = DB::select( 'SELECT item_id from restaurant.recommendations WHERE user_id = ?', [ $user_id ] );
+        return view( 'recommendations' )->with( 'items', $recommendedItems );
+    }
 }

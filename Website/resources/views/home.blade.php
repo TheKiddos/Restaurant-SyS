@@ -5,6 +5,7 @@
     <div class="container-fluid ">
         <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
         <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
+        <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Recommendations</button></a></div>
 
         <br>   <br>
 <div id="demo" class="carousel slide" data-ride="carousel">
@@ -80,6 +81,7 @@
 
     <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
     <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
+    <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Recommendations</button></a></div>
 
     <br> <br>
     <div id="demo" class="carousel slide" data-ride="carousel">
