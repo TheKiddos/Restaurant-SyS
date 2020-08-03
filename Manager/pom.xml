@@ -26,6 +26,10 @@
             <id>Gluon Repository</id>
             <url>http://nexus.gluonhq.com/nexus/content/repositories/releases/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <build>
@@ -150,6 +154,12 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.PlusHaze</groupId>
+            <artifactId>TrayNotification</artifactId>
+            <version>5393c3a54f</version>
         </dependency>
     </dependencies>
 </project>

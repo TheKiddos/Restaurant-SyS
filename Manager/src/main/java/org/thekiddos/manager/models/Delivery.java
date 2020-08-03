@@ -2,6 +2,7 @@ package org.thekiddos.manager.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.thekiddos.manager.repositories.Database;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
@@ -28,5 +29,9 @@ public class Delivery extends Service {
     @Override
     protected double getFees() {
         return deliveryFee;
+    }
+
+    public String getCustomerName() {
+        return Database.getCustomerById( getCustomerId() ).getName();
     }
 }

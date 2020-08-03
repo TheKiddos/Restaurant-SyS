@@ -1,5 +1,8 @@
 package org.thekiddos.manager;
 
+import com.github.plushaze.traynotification.animations.Animations;
+import com.github.plushaze.traynotification.notification.Notifications;
+import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.JFXButton;
 import javafx.print.*;
 import javafx.scene.Node;
@@ -256,5 +259,16 @@ public final class Util {
 
     public static String hashPassword( String password ) {
         return hasher.encode( password );
+    }
+
+    public static TrayNotification createTrayNotification( String title, String message ) {
+        TrayNotification tray = new TrayNotification();
+        tray.setTitle( title );
+        tray.setMessage( message );
+        tray.setAnimation( Animations.POPUP );
+        tray.setNotification( Notifications.INFORMATION );
+        tray.setTrayIcon( Util.ICON );
+        tray.setImage( Util.ICON );
+        return tray;
     }
 }

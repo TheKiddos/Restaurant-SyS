@@ -55,14 +55,10 @@
          </VBox>
       </GridPane>
    </Tab>
-   <Tab fx:id="tableTab" closable="false" text="Tables">
-   </Tab>
-   <Tab fx:id="customerTab" closable="false" text="Customers">
-   </Tab>
-   <Tab fx:id="itemTab" closable="false" text="Items">
-   </Tab>
-   <Tab fx:id="employeeTab" closable="false" text="Employees">
-   </Tab>
-   <Tab fx:id="payrollTab" closable="false" text="Payroll">
-   </Tab>
+   <Tab fx:id="tableTab" closable="false" text="Tables" />
+   <Tab fx:id="customerTab" closable="false" text="Customers" />
+   <Tab fx:id="itemTab" closable="false" text="Items" />
+   <Tab fx:id="employeeTab" closable="false" text="Employees" />
+   <Tab fx:id="payrollTab" closable="false" text="Payroll" />
+   <Tab fx:id="deliveriesTab" closable="false" text="Deliveries" />
 </JFXTabPane>

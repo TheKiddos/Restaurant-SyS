@@ -31,6 +31,7 @@ public final class GUIApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         Util.ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
+
         Stage invoiceStage = Util.createWindowContainer( InvoiceController.class, null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );
 
@@ -54,6 +55,7 @@ public final class GUIApplication extends Application {
         Util.createWindowContainer( ItemController.class, null, "Items" );
         Util.createWindowContainer( EmployeeController.class, null, "Employees" );
         Util.createWindowContainer( PayrollController.class, null,"Payroll" );
+        Util.createWindowContainer( DeliveryController.class, null,"Delivery" );
 
         primaryStage = Util.createWindowContainer( GUIController.class, null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );

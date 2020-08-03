@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<VBox fx:id="root" styleClass="root" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.DeliveryController">
+    <TableView fx:id="deliveriesTable">
+        <columns>
+            <TableColumn fx:id="customerNameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Customer" />
+            <TableColumn fx:id="totalColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Total" />
+            <TableColumn fx:id="dateColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Date" />
+            <TableColumn fx:id="addressColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="150.0" text="Address" />
+        </columns>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </TableView>
+    <HBox>
+        <JFXButton fx:id="cancelDeliveryButton" disable="true" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#cancelDelivery" text="Cancel Delivery" textFill="WHITE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+        <JFXButton fx:id="checkOutDeliveryButton" disable="true" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onAction="#checkOutDelivery" text="Check Out Delivery" textFill="WHITE" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </JFXButton>
+    </HBox>
+</VBox>

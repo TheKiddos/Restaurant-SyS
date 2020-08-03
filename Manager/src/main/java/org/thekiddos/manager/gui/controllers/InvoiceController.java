@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Invoice;
 import org.thekiddos.manager.models.Item;
@@ -34,16 +35,24 @@ public class InvoiceController extends Controller {
         detailsBox.getChildren().add( ordersGridPane );
     }
     // TODO use TableView like order?
+    // TODO rename and refactor the controls for the delivery/reservation change
     public void setInvoice( Invoice invoice ) {
         Customer customer = Database.getCustomerById( invoice.getCustomerId() );
 
         customerNameLabel.setText( "Customer Id: " + customer.getId() + "\tCustomer Name: " + customer.getName() );
-        tableIdLabel.setText( "Table Id: " + invoice.getTableId() );
+        if ( invoice.getTableId().equals( Util.INVALID_ID ) ) {
+            tableIdLabel.setText( "Address: " + invoice.getDeliveryAddress() );
+            tableFeeLabel.setText( "Delivery Fee: " + invoice.getDeliveryFee() );
+        }
+        else {
+            tableIdLabel.setText( "Table Id: " + invoice.getTableId() );
+            tableFeeLabel.setText( "Table Fee: " + invoice.getTableFee() );
+            reservationFeeLabel.setText( "Reservation Fee: " + invoice.getReservationFee() );
+        }
+
         String time = invoice.getTime().format( DateTimeFormatter.ofPattern( "hh:mm a" ) );
-        reservationDateTimeLabel.setText( "Reservation Date: " + invoice.getDate() + " At: " + time );
+        reservationDateTimeLabel.setText( "Date: " + invoice.getDate() + " At: " + time );
         netAmountLabel.setText( "Net: " + invoice.getNetAmount() );
-        tableFeeLabel.setText( "Table Fee: " + invoice.getTableFee() );
-        reservationFeeLabel.setText( "Reservation Fee: " + invoice.getReservationFee() );
         discountLabel.setText( "Discount: " + invoice.getDiscount() );
         totalLabel.setText( "Total: " + invoice.getTotal() );
 
