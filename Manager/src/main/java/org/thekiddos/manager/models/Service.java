@@ -50,6 +50,14 @@ public abstract class Service {
     }
 
     /**
+     * Add an {@link Item} to the current service
+     * @param item
+     */
+    public void addItem( Item item ) {
+        order.addItem( item );
+    }
+
+    /**
      * @return The service total charges which includes the order charges plus additional fees (reservations, tables, ...etc)
      */
     public double getTotal() {

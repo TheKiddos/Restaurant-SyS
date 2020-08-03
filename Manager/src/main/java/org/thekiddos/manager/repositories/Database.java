@@ -23,6 +23,7 @@ public final class Database {
     private static EmployeeRepository employeeRepository;
     private static TypeRepository typeRepository;
     private static TelegramUserRepository telegramUserRepository;
+    private static DeliveryRepository deliveryRepository;
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -38,15 +39,18 @@ public final class Database {
         employeeRepository = getBean( EmployeeRepository.class );
         typeRepository = getBean( TypeRepository.class );
         telegramUserRepository = getBean( TelegramUserRepository.class );
+        deliveryRepository = getBean( DeliveryRepository.class );
     }
 
     public static void deleteAll() {
         reservationsRepository.deleteAll();
+        deliveryRepository.deleteAll();
         tableRepository.deleteAll();
         customerRepository.deleteAll();
         itemRepository.deleteAll();
         timeCardRepository.deleteAll();
         employeeRepository.deleteAll();
+        telegramUserRepository.deleteAll();
     }
 
     public static Employee getEmployeeById( Long employeeId ) {
@@ -296,6 +300,18 @@ public final class Database {
         return customer.getRecommendations();
     }
 
+    public static List<Delivery> getDeliveryByCustomerId( Long customerId ) {
+        return deliveryRepository.findByServiceIdCustomerId( customerId );
+    }
+
+    public static Delivery getDeliveryById( Long customerId, LocalDate data ) {
+        return deliveryRepository.findById( new ServiceId( customerId, data ) ).orElse( null );
+    }
+
+    public static void addDelivery( Delivery delivery ) {
+        deliveryRepository.save( delivery );
+    }
+
     // TODO
     // Create the delivery table and connect it to the manager, website and bot (when a customer order something outside using the website or the bot the manager receives it and prints it)
     // Check the recommendation table in the Manager (ManyToMany relation for the Customer)
@@ -303,4 +319,5 @@ public final class Database {
     // Check the bot works as expected
     // Finish Bot
     // Check the recommendation python script works
+    // if there is time add tests
 }
