@@ -9,6 +9,8 @@ $(document).ready(function () {
         $(this).removeClass('btn-primary').addClass('btn-default disabled');
 
         var html=`<tr>
+                 <td>${id}</td>
+                 <input type="hidden" name="id[]" value="${id}">
                   <td>${name}</td>
                   <input type="hidden" name="name[]" value="${name}">
                  <td> <input type="number" name="quntites[]" data-price="${price}" class="input" min="1" ></td>

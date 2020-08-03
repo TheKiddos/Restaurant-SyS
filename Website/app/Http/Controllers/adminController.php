@@ -80,7 +80,9 @@ class adminController extends Controller
         $email=Auth::user()->email;
         $city=$request->city;
         $region=$request->region;
-        DB::select('UPDATE userlaters SET  city=?,  region=? WHERE email=?',[$city,$region,$email]);
+
+        DB::delete( 'DELETE FROM restaurant.userlaters WHERE email = ?', [$email]);
+        DB::insert('INSERT INTO restaurant.userlaters(email, city, region) VALUES(?, ?, ?)',[$email,$city,$region]);
 
         return redirect('/home/main');
     }
@@ -175,31 +177,18 @@ class adminController extends Controller
 
     public function orderadd(Request $request)
     {
-        /*
-        $x=new Order();
-        $n=$request->name;
-        foreach ($n as $item){
-            $m[]=$item;
-        }
-        $name=  implode(",", $m);
-        $x->name=$name;
-        $q=$request->quntites;
-        foreach ($q as $i){
-            $v[]=$i;
+        $order = new Order();
+        $order->save();
 
+        $order_id = $order[ 'id' ];
+
+        for ( $i = 0; $i < count( $request[ 'id' ] ); $i++ ) {
+            DB::insert( 'INSERT INTO restaurant.order_items(order_id, item_id, quantity) VALUES(?, ?, ?)', [$order_id, $request['id'][$i], $request['quntites'][$i]]);
         }
-        $quntites= implode(",", $v);
-        $x->quntites=$quntites;
-        $p=$request->price;
-        foreach ($p as $j){
-            $h[]=$j;
-        }
-        $price= implode(",", $h);
-        $x->price=$price;
-        $x->email=Auth::user()->email;
-        $x->site=$request->site;
-        $x->total=$request->total;
-        $x->save();*/
+
+        DB::insert( 'INSERT INTO restaurant.deliveries(user_id, date, service_time, delivery_address, delivery_fee, order_id) VALUES( ?, ?, ?, ?, ?, ?)',
+            [ Auth::user()['id'], date('Y-m-d' ), date( 'H:i:s' ), $request['site'], 0, $order_id ]);
+
         return redirect('/home/main');
     }
 

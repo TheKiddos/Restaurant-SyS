@@ -59,6 +59,7 @@
                 @endforeach
                 <table class="table table-striped addt">
                     <tr>
+                        <th>id</th>
                         <th>name</th>
                         <th>quantity</th>
                         <th>price</th>
