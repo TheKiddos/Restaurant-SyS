@@ -312,6 +312,10 @@ public final class Database {
         deliveryRepository.save( delivery );
     }
 
+    public static void deleteDelivery( Delivery delivery ) {
+        deliveryRepository.delete( delivery );
+    }
+
     // TODO
     // Create the delivery table and connect it to the manager, website and bot (when a customer order something outside using the website or the bot the manager receives it and prints it)
     // Check the recommendation table in the Manager (ManyToMany relation for the Customer)

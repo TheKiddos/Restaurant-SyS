@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Set;
 
+// TODO This looks like a good candidate for the Singleton pattern
 @Entity
 @Getter
 @NoArgsConstructor

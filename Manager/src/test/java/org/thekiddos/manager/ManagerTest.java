@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.thekiddos.manager.models.Delivery;
 import org.thekiddos.manager.models.Invoice;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
@@ -37,7 +38,7 @@ public class ManagerTest {
     }
 
     @Test
-    void testPayForOrder() {
+    void testPayForOrderInReservation() {
         new ImmediateReservationTransaction( tableId, customerId ).execute();
 
         AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
@@ -64,6 +65,33 @@ public class ManagerTest {
 
         assertEquals( customerId, invoice.getCustomerId() );
         assertEquals( tableId, invoice.getTableId() );
+
+        assertEquals( LocalDate.now(), invoice.getDate() );
+        assertEquals( 1, invoice.getItems().size() );
+        assertEquals( 1, invoice.getItems().get( Database.getItemById( itemId ) ) );
+    }
+
+    @Test
+    void testPayForOrderInDelivery() {
+        new ImmediateDeliveryTransaction( customerId, "Hell", 1000, Database.getItems() ).execute();
+
+        List<Delivery> deliveries = Database.getDeliveryByCustomerId( customerId );
+        assertEquals( 1, deliveries.size() );
+
+        CheckOutTransaction checkOut = new CheckOutTransaction( deliveries.get( 0 ) );
+        checkOut.execute();
+
+        deliveries = Database.getDeliveryByCustomerId( customerId );
+        assertEquals( 0, deliveries.size() );
+
+        Invoice invoice = checkOut.getInvoice();
+        assertNotNull( invoice );
+        assertEquals( 1010.0, invoice.getTotal() );
+        assertEquals( 10.0, invoice.getOrderTotal() );
+        assertEquals( 0.0, invoice.getDiscount() );
+        assertEquals( 1010.0, invoice.getNetAmount() );
+
+        assertEquals( customerId, invoice.getCustomerId() );
 
         assertEquals( LocalDate.now(), invoice.getDate() );
         assertEquals( 1, invoice.getItems().size() );

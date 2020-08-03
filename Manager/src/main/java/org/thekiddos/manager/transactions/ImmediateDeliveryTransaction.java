@@ -30,8 +30,8 @@ public class ImmediateDeliveryTransaction implements Transaction {
         if ( customer == null )
             throw new IllegalArgumentException( "No customer exists with an id of " + customerId );
 
-        if ( Database.getDeliveryById( customerId, deliveryDate ) != null )
-            throw new IllegalArgumentException( "Customer " + customerId + " can't make more than another delivery until the first delivery has arrived." );
+        if ( customer.hasDelivery() )
+            throw new IllegalArgumentException( "Customer " + customerId + " can't make more than another delivery until the first delivery has arrived/canceled." );
 
         this.customerId = customerId;
     }

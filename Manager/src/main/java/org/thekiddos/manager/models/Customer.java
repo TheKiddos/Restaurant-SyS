@@ -45,4 +45,8 @@ public class Customer {
     public boolean hasReservation() {
         return Database.customerHasReservations( id );
     }
+
+    public boolean hasDelivery() {
+        return Database.getDeliveryByCustomerId( id ).size() > 0;
+    }
 }
