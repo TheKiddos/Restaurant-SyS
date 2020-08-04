@@ -70,9 +70,8 @@ public class DeliveryController extends Controller {
     public void refresh() {
         int numberOfDeliveries = deliveriesTable.getItems().size();
 
-        fillDeliveriesTable();
-
         if ( numberOfDeliveries != deliveriesTable.getItems().size() ) {
+            fillDeliveriesTable();
             Util.createTrayNotification( "New Delivery Has Arrived!",  "Please see Manager for more details" ).showAndDismiss( Duration.seconds( 2  ) );
         }
     }

@@ -1,6 +1,6 @@
-create schema if not exists restaurant collate latin1_swedish_ci;
+create schema restaurant collate latin1_swedish_ci;
 
-create table if not exists comments
+create table comments
 (
     id bigint unsigned auto_increment
         primary key,
@@ -15,7 +15,24 @@ create table if not exists comments
 create index comments_email_index
     on comments (email);
 
-create table if not exists employee
+create table deliveries
+(
+    user_id bigint not null,
+    date date not null,
+    service_time time not null,
+    delivery_address varchar(191) not null,
+    delivery_fee double not null,
+    order_id bigint not null,
+    created_at timestamp null,
+    updated_at timestamp null,
+    primary key (user_id, date)
+)
+    collate=utf8mb4_unicode_ci;
+
+create index deliveries_order_id_foreign
+    on deliveries (order_id);
+
+create table employee
 (
     id bigint unsigned auto_increment
         primary key,
@@ -28,7 +45,7 @@ create table if not exists employee
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists failed_jobs
+create table failed_jobs
 (
     id bigint unsigned auto_increment
         primary key,
@@ -40,13 +57,13 @@ create table if not exists failed_jobs
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists hibernate_sequence
+create table hibernate_sequence
 (
     next_val bigint null
 )
     engine=InnoDB;
 
-create table if not exists hibernate_sequences
+create table hibernate_sequences
 (
     sequence_name varchar(255) not null
         primary key,
@@ -54,7 +71,7 @@ create table if not exists hibernate_sequences
 )
     engine=InnoDB;
 
-create table if not exists hold_method
+create table hold_method
 (
     id bigint unsigned auto_increment
         primary key,
@@ -63,7 +80,7 @@ create table if not exists hold_method
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists hourly_classification
+create table hourly_classification
 (
     id bigint unsigned auto_increment
         primary key,
@@ -75,7 +92,7 @@ create table if not exists hourly_classification
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists items
+create table items
 (
     id bigint unsigned auto_increment
         primary key,
@@ -92,7 +109,7 @@ create table if not exists items
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists items_types
+create table items_types
 (
     item_id bigint not null,
     types_name varchar(191) not null,
@@ -102,7 +119,7 @@ create table if not exists items_types
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists migrations
+create table migrations
 (
     id int unsigned auto_increment
         primary key,
@@ -111,7 +128,7 @@ create table if not exists migrations
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists monthly_schedule
+create table monthly_schedule
 (
     id bigint unsigned auto_increment
         primary key,
@@ -120,7 +137,7 @@ create table if not exists monthly_schedule
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists order_items
+create table order_items
 (
     order_id bigint not null,
     item_id bigint not null,
@@ -134,7 +151,7 @@ create table if not exists order_items
 create index order_items_item_id_foreign
     on order_items (item_id);
 
-create table if not exists orders
+create table orders
 (
     id bigint unsigned auto_increment
         primary key,
@@ -143,7 +160,7 @@ create table if not exists orders
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists password_resets
+create table password_resets
 (
     email varchar(191) not null,
     token varchar(191) not null,
@@ -154,7 +171,7 @@ create table if not exists password_resets
 create index password_resets_email_index
     on password_resets (email);
 
-create table if not exists ratings
+create table ratings
 (
     user_id bigint not null,
     item_id bigint not null,
@@ -168,7 +185,7 @@ create table if not exists ratings
 create index ratings_item_id_foreign
     on ratings (item_id);
 
-create table if not exists recommendations
+create table recommendations
 (
     user_id bigint not null,
     item_id bigint not null,
@@ -181,7 +198,7 @@ create table if not exists recommendations
 create index recommendations_item_id_foreign
     on recommendations (item_id);
 
-create table if not exists reservations
+create table reservations
 (
     user_id bigint not null,
     date date not null,
@@ -202,7 +219,7 @@ create index reservations_order_id_foreign
 create index reservations_table_id_foreign
     on reservations (table_id);
 
-create table if not exists salaried_classification
+create table salaried_classification
 (
     id bigint unsigned auto_increment
         primary key,
@@ -212,7 +229,7 @@ create table if not exists salaried_classification
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists tables
+create table tables
 (
     id bigint unsigned auto_increment
         primary key,
@@ -223,7 +240,18 @@ create table if not exists tables
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists timecard
+create table telegram_users
+(
+    id int not null
+        primary key,
+    email varchar(191) not null,
+    last_command varchar(191) not null,
+    verification_code int not null,
+    is_verified tinyint(1) not null
+)
+    collate=utf8mb4_unicode_ci;
+
+create table timecard
 (
     date date not null,
     hourly_classification_id bigint not null,
@@ -236,14 +264,14 @@ create table if not exists timecard
 create index timecard_hourly_classification_id_foreign
     on timecard (hourly_classification_id);
 
-create table if not exists types
+create table types
 (
     name varchar(191) not null
         primary key
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists userlaters
+create table userlaters
 (
     id bigint unsigned auto_increment
         primary key,
@@ -258,7 +286,7 @@ create table if not exists userlaters
 create index userlaters_email_index
     on userlaters (email);
 
-create table if not exists users
+create table users
 (
     id bigint unsigned auto_increment
         primary key,
@@ -274,7 +302,7 @@ create table if not exists users
 )
     collate=utf8mb4_unicode_ci;
 
-create table if not exists weekly_schedule
+create table weekly_schedule
 (
     id bigint unsigned auto_increment
         primary key,
@@ -283,14 +311,4 @@ create table if not exists weekly_schedule
     updated_at timestamp null
 )
     collate=utf8mb4_unicode_ci;
-
-create table restaurant.telegram_users
-(
-    id int not null
-        primary key,
-    email varchar(191) null,
-    last_command varchar(191) null,
-    verification_code int null,
-    is_verified tinyint(1) null
-);
 

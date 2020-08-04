@@ -76,7 +76,7 @@ public class PayrollController extends Controller {
 
     @Override
     public void refresh() {
-        fillPayCheckTable( searchPayCheckField.getText() );
+
     }
 
     public void removePayCheck( ActionEvent actionEvent ) {

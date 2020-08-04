@@ -106,6 +106,7 @@ public class TableController extends Controller {
 
     @Override
     public void refresh() {
-        fillTableTableView();
+        if ( tableTable.getItems().size() != Database.getTablesId().size() )
+            fillTableTableView();
     }
 }

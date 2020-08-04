@@ -1,5 +1,6 @@
 package org.thekiddos.manager.bot;
 
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.thekiddos.manager.services.EmailServiceImpl;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.net.URI;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -72,9 +74,9 @@ public class KDRSBot extends TelegramLongPollingBot {
         processRequestMessage( messageText );
 
         try {
-            if ( response == null )
+            if ( response == null && responseWithImage != null )
                 execute( responseWithImage ) ;
-            else
+            else if ( response != null )
                 execute( response );
             logger.info( "Sent message \"{}\" to {}", messageText, chatId );
         } catch (TelegramApiException e) {
@@ -85,7 +87,12 @@ public class KDRSBot extends TelegramLongPollingBot {
     private void processRequestMessage( String messageText ) {
         // Commands must come before checking for last commands.
         if ( messageText.equals( Commands.EMAIL ) ) {
-            sendInstructions( "Please enter the same email you used to create account at our website.", Commands.EMAIL );
+            if ( currentTelegramUser.isVerified() ) {
+                sendInstructions( "Can't Change your email after it was verified" );
+            }
+            else {
+                sendInstructions( "Please enter the same email you used to create account at our website.", Commands.EMAIL );
+            }
         }
         else if ( messageText.equals( Commands.VERIFY ) ) {
             processVerificationRequest();
@@ -145,7 +152,7 @@ public class KDRSBot extends TelegramLongPollingBot {
     }
 
     private boolean emailExists( String email ) {
-        return email == null || email.length() == 0;
+        return email != null && email.length() > 0;
     }
 
     private int generateVerificationCode() {
@@ -185,13 +192,15 @@ public class KDRSBot extends TelegramLongPollingBot {
         return itemDetails.toString();
     }
 
+    @SneakyThrows
     private void sendItemDetails( Long itemId ) {
         Item item = Database.getItemById( itemId );
 
-        SendPhoto responsePhoto = new SendPhoto();
-        responsePhoto.setChatId( response.getChatId() );
-        responsePhoto.setPhoto( new File( item.getImagePath() ) ); // TODO test it
-        responsePhoto.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
+        responseWithImage = new SendPhoto();
+        responseWithImage.setChatId( response.getChatId() );
+        File image =  new File( new URI( item.getImagePath() ).toURL().getFile() );
+        responseWithImage.setPhoto( image );
+        responseWithImage.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
 
         response = null;
     }

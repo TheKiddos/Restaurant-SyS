@@ -68,12 +68,15 @@ public class GUIController extends Controller implements Remover {
     }
 
     public void refreshMainGUI() {
-        ReservationPane.resetCounter();
-        currentReservationsBox.getChildren().clear();
         List<Reservation> currentReservations = Database.getCurrentReservations();
-        for ( Reservation reservation : currentReservations )
-            currentReservationsBox.getChildren().add( new ReservationPane( reservation ) );
-        updateReservedTableTracker();
+
+        if ( currentReservationsBox.getChildren().size() != currentReservations.size() ) {
+            ReservationPane.resetCounter();
+            currentReservationsBox.getChildren().clear();
+            for ( Reservation reservation : currentReservations )
+                currentReservationsBox.getChildren().add( new ReservationPane( reservation ) );
+            updateReservedTableTracker();
+        }
     }
 
     private void updateReservedTableTracker() {

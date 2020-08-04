@@ -15,10 +15,10 @@ class TelegramUser extends Migration
     {
         Schema::create('telegram_users', function (Blueprint $table) {
             $table->integer("id")->primary();
-            $table->string('email');
-            $table->string('last_command');
-            $table->integer( 'verification_code');
-            $table->boolean( 'is_verified');
+            $table->string('email')->nullable();
+            $table->string('last_command')->nullable();
+            $table->integer( 'verification_code')->nullable();
+            $table->boolean( 'is_verified')->default(false);
         });
     }
 

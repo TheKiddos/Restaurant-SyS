@@ -70,6 +70,7 @@ public class ItemController extends Controller {
 
     @Override
     public void refresh() {
-        fillItemTableView();
+        if ( itemTable.getItems().size() != Database.getItemsId().size() )
+            fillItemTableView();
     }
 }

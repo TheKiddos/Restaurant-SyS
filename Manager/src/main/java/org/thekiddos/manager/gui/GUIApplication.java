@@ -61,11 +61,12 @@ public final class GUIApplication extends Application {
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();
 
+        // TODO Instead of this we can use an http request with the rest API to signal a refresh event (but for debugging purposes this will currently stay)
         refreshThread = new Thread( () -> {
             while ( true ) {
                 Platform.runLater( this::refresh );
                 try {
-                    Thread.sleep( 3000 );
+                    Thread.sleep( 5000 );
                 } catch ( InterruptedException e ) {
                     refreshThread = null;
                     break;

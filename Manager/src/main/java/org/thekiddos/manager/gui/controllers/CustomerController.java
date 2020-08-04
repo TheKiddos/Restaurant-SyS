@@ -99,6 +99,7 @@ public class CustomerController extends Controller {
 
     @Override
     public void refresh() {
-        fillCustomerTableView();
+        if ( getScene().getWindow().isShowing() && Database.getCustomersId().size() != customerTable.getItems().size() )
+            fillCustomerTableView();
     }
 }

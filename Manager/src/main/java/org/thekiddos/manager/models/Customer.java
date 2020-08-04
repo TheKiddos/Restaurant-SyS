@@ -26,7 +26,7 @@ public class Customer {
     private String password;
     private String remember_token;
 
-    @ManyToMany
+    @ManyToMany( fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinTable( name = "recommendations", joinColumns = @JoinColumn( name = "user_id" ),
     inverseJoinColumns = @JoinColumn( name = "item_id" ) )
     private Set<Item> recommendations;
