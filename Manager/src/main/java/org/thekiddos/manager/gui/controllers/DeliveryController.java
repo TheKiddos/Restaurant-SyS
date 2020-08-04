@@ -68,9 +68,9 @@ public class DeliveryController extends Controller {
 
     @Override
     public void refresh() {
-        int numberOfDeliveries = deliveriesTable.getItems().size();
+        int currentNumberOfDeliveries = deliveriesTable.getItems().size();
 
-        if ( numberOfDeliveries != deliveriesTable.getItems().size() ) {
+        if ( currentNumberOfDeliveries != Database.getDeliveries().size() ) {
             fillDeliveriesTable();
             Util.createTrayNotification( "New Delivery Has Arrived!",  "Please see Manager for more details" ).showAndDismiss( Duration.seconds( 2  ) );
         }

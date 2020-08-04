@@ -7,7 +7,7 @@ import org.thekiddos.manager.repositories.Database;
 import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.List;
 
 // TODO This looks like a good candidate for the Singleton pattern
 @Entity
@@ -18,7 +18,7 @@ public class Delivery extends Service {
     private String deliveryAddress;
     private double deliveryFee;
 
-    public Delivery( Long customerId, LocalDate serviceDate, LocalTime serviceTime, String deliveryAddress, double deliveryFee, Set<Item> items ) {
+    public Delivery( Long customerId, LocalDate serviceDate, LocalTime serviceTime, String deliveryAddress, double deliveryFee, List<Long> items ) {
         super( customerId, serviceDate, serviceTime );
         this.deliveryAddress = deliveryAddress;
         this.deliveryFee = deliveryFee;

@@ -317,15 +317,13 @@ public final class Database {
     }
 
     public static List<Delivery> getDeliveries() {
-        List<Delivery> deliveries = new ArrayList<Delivery>( );
+        List<Delivery> deliveries = new ArrayList<>( );
         deliveryRepository.findAll().forEach( deliveries::add );
         return deliveries;
     }
 
     // TODO
     // Add deals button to the app
-    // Check the bot works as expected
-    // Finish Bot
     // if there is time add tests
     // FIX date in laravel not zone specific use Carbon
 }

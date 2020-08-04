@@ -2,22 +2,21 @@ package org.thekiddos.manager.transactions;
 
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Delivery;
-import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.List;
 
 public class ImmediateDeliveryTransaction implements Transaction {
     private Long customerId;
     private final String address;
     private final double fee;
-    private final Set<Item> items;
+    private final List<Long> items;
     private final LocalDate deliveryDate = LocalDate.now();
     private final LocalTime deliveryTime = LocalTime.now();
 
-    public ImmediateDeliveryTransaction( Long customerId, String address, double fee, Set<Item> items ) {
+    public ImmediateDeliveryTransaction( Long customerId, String address, double fee, List<Long> items ) {
         setCustomerId( customerId );
         this.address = address;
         this.fee = fee;

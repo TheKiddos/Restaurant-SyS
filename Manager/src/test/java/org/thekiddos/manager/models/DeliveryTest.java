@@ -11,8 +11,8 @@ import org.thekiddos.manager.transactions.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,13 +21,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DeliveryTest {
     private final Long customerId = 1L, customerId2 = 2L, itemId = 1L, itemId2 = 2L, itemId3 = 3L;
-    private Set<Item> items;
+    private List<Long> items = Arrays.asList( 1L, 2L, 3L, 1L );
 
     @BeforeEach
     void setUp() {
         Database.deleteAll();
         fillDatabase();
-        items = Database.getItems();
     }
 
     private void fillDatabase() {
@@ -44,8 +43,8 @@ class DeliveryTest {
         deliveryTransaction.execute();
 
         List<Delivery> deliveries = Database.getDeliveryByCustomerId( customerId );
-        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1010, LocalDate.now(), LocalTime.now() );
-        validateOrder( deliveries.get( 0 ).getOrder(), 3, 10 );
+        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1012, LocalDate.now(), LocalTime.now() );
+        validateOrder( deliveries.get( 0 ).getOrder(), 3, 12 );
     }
 
     @Test
@@ -61,8 +60,8 @@ class DeliveryTest {
         assertThrows( IllegalArgumentException.class, () -> new ImmediateDeliveryTransaction( customerId, "Hell", 1000, items ) );
 
         List<Delivery> deliveries = Database.getDeliveryByCustomerId( customerId );
-        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1010, LocalDate.now(), LocalTime.now() );
-        validateOrder( deliveries.get( 0 ).getOrder(), 3, 10 );
+        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1012, LocalDate.now(), LocalTime.now() );
+        validateOrder( deliveries.get( 0 ).getOrder(), 3, 12 );
     }
 
     @Test
@@ -70,8 +69,8 @@ class DeliveryTest {
         new ImmediateDeliveryTransaction( customerId, "Hell", 1000, items ).execute();
 
         List<Delivery> deliveries = Database.getDeliveryByCustomerId( customerId );
-        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1010, LocalDate.now(), LocalTime.now() );
-        validateOrder( deliveries.get( 0 ).getOrder(), 3, 10 );
+        validateDelivery( deliveries, 1, 0, customerId, "Hell", 1012, LocalDate.now(), LocalTime.now() );
+        validateOrder( deliveries.get( 0 ).getOrder(), 3, 12 );
 
         DeleteDeliveryTransaction deleteDeliveryTransaction = new DeleteDeliveryTransaction( customerId, LocalDate.now() );
         deleteDeliveryTransaction.execute();

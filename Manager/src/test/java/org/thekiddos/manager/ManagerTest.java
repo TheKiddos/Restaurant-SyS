@@ -14,6 +14,7 @@ import org.thekiddos.manager.transactions.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -73,7 +74,7 @@ public class ManagerTest {
 
     @Test
     void testPayForOrderInDelivery() {
-        new ImmediateDeliveryTransaction( customerId, "Hell", 1000, Database.getItems() ).execute();
+        new ImmediateDeliveryTransaction( customerId, "Hell", 1000, new ArrayList<>( Database.getItemsId() ) ).execute();
 
         List<Delivery> deliveries = Database.getDeliveryByCustomerId( customerId );
         assertEquals( 1, deliveries.size() );

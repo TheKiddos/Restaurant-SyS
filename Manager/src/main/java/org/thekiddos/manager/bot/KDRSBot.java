@@ -18,10 +18,17 @@ import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.TelegramUser;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.services.EmailServiceImpl;
+import org.thekiddos.manager.transactions.ImmediateDeliveryTransaction;
+import org.thekiddos.manager.transactions.ScheduledReservationTransaction;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -102,6 +109,15 @@ public class KDRSBot extends TelegramLongPollingBot {
         }
         else if ( messageText.equals( Commands.RECOMMEND ) ) {
             recommendItemsForUser();
+        }
+        else if ( messageText.startsWith( Commands.FREE_TABLES ) ) {
+            sendFreeTablesOn( messageText.substring( Commands.FREE_TABLES.length() + 1 ) ); // + 1 for the space (/freetables 2020-02-10)
+        }
+        else if ( messageText.startsWith( Commands.RESERVE ) ) {
+            reserveTable( messageText );
+        }
+        else if ( messageText.startsWith( Commands.ORDER ) ) {
+            createDelivery( messageText );
         }
         else if ( currentTelegramUser.getLastCommand().equals( Commands.EMAIL ) ) {
             setEmail( messageText );
@@ -211,6 +227,86 @@ public class KDRSBot extends TelegramLongPollingBot {
 
         currentTelegramUser.setLastCommand( Commands.RECOMMEND );
         Database.updateTelegramUser( currentTelegramUser );
+    }
+
+    private void sendFreeTablesOn( String dateString ) {
+        try {
+            LocalDate date = LocalDate.parse( dateString );
+
+            Set<Long> freeTables = Database.getFreeTablesOn( date );
+            response.setText( freeTables.toString() );
+
+            currentTelegramUser.setLastCommand( Commands.FREE_TABLES );
+            Database.updateTelegramUser( currentTelegramUser );
+        }
+        catch ( DateTimeParseException e ) {
+            sendInstructions( "Please enter the date in the correct format YYYY-MM-DD eg: 2020-03-20", Commands.FREE_TABLES );
+        }
+
+    }
+
+    private void reserveTable( String messageText ) {
+        try {
+            String[] args = getArgumentsBySpace( messageText, 4 );
+
+            Long tableId = Long.parseLong( args[ 1 ] );
+            Long customerId = Database.getCustomerByEmail( currentTelegramUser.getEmail() ).getId();
+            LocalDate reservationDate = LocalDate.parse( args[ 2 ] );
+            LocalTime reservationTime = LocalTime.parse( args[ 3 ] );
+
+            new ScheduledReservationTransaction( tableId, customerId, reservationDate, reservationTime ).execute();
+
+            sendInstructions( "Your reservation was completed successfully!", Commands.RESERVE );
+        }
+        catch ( Exception e ) {
+            sendInstructions( "Wrong or missing information, please enter the message in the current format\n" +
+                    "TABLE_ID YYYY-MM-DD HH:MM:SS\n" +
+                    "for example:\n" +
+                    "/reserve 1 2020-02-03 18:00:00\n" +
+                    "Also make sure that the table exists, free on the selected date, and the date/time are not in the past." );
+        }
+    }
+
+    private String[] getArgumentsBySpace( String messageText, int lowerBoundOfArguments ) {
+        return getArguments( messageText, lowerBoundOfArguments, "\\s" );
+    }
+
+    private String[] getArgumentsByLine( String messageText, int lowerBoundOfArguments ) {
+        return getArguments( messageText, lowerBoundOfArguments, "\n" );
+    }
+
+    private String[] getArguments( String messageText, int lowerBoundOfArguments, String splitBy ) {
+        String[] args = messageText.split( splitBy );
+        if ( args.length < lowerBoundOfArguments )
+            throw new IllegalArgumentException( "The message should contains at least " + lowerBoundOfArguments + " arguments" );
+        return args;
+    }
+
+
+    private void createDelivery( String messageText ) {
+        try {
+            String[] args = getArgumentsByLine( messageText, 3 );
+
+            Long customerId = Database.getCustomerByEmail( currentTelegramUser.getEmail() ).getId();
+            String address = args[ 1 ];
+            List<Long> items = extractItemIds( args[ 2 ] );
+
+            new ImmediateDeliveryTransaction( customerId, address, 0.0, items ).execute();
+
+            sendInstructions( "Delivery Added Thanks for trusting us", Commands.ORDER );
+        }
+        catch ( Exception e ) {
+            sendInstructions( "Please enter the message in the correct format first line /order, second line your address, third line item ids separated by space", Commands.ORDER );
+        }
+    }
+
+    private List<Long> extractItemIds( String itemIdsString ) {
+        List<Long> itemIds = new ArrayList<>();
+
+        for ( String itemIdString : getArgumentsBySpace( itemIdsString, 1 ) )
+            itemIds.add( Long.parseLong( itemIdString ) );
+
+        return itemIds;
     }
 
     private void setEmail( String email ) {
