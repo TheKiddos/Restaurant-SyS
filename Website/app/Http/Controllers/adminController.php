@@ -123,7 +123,6 @@ class adminController extends Controller
         return view('reserve',compact('table_id','reservation_date' ));
     }
 
-    // TODO fix timezone issues with date and time
     public function reserveadd(Request $request)
     {
         $validatedData = $request->validate([

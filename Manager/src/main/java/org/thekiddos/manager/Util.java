@@ -204,8 +204,6 @@ public final class Util {
         alert.getDialogPane().getScene().getStylesheets().add( STYLESHEET_PATH );
     }
 
-    // TODO make it create Exceptions
-
     /**
      * This function is used to print a paycheck from the {@link PayCheckController#getRoot()}
      * it uses a {@link Paper} of size {@link Paper#LEGAL} and {@link PageOrientation#LANDSCAPE}

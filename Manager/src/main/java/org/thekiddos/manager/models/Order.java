@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-//TODO This creates an order table with only an id field redundant fix it.
-
 /**
  * An order holds the items that the customer requested, along side their total value and information
  */

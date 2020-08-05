@@ -20,7 +20,6 @@ public class Type {
     @Id
     private String name;
 
-    // TODO maybe I need to create a tracnsaction?
     public static Type type( String typeName ) {
         Type type = Database.getTypeId( typeName );
         if ( type == null ) {

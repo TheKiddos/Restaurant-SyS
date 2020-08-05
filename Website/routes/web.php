@@ -13,7 +13,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// TODO fix images in items
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
