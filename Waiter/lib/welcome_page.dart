@@ -1,3 +1,4 @@
+import 'package:Waiter/view_deals.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -15,8 +16,18 @@ class WelcomeMenu extends StatefulWidget {
 
 class _WelcomeMenuState extends State<WelcomeMenu> {
   final _formKey = GlobalKey<FormState>();
+  Widget dealsButton;
 
   Widget build(BuildContext context) {
+    dealsButton = RawMaterialButton(
+      padding: EdgeInsets.all(10),
+      child: Text("View Deals", style: etextstyle,),
+      shape: RoundedRectangleBorder(),
+      onPressed: () {
+        Navigator.push( context, MaterialPageRoute( builder:(context) =>  ViewDeals(), ) );
+      },
+    );
+
     return Scaffold(
         //AppBar section
         appBar: AppBar(
@@ -29,7 +40,8 @@ class _WelcomeMenuState extends State<WelcomeMenu> {
         ),
         backgroundColor: Colors.white12,
         //Body section
-        body: buildMainBody());
+        body: buildMainBody()
+    );
   }
 
   Widget buildMainBody() {
@@ -46,7 +58,8 @@ class _WelcomeMenuState extends State<WelcomeMenu> {
                   ],
                 ),
               ),
-              TableIdForm(formKey: _formKey)
+              TableIdForm(formKey: _formKey),
+              dealsButton
             ],
       ));
   }
