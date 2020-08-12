@@ -77,11 +77,13 @@ class _WelcomeMenuState extends State<WelcomeMenu> {
 }
 
 class TableIdForm extends StatelessWidget {
-  const TableIdForm({
+  TableIdForm({
     @required GlobalKey<FormState> formKey,
   })  : _formKey = formKey;
 
+  final tableIdFieldController = TextEditingController();
   final GlobalKey<FormState> _formKey;
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +93,9 @@ class TableIdForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           //TextFormField
-          TableIdField(),
+          TableIdField(tableIdFieldController: tableIdFieldController,),
           //Button section
-          GoToMenuButton(formKey: _formKey),
+          GoToMenuButton(formKey: _formKey, tableIdFieldController: tableIdFieldController,),
         ],
       ),
     );
@@ -101,11 +103,14 @@ class TableIdForm extends StatelessWidget {
 }
 
 class TableIdField extends StatefulWidget {
+  final TextEditingController tableIdFieldController;
+
+  const TableIdField({Key key, this.tableIdFieldController}) : super(key: key);
+
   @override
   _TableIdFieldState createState() => _TableIdFieldState();
 }
 
-int tableId;
 class _TableIdFieldState extends State<TableIdField> {
   @override
   Widget build(BuildContext context) {
@@ -116,7 +121,8 @@ class _TableIdFieldState extends State<TableIdField> {
         cursorColor: Colors.white,
         maxLength: 5,
         keyboardType: TextInputType.number,
-        validator: validateAndSetTableId,
+        validator: validateInteger,
+        controller: widget.tableIdFieldController,
         decoration: InputDecoration(
             hintStyle: ktextformstyle,
             hintText: 'Table Number:',
@@ -129,22 +135,24 @@ class _TableIdFieldState extends State<TableIdField> {
     );
   }
 
-  String validateAndSetTableId(value) {
+  String validateInteger(value) {
         if ( value.isEmpty )
           return 'Please enter the tableId';
 
-        tableId = int.tryParse( value );
-        if ( tableId == null )
-          return 'That\'s not a number dumb ass';
+        if ( int.tryParse( value ) == null )
+          return 'That\'s not a integer dumb ass';
 
         return null;
       }
 }
 
 class GoToMenuButton extends StatelessWidget {
+  final TextEditingController tableIdFieldController;
+
   const GoToMenuButton({
     Key key,
     @required GlobalKey<FormState> formKey,
+    this.tableIdFieldController
   })  : _formKey = formKey,
         super(key: key);
 
@@ -178,9 +186,16 @@ class GoToMenuButton extends StatelessWidget {
 
   goToMenu( BuildContext context ) async {
       EasyLoading.show(status: "Checking table status..." );
+
+      if ( !_formKey.currentState.validate() ) {
+        EasyLoading.showError( "Please enter a number asshole." );
+        return;
+      }
+
+      int tableId = int.tryParse( tableIdFieldController.text );
       bool requestSuccess = false;
       await tableExists( tableId ).then( (value) => requestSuccess = value );
-      if ( !_formKey.currentState.validate() || !requestSuccess ) {
+      if ( !requestSuccess ) {
         EasyLoading.showError( "Make sure the table exists and that it's active" );
         return;
       }

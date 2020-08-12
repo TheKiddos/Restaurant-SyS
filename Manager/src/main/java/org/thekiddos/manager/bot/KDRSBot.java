@@ -222,6 +222,10 @@ public class KDRSBot extends TelegramLongPollingBot {
     }
 
     private void recommendItemsForUser() {
+        if ( !currentTelegramUser.isVerified() ) {
+            sendInstructions( "Please verify your email first." );
+            return;
+        }
         Set<Item> recommendedItems = Database.getRecommendationsFor( currentTelegramUser.getEmail() );
         response.setText( getItemsDetails( recommendedItems ) );
 
@@ -246,6 +250,10 @@ public class KDRSBot extends TelegramLongPollingBot {
     }
 
     private void reserveTable( String messageText ) {
+        if ( !currentTelegramUser.isVerified() ) {
+            sendInstructions( "Please verify your email first." );
+            return;
+        }
         try {
             String[] args = getArgumentsBySpace( messageText, 4 );
 
@@ -284,6 +292,10 @@ public class KDRSBot extends TelegramLongPollingBot {
 
 
     private void createDelivery( String messageText ) {
+        if ( !currentTelegramUser.isVerified() ) {
+            sendInstructions( "Please verify your email first." );
+            return;
+        }
         try {
             String[] args = getArgumentsByLine( messageText, 3 );
 

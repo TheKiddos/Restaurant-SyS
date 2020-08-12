@@ -89,8 +89,4 @@ public final class GUIApplication extends Application {
         this.applicationContext.close();
         Platform.exit();
     }
-
-    public static void main( String[] args) {
-        launch(args);
-    }
 }

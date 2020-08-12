@@ -36,7 +36,7 @@ public class GUIController extends Controller implements Remover {
     public Tab deliveriesTab;
 
     private Stage addReservationGUIStage;
-    private WindowContainer orderWindow;
+
     // TODO fix this annoying refresh behavior of closing all ReservationPanes
     // TODO add search bar for tables
     // TODO Alerts
@@ -61,7 +61,7 @@ public class GUIController extends Controller implements Remover {
     }
 
     private void initializeMainGUI() {
-        orderWindow = Util.getWindowContainer( "Order Summary" );
+        WindowContainer orderWindow = Util.getWindowContainer( "Order Summary" );
         orderWindow.getStage().setOnCloseRequest( e -> refreshMainGUI() );
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
         updateReservedTableTracker();

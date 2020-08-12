@@ -18,7 +18,7 @@ public interface ItemMapper {
             return null;
         }
 
-        Item item = new Item(
+        return new Item(
                 itemDTO.getId(),
                 itemDTO.getName(),
                 itemDTO.getPrice(),
@@ -30,7 +30,5 @@ public interface ItemMapper {
                 itemDTO.getDescription(),
                 itemDTO.getTypes()
         );
-
-        return item;
     }
 }

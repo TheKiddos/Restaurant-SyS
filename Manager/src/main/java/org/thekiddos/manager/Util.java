@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 public final class Util {
     private static final Map<String, WindowContainer> WINDOWS = new HashMap<>();
     private static final ClassLoader CLASS_LOADER = Util.class.getClassLoader();
-    private static BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
+    private static final BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
 
     public static final Long INVALID_ID = -1L;
     public static Image ICON; // Initialized in GUIApplication for now so tests can work without graphics getting initialized

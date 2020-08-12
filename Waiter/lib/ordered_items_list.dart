@@ -10,7 +10,7 @@ class OrderedItemsList {
   Map<String, dynamic> toJson() =>
       {
         "table": createTableJson(),
-        "itemList": createItemList()
+        "items": items
       };
 
   createTableJson() {
@@ -22,14 +22,5 @@ class OrderedItemsList {
         };
 
     return table;
-  }
-
-  createItemList() {
-    Map<String, dynamic> itemList =
-    {
-      "items": items
-    };
-
-    return itemList;
   }
 }

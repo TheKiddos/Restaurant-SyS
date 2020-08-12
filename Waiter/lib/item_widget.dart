@@ -79,8 +79,7 @@ class _ItemWidgetState extends State<ItemWidget> {
       icon: Icons.remove,
       onPressed: (){
         setState(() {
-          if(widget.quantity.get()>0)
-            widget.quantity.remove();
+            widget.quantity.removeOne();
         });
       },
     );
@@ -89,7 +88,7 @@ class _ItemWidgetState extends State<ItemWidget> {
       icon: Icons.add,
       onPressed: (){
         setState(() {
-          widget.quantity.add();
+          widget.quantity.addOne();
         });
       },
     );

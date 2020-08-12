@@ -39,4 +39,4 @@ while True:
             recommendations = recommendation_engine.recommend_for_user(user_id)
             for item_id in recommendations:
                 db_connection.execute(f'INSERT INTO recommendations(user_id, item_id) VALUES({user_id}, {item_id})')
-    time.sleep(1)
+    time.sleep(3600)

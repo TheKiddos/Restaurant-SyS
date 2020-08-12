@@ -41,8 +41,7 @@ public class Item {
     private Set<Type> types = new HashSet<>();
 
     /**
-     * Returns a set of this items {@link Type}s
-     * @return
+     * @return a set of this items {@link Type}s
      */
     public Set<Type> getTypes() {
         return Collections.unmodifiableSet( types );
@@ -59,5 +58,21 @@ public class Item {
     @Override
     public int hashCode() {
         return Objects.hash( id );
+    }
+
+    /**
+     * While the Object equals method only compares the Id of the items
+     * this method compares all important fields (name, price, ...etc). This is especially useful when comparing the item to another item which was
+     * generated outside the current program eg: REST API Post request.
+     * @param other The item to compare the current item to
+     * @return true if both items match, false otherwise.
+     */
+    public boolean deepEquals( Item other ) {
+        if ( other == null )
+            return false;
+        return id.equals( other.getId() ) &&
+                name.equals( other.getName() ) &&
+                price == other.getPrice() &&
+                types.equals( other.getTypes() );
     }
 }

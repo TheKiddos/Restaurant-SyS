@@ -27,7 +27,7 @@ public class HourlyClassification extends PaymentClassification {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "HOURLY_CLASSIFICATION_ID", referencedColumnName = "ID")
     @MapKey(name = "timeCardId.date")
-    private Map<LocalDate, TimeCard> timeCards = new HashMap<>();
+    private final Map<LocalDate, TimeCard> timeCards = new HashMap<>();
 
     public TimeCard getTimeCard( LocalDate date ) {
         return timeCards.get( date );

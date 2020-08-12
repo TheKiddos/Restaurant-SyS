@@ -11,7 +11,7 @@ import org.thekiddos.manager.services.TypeService;
 @Controller
 @RequestMapping("/api/types")
 public class TypeDTOController {
-    private TypeService typeService;
+    private final TypeService typeService;
 
     public TypeDTOController( TypeService typeService ) {
         this.typeService = typeService;

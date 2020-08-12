@@ -21,37 +21,42 @@ class ViewOrder extends StatelessWidget {
         centerTitle: true,
         title: Text( "Your Order" ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text( "Order for table: " + _tableId.toString() ),
-          Expanded(
-            child: ListView (
-                children: getOrderedItems(),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text( "Order for table: " + _tableId.toString() ),
             ),
-          ),
-          RaisedButton(
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            //button color
-            color: Colors.white12,
-            //The highlight color of the button's
-            highlightColor: Colors.grey,
-            //The color to use for this button's text.
-            textColor: Colors.white,
-            //We have a problem here
-            padding: EdgeInsets.all(30),
-            //The splash color of the button's
-            splashColor: Colors.deepPurple,
-            onPressed: () {
-              sendOrder( _tableId, _orderedItems );
-            },
-            child: Text(
-              "Send Order",
-              style: ktextstyle,
+            Expanded(
+              child: ListView (
+                  children: getOrderedItems(),
+              ),
             ),
-          ),
-        ],
+            RaisedButton(
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              //button color
+              color: Colors.white12,
+              //The highlight color of the button's
+              highlightColor: Colors.grey,
+              //The color to use for this button's text.
+              textColor: Colors.white,
+              //We have a problem here
+              padding: EdgeInsets.all(30),
+              //The splash color of the button's
+              splashColor: Colors.deepPurple,
+              onPressed: () {
+                sendOrder( _tableId, _orderedItems );
+              },
+              child: Text(
+                "Send Order",
+                style: ktextstyle,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -74,7 +79,7 @@ class ViewOrder extends StatelessWidget {
     });
 
     bool requestSuccess = false;
-    postOrder( tableId, items ).then( (value) => requestSuccess = value );
+    await postOrder( tableId, items ).then( (value) => requestSuccess = value );
     
     requestSuccess ? EasyLoading.showSuccess( "Order sent successfully!" ) : EasyLoading.showError( "Something went wrong. Please check the manager." );
   }

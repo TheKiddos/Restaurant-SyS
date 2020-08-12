@@ -12,7 +12,6 @@ import java.time.LocalTime;
  * A TimeCard records how many hours an employee worked on a specified date
  */
 public class AddTimeCardTransaction implements Transaction {
-    private final Employee emp;
     private final LocalDate date;
     private final LocalTime timeWorked;
     private final HourlyClassification hourlyClassification;
@@ -21,7 +20,7 @@ public class AddTimeCardTransaction implements Transaction {
      * @throws IllegalArgumentException if the Employee doesn't exists or if the employee isn't hourly
      */
     public AddTimeCardTransaction( Long empId, LocalDate date, LocalTime timeWorked ) {
-        emp = Database.getEmployeeById( empId );
+        Employee emp = Database.getEmployeeById( empId );
         if ( emp == null )
             throw new IllegalArgumentException( "No such Employee exists" );
 

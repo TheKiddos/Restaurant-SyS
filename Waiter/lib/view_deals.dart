@@ -13,7 +13,7 @@ class ViewDeals extends StatelessWidget {
           centerTitle: true,
           title: Text(
             'Digital Restaurant System™',
-            style: TextStyle(fontSize: 28.0),
+            style: TextStyle(fontSize: 22.0),
           ),
         ),
         backgroundColor: Colors.white12,

@@ -11,7 +11,6 @@ import 'type.dart';
 Future<bool> tableExists( int tableId ) async {
   try {
     var response = await http.get( manager_api + 'tables/$tableId', headers: headers ).timeout( Duration( seconds: 3 ) );
-
     if ( response.statusCode == HttpStatus.ok )
       return true;
 
@@ -99,7 +98,7 @@ Future<List<Type>> fetchTypes() async {
 Future<bool> postOrder( int tableId, List<Item> items ) async {
   try {
     OrderedItemsList orderedItemsList = OrderedItemsList( tableId, items );
-    var response = await http.post( manager_api + 'items/', headers: jsonHeaders, body: jsonEncode( orderedItemsList.toJson() ) ).timeout( Duration( seconds: 5 ) );
+    var response = await http.post( manager_api + 'items/', headers: jsonHeaders, body: jsonEncode( orderedItemsList.toJson() ) ).timeout( Duration( seconds: 10 ) );
 
     if ( response.statusCode == HttpStatus.created )
       return true;

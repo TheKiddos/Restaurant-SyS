@@ -1,12 +1,14 @@
 class Quantity {
   int _quantity = 0;
 
-  void add() {
-    ++_quantity;
+  void addOne() {
+    if ( _quantity < 10000 ) // Preventing Overflow
+      ++_quantity;
   }
 
-  void remove() {
-    --_quantity;
+  void removeOne() {
+    if ( _quantity > 0 )
+      --_quantity;
   }
 
   int get() {

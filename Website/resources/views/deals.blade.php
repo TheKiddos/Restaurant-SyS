@@ -2,23 +2,24 @@
 
    @section('content')
         @if(app()->getLocale()=='en')
-            <strong id="address">Exclusive Deals</strong>
+            <strong class="h1 text-center mx-auto d-block">Exclusive Deals</strong>
             <br><br><br><br><br>
-            <img src="{{ asset('food46.jpeg') }}" alt="Mountains" width="600" height="300" id="image">
-            <br><br><br><br><br>
-            <strong style="font-size: 20px; position: relative;left: 125px">Discover delicious {{ config('app.name', 'Laravel') }} deals in our App for <a href="#b">iOS</a>  and <a href="#d">Android</a>.</strong>
-            <br>
+            <figure class="figure mx-auto d-block">
+                <img class="figure-img img-responsive rounded mx-auto d-block" src="{{ asset('food46.jpeg') }}" alt="Mountains">
+                <br><br><br><br><br>
+                <figcaption class="figure-caption mx-auto d-block text-center"><strong>Discover delicious {{ config('app.name', 'Laravel') }} deals in our App for <a href="#b">iOS</a>  and <a href="#d">Android</a></strong></figcaption>
+                <br>
+            </figure>
 
         @else
 
-            <strong id="address">Exclusive Deals</strong>
+            <strong class="h1 text-center mx-auto d-block">Exclusive Deals</strong>
             <br><br><br><br><br>
-            <img src="{{ asset('food46.jpeg') }}" alt="Mountains" width="600" height="300" id="image">
-            <br><br><br><br><br>
-            <strong style="font-size: 20px; position: relative;left: 125px">Discover delicious {{ config('app.name', 'Laravel') }} deals in our App for <a href="#b">iOS</a>  and <a href="#d">Android</a>.</strong>
-            <br>
-
-
-
+            <figure class="figure mx-auto d-block">
+                <img class="figure-img img-responsive rounded mx-auto d-block" src="{{ asset('food46.jpeg') }}" alt="Mountains">
+                <br><br><br><br><br>
+                <figcaption class="figure-caption mx-auto d-block text-center"><strong>Discover delicious {{ config('app.name', 'Laravel') }} deals in our App for <a href="#b">iOS</a>  and <a href="#d">Android</a></strong></figcaption>
+                <br>
+            </figure>
         @endif
     @endsection

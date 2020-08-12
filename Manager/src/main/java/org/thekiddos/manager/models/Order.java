@@ -60,6 +60,10 @@ public class Order {
      */
     public void addItem( Item item ) {
         Integer count = items.get( item );
+        int QUANTITY_LIMIT_PER_ITEM = 1000;
+        if ( count != null && count >= QUANTITY_LIMIT_PER_ITEM ) {
+            return;
+        }
         items.put( item, count == null ? 1 : count + 1 );
     }
 

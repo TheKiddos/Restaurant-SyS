@@ -36,7 +36,7 @@ class _MenuState extends State<Menu> {
     sizeWidth = MediaQuery.of(context).size.width;
     fillItemWidgets( widget._items );
 
-    var sendButton = RawMaterialButton(
+    var viewOrderButton = RawMaterialButton(
       padding: EdgeInsets.all(10),
       child: Text("View Order", style: etextstyle,),
       shape: RoundedRectangleBorder(),
@@ -58,7 +58,7 @@ class _MenuState extends State<Menu> {
               centerTitle: true,
               title: Text('Menu', style: ktextstyle,),
               actions: <Widget>[
-                sendButton
+                viewOrderButton
               ],
               bottom: TabBar(
                 isScrollable: true,

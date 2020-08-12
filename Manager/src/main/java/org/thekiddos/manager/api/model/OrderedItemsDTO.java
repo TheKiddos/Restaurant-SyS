@@ -12,9 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderedItemsDTO implements Serializable {
     private TableDTO table;
-    private ItemListDTO itemList;
-
-    public List<ItemDTO> getItems() {
-        return itemList.getItems();
-    }
+    private List<ItemDTO> items;
 }

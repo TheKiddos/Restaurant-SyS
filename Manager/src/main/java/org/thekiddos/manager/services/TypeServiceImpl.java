@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TypeServiceImpl implements TypeService {
-    private TypeMapper typeMapper;
+    private final TypeMapper typeMapper;
 
     public TypeServiceImpl( TypeMapper typeMapper ) {
         this.typeMapper = typeMapper;
@@ -18,6 +18,6 @@ public class TypeServiceImpl implements TypeService {
 
     @Override
     public List<TypeDTO> getTypes() {
-        return Database.getTypes().stream().map( type -> typeMapper.typeToTypeDTO( type ) ).collect( Collectors.toList());
+        return Database.getTypes().stream().map( typeMapper::typeToTypeDTO ).collect( Collectors.toList());
     }
 }

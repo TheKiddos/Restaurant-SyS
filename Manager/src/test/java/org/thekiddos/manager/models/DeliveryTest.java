@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DeliveryTest {
     private final Long customerId = 1L, customerId2 = 2L, itemId = 1L, itemId2 = 2L, itemId3 = 3L;
-    private List<Long> items = Arrays.asList( 1L, 2L, 3L, 1L );
+    private final List<Long> items = Arrays.asList( 1L, 2L, 3L, 1L );
 
     @BeforeEach
     void setUp() {

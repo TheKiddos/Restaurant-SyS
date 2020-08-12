@@ -28,7 +28,7 @@ class OrderedItemWidget extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.only(top: 20),
-            child: Text( "Price: " + item.price.toString() ),
+            child: Text( "Unit Price: " + item.price.toString() ),
           ),
           Container(
             padding: EdgeInsets.only(top: 20),

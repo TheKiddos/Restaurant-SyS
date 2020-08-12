@@ -95,7 +95,7 @@ public class OrderController extends Controller {
 
         // Can be refactored with one of the above methods
         if ( clickedButton.isPresent() && clickedButton.get().equals( ButtonType.OK ) ) {
-            AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( reservation.getReservedTableId() );
+            AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( tableId );
             for ( Item item : orderedItems )
                 serviceTransaction.addItem( item.getId() );
             serviceTransaction.execute();

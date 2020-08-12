@@ -10,6 +10,7 @@ import java.util.List;
  * to the costumer (in tables, outside deliveries, ...etc)
  */
 public abstract class AddItemsToServiceTransaction implements Transaction {
+    private static final int QUANTITY_LIMIT_PER_ITEM = 1000;
     protected Service service;
     private final List<Long> items = new ArrayList<>();
 
@@ -28,7 +29,18 @@ public abstract class AddItemsToServiceTransaction implements Transaction {
      * @param itemId
      */
     public void addItem( Long itemId ) {
-        items.add( itemId );
+        if ( quantityDoesNotExceedsLimit( itemId ) )
+            items.add( itemId );
+    }
+
+    private boolean quantityDoesNotExceedsLimit( Long itemId ) {
+        int itemQuantity = 0;
+        for ( Long item : items ) {
+            if ( item.equals( itemId ) )
+                ++itemQuantity;
+        }
+
+        return itemQuantity < QUANTITY_LIMIT_PER_ITEM;
     }
 
     /**

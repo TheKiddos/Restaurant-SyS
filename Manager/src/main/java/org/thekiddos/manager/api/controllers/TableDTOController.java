@@ -1,5 +1,6 @@
 package org.thekiddos.manager.api.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.thekiddos.manager.services.ActiveTableService;
 public class TableDTOController {
     private final ActiveTableService tableService;
 
+    @Autowired
     public TableDTOController( ActiveTableService tableService ) {
         this.tableService = tableService;
     }
