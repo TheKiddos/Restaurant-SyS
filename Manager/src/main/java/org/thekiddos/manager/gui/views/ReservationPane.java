@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.InvoiceController;
 import org.thekiddos.manager.gui.controllers.OrderController;
@@ -33,10 +33,6 @@ public final class ReservationPane extends TitledPane {
             checkOutButton;
     private final WindowContainer orderWindow;
 
-    /**
-     *
-     * @param reservation The reservation to display
-     */
     public ReservationPane( Reservation reservation ) {
         this.reservation = reservation;
         this.orderWindow = Util.getWindowContainer( "Order Summary" );
@@ -104,13 +100,18 @@ public final class ReservationPane extends TitledPane {
     private void checkOut( ActionEvent actionEvent ) {
         CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
         checkOutTransaction.execute();
-        removeSelf();
         showAndPrintInvoice( checkOutTransaction.getInvoice() );
+        removeSelf();
     }
 
     private void removeSelf() {
-        VBox parent = (VBox) getParent();
-        parent.getChildren().remove( this );
+        Pane parent = (Pane) getParent();
+        try {
+            parent.getChildren().remove( this );
+        }
+        catch ( NullPointerException ignore ) {
+
+        }
     }
 
     private void showAndPrintInvoice( Invoice invoice ) {

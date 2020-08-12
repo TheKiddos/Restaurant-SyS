@@ -62,22 +62,23 @@ public final class GUIApplication extends Application {
         primaryStage.show();
 
         // TODO Instead of this we can use an http request with the rest API to signal a refresh event (but for debugging purposes this will currently stay)
-        refreshThread = new Thread( () -> {
-            while ( true ) {
-                Platform.runLater( this::refresh );
-                try {
-                    Thread.sleep( 5000 );
-                } catch ( InterruptedException e ) {
-                    refreshThread = null;
-                    break;
-                }
-            }
-        });
-
+        refreshThread = new Thread( this::refreshLoop );
         refreshThread.start();
     }
 
-    private void refresh() {
+    private void refreshLoop() {
+        while ( true ) {
+            Platform.runLater( this::refreshAllWindowContainers );
+            try {
+                Thread.sleep( 5000 );
+            } catch ( InterruptedException e ) {
+                refreshThread = null;
+                break;
+            }
+        }
+    }
+
+    private void refreshAllWindowContainers() {
         for ( WindowContainer windowContainer : Util.getWindowContainers() ) {
             windowContainer.getController().refresh();
         }

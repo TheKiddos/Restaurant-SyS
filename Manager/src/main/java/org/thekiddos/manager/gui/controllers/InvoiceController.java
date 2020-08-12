@@ -40,7 +40,7 @@ public class InvoiceController extends Controller {
         Customer customer = Database.getCustomerById( invoice.getCustomerId() );
 
         customerNameLabel.setText( "Customer Id: " + customer.getId() + "\tCustomer Name: " + customer.getName() );
-        if ( invoice.getTableId().equals( Util.INVALID_ID ) ) {
+        if ( isInvoiceForDelivery( invoice ) ) {
             tableIdLabel.setText( "Address: " + invoice.getDeliveryAddress() );
             tableFeeLabel.setText( "Delivery Fee: " + invoice.getDeliveryFee() );
         }
@@ -70,6 +70,10 @@ public class InvoiceController extends Controller {
             ordersGridPane.add( createLabel( String.valueOf( item.getPrice() ) ), 2, row );
             ++row;
         }
+    }
+
+    private boolean isInvoiceForDelivery( Invoice invoice ) {
+        return invoice.getTableId().equals( Util.INVALID_ID );
     }
 
     private Label createLabel( String text ) {

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.*;
 
@@ -113,10 +114,10 @@ class ReservationTest {
 
     @Test
     void testReserveWithNoCustomerOrTable() {
-        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( tableId, -1L ) );
-        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( -1L, customerId ) );
-        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( -1L, customerId, LocalDate.now(), LocalTime.now() ) );
-        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( -1L, customerId, LocalDate.now(), LocalTime.now() ) );
+        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( tableId, Util.INVALID_ID ) );
+        assertThrows( IllegalArgumentException.class, () -> new ImmediateReservationTransaction( Util.INVALID_ID, customerId ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( tableId, Util.INVALID_ID, LocalDate.now(), LocalTime.now() ) );
+        assertThrows( IllegalArgumentException.class, () -> new ScheduledReservationTransaction( Util.INVALID_ID, customerId, LocalDate.now(), LocalTime.now() ) );
     }
 
     @Test

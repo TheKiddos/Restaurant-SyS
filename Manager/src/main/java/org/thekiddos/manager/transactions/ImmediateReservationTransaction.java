@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * Creates a immediate {@link Reservation}
+ * Creates an immediate {@link Reservation}
  * Which means that the customer is already here
  */
 public class ImmediateReservationTransaction extends AddReservationTransaction {

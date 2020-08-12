@@ -34,8 +34,8 @@ public class ScheduledReservationTransaction extends AddReservationTransaction {
     }
 
     /**
-     * @param reservationDate
-     * @param reservationTime
+     * @param reservationDate date of reservation
+     * @param reservationTime time of reservation
      * @return true if the DateTime is in the present of the future (with an accepted 3 seconds delay), false otherwise
      */
     private boolean presentOrFuture( LocalDate reservationDate, LocalTime reservationTime ) {

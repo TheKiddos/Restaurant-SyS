@@ -9,9 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * An order holds the items that the customer requested, along side their total value and information
- */
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -31,13 +28,10 @@ public class Order {
     /**
      * @return A Map that maps the items to their quantity
      */
-    public Map<Item, Integer> getItems() {
+    public Map<Item, Integer> getItemsQuantities() {
         return Collections.unmodifiableMap( items );
     }
 
-    /**
-     * @return total worth of the ordered items
-     */
     public double getTotal() {
         double total = 0;
         for ( Item item : items.keySet() )
@@ -45,18 +39,13 @@ public class Order {
         return total;
     }
 
-    /**
-     * @param item
-     * @return true if the item is in the order, false otherwise
-     */
     public boolean containsItem( Item item ) {
         Integer count = items.get( item );
         return count != null && count > 0;
     }
 
     /**
-     * Adds an item to the order
-     * @param item
+     * Adds an item to the order if it's quantity is less than a threshold
      */
     public void addItem( Item item ) {
         Integer count = items.get( item );

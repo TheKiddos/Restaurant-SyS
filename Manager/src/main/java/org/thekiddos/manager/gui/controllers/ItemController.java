@@ -54,12 +54,10 @@ public class ItemController extends Controller {
         Long itemId = itemTable.getSelectionModel().getSelectedItem().getId();
         try {
             new DeleteItemTransaction( itemId ).execute();
+            fillItemTableView();
         }
         catch ( IllegalArgumentException ex ) {
             Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
-        }
-        finally {
-            fillItemTableView();
         }
     }
 

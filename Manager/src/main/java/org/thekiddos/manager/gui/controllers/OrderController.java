@@ -72,27 +72,25 @@ public class OrderController extends Controller {
     @Override
     public void refresh() {
         fillItems();
+        fillOrderTable();
+    }
+
+    private void fillOrderTable() {
         orderTable.getItems().clear();
         if ( reservation == null )
             return;
         reservation = Database.getReservationById( reservation.getCustomerId(), reservation.getDate() );
         Order order = reservation.getOrder();
-        Set<Item> items = new HashSet<>( order.getItems().keySet() );
+        Set<Item> items = new HashSet<>( order.getItemsQuantities().keySet() );
         for ( Item item : items ) {
-            int quantity = order.getItems().get( item );
+            int quantity = order.getItemsQuantities().get( item );
             orderTable.getItems().add( new OrderedItem( item.getName(), quantity, item.getPrice() ) );
         }
     }
 
     public void showAddItemsToOrderDialog( Long tableId, List<Item> orderedItems ) {
-        StringBuilder orderedItemsMessage = new StringBuilder();
-        orderedItemsMessage.append( "For Table: " ).append( tableId ).append( "\n\n" );
-        for ( Item item : orderedItems )
-            orderedItemsMessage.append( item.getName() ).append( " " ).append( item.getPrice() ).append( "\n" );
-
-        Alert alert = Util.createAlert("Add Order?", orderedItemsMessage.toString(), getScene().getWindow(), ButtonType.OK, ButtonType.CANCEL );
+        Alert alert = Util.createAlert("Add Order?", getOrderDetails( tableId, orderedItems ), getScene().getWindow(), ButtonType.OK, ButtonType.CANCEL );
         Optional<ButtonType> clickedButton = alert.showAndWait();
-
         // Can be refactored with one of the above methods
         if ( clickedButton.isPresent() && clickedButton.get().equals( ButtonType.OK ) ) {
             AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( tableId );
@@ -101,5 +99,13 @@ public class OrderController extends Controller {
             serviceTransaction.execute();
             refresh();
         }
+    }
+
+    private String getOrderDetails( Long tableId, List<Item> orderedItems ) {
+        StringBuilder orderDetails = new StringBuilder();
+        orderDetails.append( "For Table: " ).append( tableId ).append( "\n\n" );
+        for ( Item item : orderedItems )
+            orderDetails.append( item.getName() ).append( " " ).append( item.getPrice() ).append( "\n" );
+        return orderDetails.toString();
     }
 }

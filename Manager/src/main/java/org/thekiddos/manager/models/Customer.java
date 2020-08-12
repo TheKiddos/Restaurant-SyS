@@ -40,12 +40,16 @@ public class Customer {
 
     /**
      * Check if the customer has any current or future reservations
-     * @return true if the customer has any reservation
+     * @return true if the customer has any reservations
      */
     public boolean hasReservation() {
         return Database.customerHasReservations( id );
     }
 
+    /**
+     * Check if the customer has any current or future deliveries
+     * @return true if the customer has any deliveries
+     */
     public boolean hasDelivery() {
         return Database.getDeliveryByCustomerId( id ).size() > 0;
     }

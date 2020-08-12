@@ -10,6 +10,11 @@ import org.thekiddos.manager.repositories.Database;
 public class AddItemsToReservationTransaction extends AddItemsToServiceTransaction {
     private final Reservation reservation;
 
+    /**
+     * Creates the transaction
+     * @param tableId the tableId to add the items to
+     * @throws IllegalArgumentException if the table doesn't exists or if it's not active
+     */
     public AddItemsToReservationTransaction( Long tableId ) {
         reservation = Database.getCurrentReservationByTableId( tableId );
         if ( reservation == null || !reservation.isActive() )
@@ -17,6 +22,9 @@ public class AddItemsToReservationTransaction extends AddItemsToServiceTransacti
         super.service = reservation;
     }
 
+    /**
+     * Updates the reservation
+     */
     @Override
     void saveToDatabase() {
         Database.addReservation( reservation );

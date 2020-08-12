@@ -41,18 +41,10 @@ public abstract class Service {
         return this.serviceTime;
     }
 
-    /**
-     * Add an {@link Item} to the current service
-     * @param itemId
-     */
     public void addItem( Long itemId ) {
         order.addItem( Database.getItemById( itemId ) );
     }
 
-    /**
-     * Add an {@link Item} to the current service
-     * @param item
-     */
     public void addItem( Item item ) {
         order.addItem( item );
     }

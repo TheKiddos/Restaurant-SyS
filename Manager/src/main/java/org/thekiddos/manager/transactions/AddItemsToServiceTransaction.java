@@ -26,13 +26,18 @@ public abstract class AddItemsToServiceTransaction implements Transaction {
 
     /**
      * Adds an {@link org.thekiddos.manager.models.Item} to the reservation's {@link org.thekiddos.manager.models.Order}
-     * @param itemId
+     * @param itemId the itemId to add to the order
      */
     public void addItem( Long itemId ) {
         if ( quantityDoesNotExceedsLimit( itemId ) )
             items.add( itemId );
     }
 
+    /**
+     * Checks if the quantity of an item does not exceeds a {@link #QUANTITY_LIMIT_PER_ITEM}. (protects from overflow)
+     * @param itemId the itemId to check
+     * @return true if the quantity of the item is less than the limit
+     */
     private boolean quantityDoesNotExceedsLimit( Long itemId ) {
         int itemQuantity = 0;
         for ( Long item : items ) {

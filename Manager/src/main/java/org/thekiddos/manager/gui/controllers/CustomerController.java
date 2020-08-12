@@ -83,12 +83,10 @@ public class CustomerController extends Controller {
         Customer customer = customerTable.getSelectionModel().getSelectedItem();
         try {
             new DeleteCustomerTransaction( customer.getId() ).execute();
+            fillCustomerTableView();
         }
         catch ( IllegalArgumentException ex ) {
             Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
-        }
-        finally {
-            fillCustomerTableView();
         }
     }
 

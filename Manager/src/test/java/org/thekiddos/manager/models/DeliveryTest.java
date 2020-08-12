@@ -100,7 +100,7 @@ class DeliveryTest {
     }
 
     void validateOrder( Order order, int numberOfItems, double total ) {
-        assertEquals( numberOfItems, order.getItems().size() );
+        assertEquals( numberOfItems, order.getItemsQuantities().size() );
         assertEquals( total, order.getTotal() );
     }
 }

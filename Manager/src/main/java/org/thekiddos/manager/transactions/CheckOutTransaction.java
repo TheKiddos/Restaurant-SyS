@@ -7,7 +7,7 @@ import org.thekiddos.manager.models.Service;
 import org.thekiddos.manager.repositories.Database;
 
 /**
- * Frees the table and produce the invoice
+ * Produces an invoice from a {@link Service}
  */
 public class CheckOutTransaction implements Transaction {
     private boolean isReservation = true;
@@ -15,7 +15,7 @@ public class CheckOutTransaction implements Transaction {
     private Invoice invoice;
 
     /**
-     * Used to checkout a reservation on the selected table
+     * Used to checkout a {@link Delivery} on the selected table
      * @throws IllegalArgumentException if the reservation isn't active or doesn't exists
      */
     public CheckOutTransaction( Long tableId ) {
@@ -26,6 +26,9 @@ public class CheckOutTransaction implements Transaction {
         service = reservation;
     }
 
+    /**
+     * Used to checkout a {@link Delivery}
+     */
     public CheckOutTransaction( Delivery delivery ) {
         isReservation = false;
 

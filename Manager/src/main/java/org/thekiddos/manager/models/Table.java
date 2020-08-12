@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.Objects;
 
-/**
- * A table that can be reserved by a {@link Customer}
- */
 @Entity
 @Getter
 @AllArgsConstructor
@@ -27,18 +24,10 @@ public class Table {
     @Column(name = "fee")
     private double fee;
 
-    /**
-     * Check if the table has any reservations on the specified date
-     * @param on The date to check
-     * @return true if that table is reserved on the specified date
-     */
     public boolean isReserved( LocalDate on ) {
         return Database.getTableReservationOnDate( id, on ) != null;
     }
 
-    /**
-     * @return true if the table has any reservation
-     */
     public boolean hasReservation() {
         return Database.tableHasReservations( id );
     }

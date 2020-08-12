@@ -33,7 +33,7 @@ public class Invoice {
         orderTotal = service.getOrder().getTotal();
         total = service.getTotal();
         netAmount = service.getTotal() - discount;
-        items = new HashMap<>( service.getOrder().getItems() );
+        items = new HashMap<>( service.getOrder().getItemsQuantities() );
 
         if ( isReservation ) {
             Reservation reservation = (Reservation) service;

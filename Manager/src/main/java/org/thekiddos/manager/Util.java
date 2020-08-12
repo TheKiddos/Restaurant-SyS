@@ -37,14 +37,13 @@ public final class Util {
     private static final Map<String, WindowContainer> WINDOWS = new HashMap<>();
     private static final ClassLoader CLASS_LOADER = Util.class.getClassLoader();
     private static final BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
+    private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
 
     public static final Long INVALID_ID = -1L;
     public static Image ICON; // Initialized in GUIApplication for now so tests can work without graphics getting initialized
     public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
     public static final String ROOT_STYLE_CLASS = "root";
-    private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
-
 
     /**
      * This method is used to retrieve the URL of a file in the Resources folder
@@ -186,8 +185,8 @@ public final class Util {
         alert.setTitle( titleText );
         alert.initModality( Modality.WINDOW_MODAL );
         alert.initOwner( owner );
-        setStyleSheet( alert );
-        setStyleClass( alert );
+        setAlertStyleSheet( alert );
+        setAlertStyleClass( alert );
         setAlertIcon( alert );
         return alert;
     }
@@ -196,11 +195,11 @@ public final class Util {
         ( (Stage) alert.getDialogPane().getScene().getWindow() ).getIcons().add( ICON );
     }
 
-    private static void setStyleClass( Alert alert ) {
+    private static void setAlertStyleClass( Alert alert ) {
         alert.getDialogPane().getStyleClass().add( ROOT_STYLE_CLASS );
     }
 
-    private static void setStyleSheet( Alert alert ) {
+    private static void setAlertStyleSheet( Alert alert ) {
         alert.getDialogPane().getScene().getStylesheets().add( STYLESHEET_PATH );
     }
 
@@ -255,10 +254,21 @@ public final class Util {
         return matcher.matches();
     }
 
+    /**
+     * Used to hash a password with BCrypt Hasher
+     * @param password the password to hash
+     * @return encoded password
+     */
     public static String hashPassword( String password ) {
         return hasher.encode( password );
     }
 
+    /**
+     * Creates a customizable Notification Alert with default configuration
+     * @param title The title of the notification
+     * @param message The body of the notification
+     * @return the notification
+     */
     public static TrayNotification createTrayNotification( String title, String message ) {
         TrayNotification tray = new TrayNotification();
         tray.setTitle( title );

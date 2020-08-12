@@ -9,11 +9,12 @@ import org.thekiddos.manager.repositories.Database;
  * The Id provided must be unique or an {@link IllegalArgumentException} will be thrown in the
  * constructor
  */
+
 public class AddCustomerTransaction implements Transaction {
-    private Long customerId;
-    private String name;
-    private String password;
-    private String email;
+    private final Long customerId;
+    private final String name;
+    private final String password;
+    private final String email;
 
     /**
      * @param customerId Must be unique

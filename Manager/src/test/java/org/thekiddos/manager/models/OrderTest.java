@@ -45,7 +45,7 @@ class OrderTest {
 
         Order order = reservation.getOrder();
         validateOrder( order, 1, 10.0 );
-        assertEquals( 1, order.getItems().get( Database.getItemById( itemId ) ) );
+        assertEquals( 1, order.getItemsQuantities().get( Database.getItemById( itemId ) ) );
     }
 
     @Test
@@ -84,8 +84,6 @@ class OrderTest {
         Transaction activateReservation = new ActivateReservationTransaction( tableId );
         activateReservation.execute();
 
-        tableReservations = Database.getReservationsByTableId( tableId );
-
         AddItemsToServiceTransaction service = new AddItemsToReservationTransaction( tableId );
         service.addItem( itemId );
         service.execute();
@@ -113,7 +111,7 @@ class OrderTest {
 
         Order order = reservation.getOrder();
         validateOrder( order, 1, 20.0 );
-        assertEquals( 2, order.getItems().get( Database.getItemById( itemId ) ) );
+        assertEquals( 2, order.getItemsQuantities().get( Database.getItemById( itemId ) ) );
     }
 
     Reservation validateReservation( List<Reservation> reservations, int expectedSize, int indexToCheck, Long tableId, Long customerId, boolean isActive, double total ) {
@@ -128,7 +126,7 @@ class OrderTest {
     }
 
     void validateOrder( Order order, int numberOfItems, double total ) {
-        assertEquals( numberOfItems, order.getItems().size() );
+        assertEquals( numberOfItems, order.getItemsQuantities().size() );
         assertEquals( total, order.getTotal() );
     }
 }

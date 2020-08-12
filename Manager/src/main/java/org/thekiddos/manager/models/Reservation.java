@@ -11,9 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-/**
- * A reservation is a {@link Service} that requires a {@link Table}
- */
 @Entity
 @Getter
 @NoArgsConstructor
@@ -65,16 +62,10 @@ public class Reservation extends Service {
         active = true;
     }
 
-    /**
-     * @return The fee for using the table
-     */
     public double getTableFee() {
         return table.getFee();
     }
 
-    /**
-     * @return The id of the reserved table
-     */
     public Long getReservedTableId() {
         return table.getId();
     }

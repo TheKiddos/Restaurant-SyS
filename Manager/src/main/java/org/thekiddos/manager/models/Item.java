@@ -9,9 +9,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * An item represents food and beverages that a {@link Customer} can {@link Order}
- */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,9 +37,6 @@ public class Item {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Type> types = new HashSet<>();
 
-    /**
-     * @return a set of this items {@link Type}s
-     */
     public Set<Type> getTypes() {
         return Collections.unmodifiableSet( types );
     }

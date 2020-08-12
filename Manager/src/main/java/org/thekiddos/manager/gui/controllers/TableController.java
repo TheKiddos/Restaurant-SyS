@@ -90,12 +90,10 @@ public class TableController extends Controller {
 
         try {
             new DeleteTableTransaction( table.getId() ).execute();
+            fillTableTableView();
         }
         catch ( IllegalArgumentException ex ) {
             Util.createAlert( "Error", ex.getMessage(), getScene().getWindow(), ButtonType.CLOSE ).showAndWait();
-        }
-        finally {
-            fillTableTableView();
         }
     }
 

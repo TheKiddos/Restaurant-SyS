@@ -34,9 +34,6 @@ public class AddTimeCardTransaction implements Transaction {
         this.timeWorked = timeWorked;
     }
 
-    /**
-     * Adds the timeCard
-     */
     @Override
     public void execute() {
         TimeCard timeCard = new TimeCard( new TimeCardId( hourlyClassification.getId(), date ), timeWorked );

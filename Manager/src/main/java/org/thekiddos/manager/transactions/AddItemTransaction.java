@@ -17,9 +17,9 @@ import java.util.Set;
  */
 @Getter
 public class AddItemTransaction implements Transaction {
-    private Long id;
-    private String name;
-    private double price;
+    private final Long id;
+    private final String name;
+    private final double price;
     private double calories;
     private double fat;
     private double protein;
@@ -27,13 +27,13 @@ public class AddItemTransaction implements Transaction {
     private String imagePath;
     private String description;
 
-    private Set<Type> types = new HashSet<>();
+    private final Set<Type> types = new HashSet<>();
 
     /**
      * This constructor takes the main properties for an item
-     * @param itemId
-     * @param itemName
-     * @param price
+     * @param itemId The id of the item
+     * @param itemName The name of the item
+     * @param price The price of the item
      * @throws IllegalArgumentException if an item with the provided id already exists
      */
     public AddItemTransaction( Long itemId, String itemName, double price ) {

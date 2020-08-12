@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
-import org.thekiddos.manager.gui.Remover;
 import org.thekiddos.manager.gui.models.WindowContainer;
 import org.thekiddos.manager.gui.views.ReservationPane;
 import org.thekiddos.manager.models.Reservation;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Component
 @FxmlView("GUI.fxml")
-public class GUIController extends Controller implements Remover {
+public class GUIController extends Controller {
     public JFXSpinner reservedTableTracker;
     public JFXButton addReservationButton;
     public VBox currentReservationsBox;
@@ -96,11 +95,5 @@ public class GUIController extends Controller implements Remover {
     private void setAddReservationGUIStage() {
         addReservationGUIStage = Util.getWindowContainer( "Add Reservation" ).getStage();
         addReservationGUIStage.setOnCloseRequest( e -> refreshMainGUI() );
-    }
-
-    @Override
-    public void remove( Node node ) {
-        currentReservationsBox.getChildren().remove( node );
-        refreshMainGUI();
     }
 }

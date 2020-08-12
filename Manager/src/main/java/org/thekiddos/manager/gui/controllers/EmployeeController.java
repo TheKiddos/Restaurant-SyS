@@ -57,10 +57,10 @@ public class EmployeeController extends Controller {
         removeEmployeeButton.disableProperty().bind( employeeTable.getSelectionModel().selectedItemProperty().isNull() );
 
         fillEmployeeTable( "" );
-        employeeTable.getSelectionModel().selectedItemProperty().addListener( this::disableButtonsOnWrongWrongEmployee );
+        employeeTable.getSelectionModel().selectedItemProperty().addListener( this::disableTimeCardButtonsOnNonHourlyEmployeeSelected );
     }
 
-    private void disableButtonsOnWrongWrongEmployee( Observable observable, Employee oldValue, Employee newValue ) {
+    private void disableTimeCardButtonsOnNonHourlyEmployeeSelected( Observable observable, Employee oldValue, Employee newValue ) {
         if ( newValue == null ) {
             setTimeCardButton.setDisable( true );
             viewTimeCardsButton.setDisable( true );

@@ -20,8 +20,6 @@ public class PayDayTransaction implements Transaction {
     private final Map<Long, PayCheck> payChecks;
 
     /**
-     *
-     * @param payDate
      * @throws IllegalArgumentException if the passed date is in the past
      */
     public PayDayTransaction( LocalDate payDate ) {
@@ -42,7 +40,6 @@ public class PayDayTransaction implements Transaction {
     }
 
     /**
-     * @param empId
      * @return returns the paycheck for the employee specified by the id, or null if the employee was not payed
      */
     public PayCheck getPayCheck( Long empId ) {
@@ -50,6 +47,7 @@ public class PayDayTransaction implements Transaction {
     }
 
     /**
+     * Must be called after the invoking {@link #execute()}
      * @return All paychecks that were created by this transaction
      */
     public List<PayCheck> getPayChecks() {

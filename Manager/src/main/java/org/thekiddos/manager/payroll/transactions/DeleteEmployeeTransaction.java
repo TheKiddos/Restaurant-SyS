@@ -15,9 +15,6 @@ public class DeleteEmployeeTransaction implements Transaction {
         this.empId = empId;
     }
 
-    /**
-     * Deletes the employee
-     */
     @Override
     public void execute() {
         Database.removeEmployeeById( empId );

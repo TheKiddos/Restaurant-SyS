@@ -1,6 +1,7 @@
 package org.thekiddos.manager.repositories;
 
 import org.springframework.context.ApplicationContext;
+import org.thekiddos.manager.StartUpAction;
 import org.thekiddos.manager.models.*;
 import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.payroll.models.HourlyClassification;
@@ -12,6 +13,9 @@ import org.thekiddos.manager.payroll.repositories.TimeCardRepository;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * A Facade to the repositories
+ */
 public final class Database {
     private static ApplicationContext applicationContext;
 
@@ -29,6 +33,11 @@ public final class Database {
         return applicationContext.getBean(beanClass);
     }
 
+    /**
+     * This method should be called as soon as the context loads (and that is done by {@link StartUpAction#setUpDatabase()}
+     * it's main role is to get all the Repositories so they can be accessed from this class
+     * @param applicationContext Spring Boot Context
+     */
     public static void setUpDatabase( ApplicationContext applicationContext ) {
         Database.applicationContext = applicationContext;
         tableRepository = getBean( TableRepository.class );
@@ -42,6 +51,9 @@ public final class Database {
         deliveryRepository = getBean( DeliveryRepository.class );
     }
 
+    /**
+     * Deletes everything from the database except for the types
+     */
     public static void deleteAll() {
         reservationsRepository.deleteAll();
         deliveryRepository.deleteAll();
@@ -52,7 +64,7 @@ public final class Database {
         employeeRepository.deleteAll();
         telegramUserRepository.deleteAll();
     }
-
+    
     public static Employee getEmployeeById( Long employeeId ) {
         return employeeRepository.findById( employeeId ).orElse( null );
     }
@@ -323,7 +335,6 @@ public final class Database {
     }
 
     // TODO
-    // Add deals button to the app
     // if there is time add tests
     // FIX date in laravel not zone specific use Carbon
 }

@@ -1,7 +1,6 @@
 package org.thekiddos.manager.transactions;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.thekiddos.manager.models.Customer;
 import org.thekiddos.manager.models.Reservation;
@@ -18,30 +17,21 @@ import java.time.LocalTime;
  * an {@link IllegalArgumentException}
  * And of course tables, customers that doesn't exists will also throw this exception
  */
+@Getter
 public abstract class AddReservationTransaction implements Transaction {
-    @NonNull
-    @Getter
     private Long tableId;
-    @Getter
-    @NonNull
     private Long customerId;
-    @NonNull
-    @Getter
-    private LocalDate reservationDate;
-    @NonNull
-    @Getter
-    private LocalTime reservationTime;
-
+    private final LocalDate reservationDate;
+    private final LocalTime reservationTime;
     @Setter
-    @Getter
     private double reservationFee;
 
     /**
      *
      * @param tableId Must exists
      * @param customerId Must exists
-     * @param reservationDate
-     * @param reservationTime
+     * @param reservationDate date of reservation
+     * @param reservationTime time of reservation
      * @throws IllegalArgumentException if the table doesn't exists or is reserved, if the customer doesn't exists or already has a reservation
      */
     public AddReservationTransaction( Long tableId, Long customerId, LocalDate reservationDate, LocalTime reservationTime ) {
@@ -53,8 +43,8 @@ public abstract class AddReservationTransaction implements Transaction {
 
     /**
      * Make sure the table exists and that the table is free on the specified date
-     * @param tableId
-     * @param reservationDate
+     * @param tableId table id
+     * @param reservationDate date of reservation
      * @throws IllegalArgumentException if the table doesn't exists or is reserved
      */
     private void setTableId( Long tableId, LocalDate reservationDate ) {
@@ -70,8 +60,8 @@ public abstract class AddReservationTransaction implements Transaction {
 
     /**
      * Makes sure the customer exists and that he has the specified reservation on that day for that table
-     * @param customerId
-     * @param reservationDate
+     * @param customerId customer id
+     * @param reservationDate date of reservation
      * @throws IllegalArgumentException if the customer doesn't exists, or if he doesn't have any reservation for that table on the selected date
      */
     private void setCustomerId( Long customerId, LocalDate reservationDate ) {

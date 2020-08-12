@@ -31,6 +31,7 @@ public class Delivery extends Service {
         return deliveryFee;
     }
 
+    // Used in the gui (TableColumn) because I was too lazy to do it right
     public String getCustomerName() {
         return Database.getCustomerById( getCustomerId() ).getName();
     }
