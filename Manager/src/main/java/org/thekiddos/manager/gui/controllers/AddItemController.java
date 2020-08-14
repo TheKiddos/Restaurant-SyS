@@ -79,7 +79,7 @@ public class AddItemController extends Controller {
 
     @Override
     public void refresh() {
-        if ( getScene().getWindow().isShowing() && Database.getTypes().size() != typePane.getChildren().size() )
+        if ( Database.getTypes().size() != typePane.getChildren().size() )
             fillTypeBoxes();
     }
 

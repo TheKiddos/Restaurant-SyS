@@ -10,14 +10,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.thekiddos.manager.ManagerApplication;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.*;
-import org.thekiddos.manager.gui.models.WindowContainer;
 
 // TODO create refreshable interface or something
 // TODO a lot of the controllers share the same logic abstract it
 // TODO what happens to reservations in the past
 public final class GUIApplication extends Application {
     private ConfigurableApplicationContext applicationContext;
-    private Thread refreshThread;
 
     @Override
     public void init() {
@@ -60,33 +58,10 @@ public final class GUIApplication extends Application {
         primaryStage = Util.createWindowContainer( GUIController.class, null, "Digital Restaurant Manager" ).getStage();
         primaryStage.setOnCloseRequest( e -> Platform.exit() );
         primaryStage.show();
-
-        // TODO Instead of this we can use an http request with the rest API to signal a refresh event (but for debugging purposes this will currently stay)
-        refreshThread = new Thread( this::refreshLoop );
-        refreshThread.start();
-    }
-
-    private void refreshLoop() {
-        while ( true ) {
-            Platform.runLater( this::refreshAllWindowContainers );
-            try {
-                Thread.sleep( 5000 );
-            } catch ( InterruptedException e ) {
-                refreshThread = null;
-                break;
-            }
-        }
-    }
-
-    private void refreshAllWindowContainers() {
-        for ( WindowContainer windowContainer : Util.getWindowContainers() ) {
-            windowContainer.getController().refresh();
-        }
     }
 
     @Override
     public void stop() {
-        refreshThread.interrupt();
         this.applicationContext.close();
         Platform.exit();
     }

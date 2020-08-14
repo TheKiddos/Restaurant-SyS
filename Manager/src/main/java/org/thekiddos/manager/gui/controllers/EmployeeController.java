@@ -100,7 +100,7 @@ public class EmployeeController extends Controller {
 
     @Override
     public void refresh() {
-        if ( getScene().getWindow().isShowing() && employeeTable.getItems().size() != Database.getEmployeesId().size() )
+        if ( employeeTable.getItems().size() != Database.getEmployeesId().size() )
             fillEmployeeTable( searchEmployeeField.getText() );
     }
 

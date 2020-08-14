@@ -26,6 +26,13 @@ public class DeleteReservationTransaction implements Transaction {
             throw new IllegalArgumentException( "Can't delete an active reservation from here, you need to CheckOut" );
     }
 
+    public DeleteReservationTransaction( Reservation reservation ) {
+        this.reservation = reservation;
+
+        if ( reservation.isActive() )
+            throw new IllegalArgumentException( "Can't delete an active reservation from here, you need to CheckOut" );
+    }
+
     /**
      * Deletes the reservation
      */

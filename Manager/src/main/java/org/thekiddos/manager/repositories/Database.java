@@ -12,6 +12,7 @@ import org.thekiddos.manager.payroll.repositories.TimeCardRepository;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * A Facade to the repositories
@@ -199,7 +200,13 @@ public final class Database {
     }
 
     public static List<Reservation> getCurrentReservations() {
-        return new ArrayList<>( reservationsRepository.findByServiceIdDate( LocalDate.now() ) );
+        List<Reservation> activeReservations = reservationsRepository.findAllByActiveTrue();
+        List<Reservation> currentReservation = reservationsRepository.findByServiceIdDate( LocalDate.now() );
+
+        currentReservation.addAll( activeReservations );
+
+        // TODO make sure this is right
+        return currentReservation.stream().distinct().collect( Collectors.toList() );
     }
 
     public static Set<Item> getItems() {
@@ -332,6 +339,12 @@ public final class Database {
         List<Delivery> deliveries = new ArrayList<>( );
         deliveryRepository.findAll().forEach( deliveries::add );
         return deliveries;
+    }
+
+    public static List<Reservation> getReservations() {
+        List<Reservation> reservations = new ArrayList<>();
+        reservationsRepository.findAll().forEach( reservations::add );
+        return reservations;
     }
 
     // TODO

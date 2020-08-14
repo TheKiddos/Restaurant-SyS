@@ -27,4 +27,6 @@ public interface ReservationsRepository extends CrudRepository<Reservation, Serv
      * @return a list of {@link Reservation} for the specified table
      */
     List<Reservation> findByTableId( Long tableId );
+
+    List<Reservation> findAllByActiveTrue();
 }

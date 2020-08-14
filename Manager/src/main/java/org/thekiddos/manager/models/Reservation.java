@@ -7,7 +7,9 @@ import org.thekiddos.manager.repositories.Database;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -17,6 +19,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @javax.persistence.Table(name = "reservations")
 public class Reservation extends Service {
+    private static final Duration overdueThreshold = Duration.ofMinutes( 15 ); // A quick searh on the internet shows that this is the default time for most restaurants, But maybe we should make it customizable
+
     private double reservationFee;
     private boolean active = false;
 
@@ -77,6 +81,16 @@ public class Reservation extends Service {
         if ( !super.equals( o ) ) return false;
         Reservation that = (Reservation) o;
         return table.equals( that.table );
+    }
+
+    public boolean isOverdue() {
+        if ( isActive() )
+            return false;
+
+        LocalDateTime reservationDateTime = LocalDateTime.of( getDate(), getTime() );
+        Duration overdueDuration = Duration.between( reservationDateTime, LocalDateTime.now() );
+
+        return overdueDuration.compareTo( overdueThreshold ) >= 0;
     }
 
     @Override
