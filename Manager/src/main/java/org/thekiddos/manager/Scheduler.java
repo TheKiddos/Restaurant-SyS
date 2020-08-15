@@ -39,4 +39,6 @@ public class Scheduler {
         for ( Reservation reservation : overdueReservations )
             new DeleteReservationTransaction( reservation ).execute();
     }
+
+    // TODO add a method to checkout active reservations from the previous days
 }

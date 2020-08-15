@@ -21,7 +21,14 @@ public class CheckOutTransaction implements Transaction {
     public CheckOutTransaction( Long tableId ) {
         Reservation reservation = Database.getCurrentReservationByTableId( tableId );
         if ( reservation == null || !reservation.isActive() )
-            throw new IllegalArgumentException( "The reservations is't active or doesn't exists" );
+            throw new IllegalArgumentException( "The reservations isn't active or doesn't exists" );
+
+        service = reservation;
+    }
+
+    public CheckOutTransaction( Reservation reservation ) {
+        if ( !reservation.isActive() )
+            throw new IllegalArgumentException( "The reservations isn't active" );
 
         service = reservation;
     }

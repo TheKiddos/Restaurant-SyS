@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.controllers.InvoiceController;
 import org.thekiddos.manager.gui.controllers.OrderController;
@@ -98,20 +97,9 @@ public final class ReservationPane extends TitledPane {
     }
 
     private void checkOut( ActionEvent actionEvent ) {
-        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
+        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation );
         checkOutTransaction.execute();
         showAndPrintInvoice( checkOutTransaction.getInvoice() );
-        removeSelf();
-    }
-
-    private void removeSelf() {
-        Pane parent = (Pane) getParent();
-        try {
-            parent.getChildren().remove( this );
-        }
-        catch ( NullPointerException ignore ) {
-
-        }
     }
 
     private void showAndPrintInvoice( Invoice invoice ) {

@@ -63,7 +63,7 @@ public class GUIController extends Controller {
         WindowContainer orderWindow = Util.getWindowContainer( "Order Summary" );
         orderWindow.getStage().setOnCloseRequest( e -> refreshMainGUI() );
         reservedTableTracker.setTooltip( new Tooltip( "Reserved Tables" ) );
-        updateReservedTableTracker();
+        refreshMainGUI();
     }
 
     public void refreshMainGUI() {

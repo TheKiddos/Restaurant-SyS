@@ -41,7 +41,7 @@
                   <Font name="Consolas Bold" size="24.0" />
                </font>
             </JFXButton>
-            <JFXSpinner fx:id="reservedTableTracker" progress="0.43">
+            <JFXSpinner fx:id="reservedTableTracker" progress="0.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
