@@ -1,13 +1,10 @@
-package org.thekiddos.manager;
+package org.thekiddos.manager.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.thekiddos.manager.models.Delivery;
-import org.thekiddos.manager.models.Invoice;
-import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.transactions.*;
 
@@ -21,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
-public class ManagerTest {
+public class InvoiceTest {
     private final Long tableId = 1L;
     private final Long customerId = 1L;
     private final Long itemId = 1L;

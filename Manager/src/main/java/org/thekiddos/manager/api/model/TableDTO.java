@@ -1,6 +1,8 @@
 package org.thekiddos.manager.api.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.thekiddos.manager.repositories.Database;
 
 import java.io.Serializable;
@@ -8,6 +10,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TableDTO implements Serializable {
     private Long id;
     private int maxCapacity;

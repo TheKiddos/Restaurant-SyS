@@ -1,4 +1,4 @@
-package org.thekiddos.manager.models;
+package org.thekiddos.manager;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

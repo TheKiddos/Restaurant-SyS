@@ -24,7 +24,7 @@ public class Scheduler {
 
     // This can be called with something like a REST Controller instead of constantly invoking
     @Scheduled(initialDelay = 10000, fixedDelay = 5000)
-    private void refreshGUIWindows() {
+    void refreshGUIWindows() {
         Platform.runLater( () -> {
             for ( WindowContainer windowContainer : Util.getWindowContainers() )
                 windowContainer.getController().refresh();
@@ -32,7 +32,7 @@ public class Scheduler {
     }
 
     @Scheduled(initialDelay = 15000, fixedDelay = 900000) // 15 Minutes
-    private void handleOverdueReservations() {
+    void handleOverdueReservations() {
         List<Reservation> overdueReservations = Database.getReservations().stream().filter( Reservation::isOverdue ).collect( Collectors.toList() );
 
         // I was to lazy to do something nice with this, a proper way would be create a gui, fill it with theses reservations and promote the user for an action
