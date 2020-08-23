@@ -26,10 +26,10 @@
             <h1 style="text-align: center;font-size: 50px"><strong>Recommendations</strong></h1>
 
             @foreach($items as $item)
-                <div class="gallery">
-                    <img src="{{ substr($item->image, strrpos($item->image, '/')) }}" alt="{{$item->name}}" width="600" height="400" >
-                    <div class="desc">
-                        <h2>{{$item->name}}</h2>
+                <div class="gallery card" style="padding: 10px">
+                    <img class="card-img" src="{{ substr($item->image, strrpos($item->image, '/')) }}" alt="{{$item->name}}" width="800" height="800" >
+                    <div class="desc card-body">
+                        <h2 class="card-header">{{$item->name}}</h2>
                         <h3>Price: {{$item->price}}</h3>
                         <p>{{$item->description}}</p>
                         <td><a href="/home/main/rate/{{$item->id}}"><button class="btn btn-warning btn-sm"><span>&#11088;</span></button></a></td>

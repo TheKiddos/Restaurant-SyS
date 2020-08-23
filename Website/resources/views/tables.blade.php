@@ -1,4 +1,4 @@
-@extends('homegernal')
+@extends('home_general')
 
 @section('content')
     @if(app()->getLocale()=='en')
@@ -16,16 +16,18 @@
 
         @if($reservation_date != null)
         @foreach($free_tables as $table)
-            <div  style="float: left;padding: 20px;font-size: 20px ">
-                <div class="w3-col l3 m6 w3-margin-bottom">
-                    <img src="{{asset('table.jpg')}}" alt="John">
-                    <hr>
-                    <p >number table: {{$table->id}}</p>
-                    <p>capacity table :{{$table->capacity}} person</p>
-                    <p>price reservation table :{{$table->fee}} $</p>
-                    <p><a href="/home/main/tables/reserve/{{$table->id}}/{{$reservation_date}}/"><button class="w3-button btn btn-danger w3-block">Select</button></a></p>
-                </div>
-            </div>
+                <figure class="figure mx-auto d-inline-block">
+                    <img class="figure-img img-responsive img-fluid rounded mx-auto d-inline-block" src="{{asset('table.jpg')}}" alt="John">
+                    <br><br><br><br><br>
+                    <figcaption class="figure-caption mx-auto d-inline-block text-center">
+                        <hr>
+                        <p >number table: {{$table->id}}</p>
+                        <p>capacity table :{{$table->capacity}} person</p>
+                        <p>price reservation table :{{$table->fee}} $</p>
+                        <p><a href="/home/main/tables/reserve/{{$table->id}}/{{$reservation_date}}/"><button class="w3-button btn btn-danger w3-block">Select</button></a></p>
+                    </figcaption>
+                    <br>
+                </figure>
         @endforeach
         @endif
     </div>
@@ -44,16 +46,18 @@
             <hr>
             @if($reservation_date != null)
             @foreach($free_tables as $table)
-                <div  style="float: left;padding: 20px;font-size: 20px ">
-                    <div class="w3-col l3 m6 w3-margin-bottom">
-                        <img src="{{asset('table.jpg')}}" alt="John">
-                        <hr>
-                        <p >رقم الطاولة {{$table->id}}</p>
-                        <p>سعة الطاولة {{$table->capacity}} شخص</p>
-                        <p>سعر حجز الطاولة${{$table->fee}} </p>
-                        <p><a href="/home/main/tables/reserve/{{$table->id}}/{{$reservation_date}}/"><button class="w3-button btn btn-danger w3-block">اختر</button></a></p>
-                    </div>
-                </div>
+                    <figure class="figure mx-auto d-inline-block">
+                        <img class="figure-img img-responsive img-fluid rounded mx-auto d-inline-block" src="{{asset('table.jpg')}}" alt="John">
+                        <br><br><br><br><br>
+                        <figcaption class="figure-caption mx-auto d-inline-block text-center">
+                            <hr>
+                            <p >{{$table->id}}: رقم الطاولة</p>
+                            <p>{{$table->capacity}}: سعة الطاولة</p>
+                            <p>{{$table->fee}}: ثمن الجلوس على الطاولة</p>
+                            <p><a href="/home/main/tables/reserve/{{$table->id}}/{{$reservation_date}}/"><button class="w3-button btn btn-danger w3-block">اختيار الطاولة</button></a></p>
+                        </figcaption>
+                        <br>
+                    </figure>
             @endforeach
             @endif
         </div>

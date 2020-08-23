@@ -99,13 +99,13 @@ class adminController extends Controller
 
     public function menu()
     {
-        return view('menu')->with('types', Type::all())->with('type', null)->with('items', Item::all());
+        return view('menu')->with('types', Type::all())->with('selected_type', 'Menu')->with('items', Item::all());
     }
 
     public function showItemsWithType($type)
     {
         $items = DB::select( "select * from items where '".$type."' in (select types_name from items_types where items_types.item_id = items.id)");
-        return view('menu')->with('types', Type::all())->with('type', $type)->with('items', $items);
+        return view('menu')->with('types', Type::all())->with('selected_type', $type)->with('items', $items);
     }
 
     public function show_free_tables(Request $request)

@@ -1,4 +1,4 @@
-@extends('homegernal')
+@extends('home_general')
 
 @section('content')
     @if(app()->getLocale()=='en')

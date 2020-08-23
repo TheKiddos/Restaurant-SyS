@@ -22,21 +22,21 @@
 </head>
 <body>
     <div class=container-fluid">
-        <ul class="ul">
-            <li><a style="text-decoration: none" href="/home">Home</a></li>
+        <ul class="ul" style="padding: 10px">
+            <li class="btn btn-warning" style="margin-bottom: 20px"><a href="/home">Home</a></li>
             @foreach($types as $type)
-                <li><a style="text-decoration: none" href="/home/main/menu/{{$type->name}}">{{$type->name}}</a></li>
+                <li><a href="/home/main/menu/{{$type->name}}">{{$type->name}}</a></li>
                 <hr>
             @endforeach
         </ul>
         <div style="margin-left:30%;padding:1px 16px;height:1000px;">
-            <h1 style="text-align: center;font-size: 50px"><strong>{{$type->name}}</strong></h1>
+            <h1 class="badge-warning" style="text-align: center;font-size: 50px"><strong>{{ $selected_type }}</strong></h1>
 
             @foreach($items as $item)
-                <div class="gallery">
-                    <img src="{{ substr($item->image, strrpos($item->image, '/')) }}" alt="{{$item->name}}" width="600" height="400" >
-                    <div class="desc">
-                        <h2>{{$item->name}}</h2>
+                <div class="gallery card" style="padding: 10px">
+                    <img class="card-img" src="{{ substr($item->image, strrpos($item->image, '/')) }}" alt="{{$item->name}}" width="800" height="800" >
+                    <div class="desc card-body">
+                        <h2 class="card-header">{{$item->name}}</h2>
                         <h3>Price: {{$item->price}}</h3>
                         <p>{{$item->description}}</p>
                         <td><a href="/home/main/rate/{{$item->id}}"><button class="btn btn-warning btn-sm"><span>&#11088;</span></button></a></td>

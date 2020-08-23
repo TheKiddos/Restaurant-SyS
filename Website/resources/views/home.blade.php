@@ -1,13 +1,7 @@
-@extends('homegernal')
+@extends('home_general')
 
 @section('content')
 @if(app()->getLocale()=='en')
-    <div class="container-fluid ">
-        <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
-        <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
-        <div style="float: right;position: relative;top: -150px;left: -20px"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Recommendations</button></a></div>
-
-        <br>   <br>
 <div id="demo" class="carousel slide" data-ride="carousel">
     <ul class="carousel-indicators">
         <li data-target="#demo" data-slide-to="2"></li>
@@ -36,6 +30,11 @@
         <span class="carousel-control-next-icon"></span>
     </a>
 </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <div style="margin: 10px;"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
+            <div style="margin: 10px;"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
+            <div style="margin: 10px;"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Recommendations</button></a></div>
+        </div>
 <br><br><br><br><br>
 <img src="{{asset('food6.jpg')}}" width="70%" height="500">
 <div class="boximage">
@@ -75,14 +74,7 @@
         together to make a positive impact across the country and around the world.</p>
     <a href="#news" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-danger"> Learn More</button></a>
 </div>
-    </div>
 @else
-
-
-    <div style="float: right;position: relative;top: -150px"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
-    <div style="float: right;position: relative;top: -150px;left: -10px"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Reserve your table</button></a></div>
-    <div style="float: right;position: relative;top: -150px;left: -20px"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Recommendations</button></a></div>
-
     <br> <br>
     <div id="demo" class="carousel slide" data-ride="carousel">
         <ul class="carousel-indicators">
@@ -111,6 +103,11 @@
         <a class="carousel-control-next" href="#demo" data-slide="next">
             <span class="carousel-control-next-icon"></span>
         </a>
+    </div>
+    <div class="d-flex justify-content-center align-items-center">
+        <div style="margin: 10px;"><a  href="/home/main/orderpage/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">اختر طلبيتك</button></a></div>
+        <div style="margin: 10px;"><a  href="/home/main/tables/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">احجز طاولتك</button></a></div>
+        <div style="margin: 10px;"><a  href="/home/main/recommendations/" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">اقتراحاتنا</button></a></div>
     </div>
     <br><br><br><br><br>
     <img src="{{asset('food6.jpg')}}" width="70%" height="500">

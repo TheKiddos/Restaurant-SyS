@@ -58,3 +58,28 @@ function calculate() {
     $('.total').html(p);
     $('.totall').val(p);
 }
+
+$(document).scroll(function () {
+    pageScrolledDown() ? shrinkNavBar() : enlargeNavBar();
+})
+
+function pageScrolledDown() {
+    return document.body.scrollTop > 80 || document.documentElement.scrollTop > 80;
+}
+
+function shrinkNavBar() {
+    setNavBarStyle("3px 0px", "#343a40", "15px", "32px")
+
+}
+
+function enlargeNavBar() {
+    setNavBarStyle("8px 5px", "rgba(52, 58, 64, 0.7)", "19px", "64px");
+}
+
+function setNavBarStyle(padding, color, titleFontSize, logoSize) {
+    document.getElementById("navbar").style.padding = padding;
+    //document.getElementById("navbar").style.backgroundColor = color;
+    document.getElementById("header").style.fontSize = titleFontSize;
+    document.getElementById("logo").style.width = logoSize;
+    document.getElementById("logo").style.height = logoSize;
+}

@@ -1,4 +1,4 @@
-@extends('homegernal')
+@extends('home_general')
 
 @section('content')
     <div style="float: right;position: relative;top: -150px"><a href="" style="text-decoration: none;font-size: 15px"><button type="button" class="btn btn-warning">Choose your order</button></a></div>
@@ -13,7 +13,7 @@
                 <div class="panel panel-warning">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a  style="text-decoration: none" data-toggle="collapse" data-parent="#accordion" href="#collapse1">Menu</a>
+                            <a  style="text-decoration: none" data-target="#collapse1" data-toggle="collapse" href="#collapse1">Menu</a>
                         </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse in">
