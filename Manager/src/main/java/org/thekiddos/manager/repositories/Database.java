@@ -65,6 +65,10 @@ public final class Database {
         employeeRepository.deleteAll();
         telegramUserRepository.deleteAll();
     }
+
+    public static void deleteTypes() {
+        typeRepository.deleteAll();
+    }
     
     public static Employee getEmployeeById( Long employeeId ) {
         return employeeRepository.findById( employeeId ).orElse( null );

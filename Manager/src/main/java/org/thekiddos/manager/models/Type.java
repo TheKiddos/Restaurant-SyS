@@ -20,6 +20,11 @@ public class Type {
     @Id
     private String name;
 
+    /**
+     * Used to get a type object if the type doesn't exists this method will automatically create it and save it in the Database
+     * @param typeName The type you want to get/create
+     * @return Type!
+     */
     public static Type type( String typeName ) {
         Type type = Database.getTypeId( typeName );
         if ( type == null ) {
