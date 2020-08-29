@@ -1,6 +1,7 @@
 package org.thekiddos.manager.api.controllers;
 
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.thekiddos.manager.services.ItemService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/api/items")
 public class ItemDTOController {
@@ -52,7 +54,18 @@ public class ItemDTOController {
         if ( activeTableService.getActiveTableById( tableId ) == null )
             return new ResponseEntity<>( "The table you selected isn't active", HttpStatus.BAD_REQUEST );
 
-        Platform.runLater( () -> orderController.showAddItemsToOrderDialog( tableId, orderedItems ) );
+        try {
+            Platform.runLater( () -> orderController.showAddItemsToOrderDialog( tableId, orderedItems ) );
+        }
+        catch ( IllegalStateException e ) {
+            if ( isGUINotInitialized( e ) )
+                throw e;
+            log.warn( e.getMessage() + ". Testing mode is assumed" );
+        }
         return new ResponseEntity<>( "Order sent successfully", HttpStatus.CREATED );
+    }
+
+    private boolean isGUINotInitialized( IllegalStateException e ) {
+        return !e.getMessage().equals( "Toolkit not initialized" );
     }
 }
