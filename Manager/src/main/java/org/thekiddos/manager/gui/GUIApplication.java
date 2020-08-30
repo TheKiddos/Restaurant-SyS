@@ -2,7 +2,6 @@ package org.thekiddos.manager.gui;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -14,7 +13,7 @@ import org.thekiddos.manager.gui.controllers.*;
 // TODO create refreshable interface or something
 // TODO a lot of the controllers share the same logic abstract it
 
-// TODO add tests api controllers
+// TODO Add test for gui with testFX
 // TODO Sick Employee should be given his salary in advance #34
 // TODO Active Reservation that span two days #81
 // TODO Fix timezone issues with date and time in the website #74
@@ -32,7 +31,7 @@ public final class GUIApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Util.ICON = new Image( Util.getResource( "static/images/icon.png" ).toExternalForm() );
+        Util.initialize();
 
         Stage invoiceStage = Util.createWindowContainer( InvoiceController.class, null, "Invoice Summary" ).getStage();
         invoiceStage.initModality( Modality.NONE );

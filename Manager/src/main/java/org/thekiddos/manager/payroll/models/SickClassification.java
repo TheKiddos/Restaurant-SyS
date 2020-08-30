@@ -1,9 +1,8 @@
 package org.thekiddos.manager.payroll.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
@@ -11,47 +10,47 @@ import java.util.Objects;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
-public class SalariedClassification extends PaymentClassification {
-    @NonNull
-    double salary;
+public class SickClassification extends PaymentClassification {
+    private double compensation;
 
     @Override
     public double calculatePay( LocalDate startData, LocalDate endDate ) {
-        return salary;
+        return compensation;
     }
 
     @Override
     public String getType() {
-        return "Salaried Employee";
+        return "Sick Employee";
     }
 
     @Override
     public String getBaseSalary() {
-        return salary + " per Month";
+        return "Compensation: " + compensation;
     }
 
     @Override
     public String toString() {
-        return "Salary: " + salary;
+        return getBaseSalary();
     }
 
     @Override
     public boolean equals( Object o ) {
         if ( this == o ) return true;
         if ( o == null || getClass() != o.getClass() ) return false;
-        SalariedClassification that = (SalariedClassification) o;
-        return Double.compare( that.salary, salary ) == 0;
+        if ( !super.equals( o ) ) return false;
+        SickClassification that = (SickClassification) o;
+        return Double.compare( that.compensation, compensation ) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( salary );
+        return Objects.hash( super.hashCode(), compensation );
     }
 
     @Override
     public double calculateCompensation() {
-        return salary;
+        return getCompensation();
     }
 }

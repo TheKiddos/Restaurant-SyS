@@ -17,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Table(name = "HOURLY_CLASSIFICATION")
 public class HourlyClassification extends PaymentClassification {
+    private static final double DAYS_IN_WEEK = 7;
     @NonNull
     private double hourlyRate;
     @NonNull
@@ -58,6 +59,11 @@ public class HourlyClassification extends PaymentClassification {
     @Override
     public String getBaseSalary() {
         return hourlyRate + " per normal hour";
+    }
+
+    @Override
+    public double calculateCompensation() {
+        return hourlyRate * overHoursThreshold * DAYS_IN_WEEK;
     }
 
     private double calculateTimeCardPay( TimeCard timeCard ) {

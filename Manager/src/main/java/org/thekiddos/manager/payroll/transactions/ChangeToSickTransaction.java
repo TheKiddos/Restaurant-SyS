@@ -3,19 +3,17 @@ package org.thekiddos.manager.payroll.transactions;
 import org.thekiddos.manager.payroll.models.MonthlySchedule;
 import org.thekiddos.manager.payroll.models.PaymentClassification;
 import org.thekiddos.manager.payroll.models.PaymentSchedule;
-import org.thekiddos.manager.payroll.models.SalariedClassification;
+import org.thekiddos.manager.payroll.models.SickClassification;
 
-public class ChangeToSalariedTransaction extends ChangeClassificationTransaction {
-    private final double salary;
+public class ChangeToSickTransaction extends ChangeClassificationTransaction {
 
-    public ChangeToSalariedTransaction( Long empId, double salary ) {
+    public ChangeToSickTransaction( Long empId ) {
         super( empId );
-        this.salary = salary;
     }
 
     @Override
     PaymentClassification getPaymentClassification( PaymentClassification oldClassification ) {
-        return new SalariedClassification( salary );
+        return new SickClassification( oldClassification.calculateCompensation() );
     }
 
     @Override

@@ -20,12 +20,12 @@ public class ChangeToHourlyTransaction extends ChangeClassificationTransaction {
     }
 
     @Override
-    PaymentClassification getPaymentClassification() {
+    PaymentClassification getPaymentClassification( PaymentClassification oldClassification ) {
         return new HourlyClassification( hourlyRate, overHoursBonusRate, overHoursThreshold );
     }
 
     @Override
-    PaymentSchedule getPaymentSchedule() {
+    PaymentSchedule getPaymentSchedule( PaymentSchedule oldSchedule ) {
         return new WeeklySchedule();
     }
 }

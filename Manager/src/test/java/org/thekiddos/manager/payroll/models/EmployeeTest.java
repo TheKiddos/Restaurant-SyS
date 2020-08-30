@@ -185,4 +185,28 @@ class EmployeeTest {
         HoldMethod holdMethod = (HoldMethod)paymentMethod;
         assertNotNull( holdMethod );
     }
+
+    @Test
+    void testChangeSalariedToSick() {
+        Long empId = 1L;
+        Transaction addEmployee = new AddSalariedEmployeeTransaction( empId, "Zahlt", 1000.0 );
+        addEmployee.execute();
+
+        ChangeClassificationTransaction changeToSick = new ChangeToSickTransaction( empId );
+        changeToSick.execute();
+
+        Employee employee = Database.getEmployeeById( empId );
+
+        assertNotNull( employee );
+        assertEquals( "Zahlt", employee.getName() );
+
+        PaymentClassification paymentClassification = employee.getPaymentClassification();
+        SickClassification sickClassification = (SickClassification)paymentClassification;
+        assertNotNull( sickClassification );
+        assertEquals( 1000.0, sickClassification.getCompensation() );
+
+        PaymentSchedule paymentSchedule = employee.getPaymentSchedule();
+        MonthlySchedule monthlySchedule = (MonthlySchedule)paymentSchedule;
+        assertNotNull( monthlySchedule );
+    }
 }

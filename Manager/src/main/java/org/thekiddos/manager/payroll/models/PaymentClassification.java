@@ -32,4 +32,6 @@ public abstract class PaymentClassification {
     public int hashCode() {
         return Objects.hash( id );
     }
+
+    public abstract double calculateCompensation();
 }

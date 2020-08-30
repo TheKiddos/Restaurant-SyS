@@ -4,8 +4,6 @@ import org.thekiddos.manager.payroll.models.Employee;
 import org.thekiddos.manager.payroll.models.PaymentMethod;
 
 public abstract class ChangeMethodTransaction extends ChangeEmployeeTransaction {
-    private Long empId;
-
     public ChangeMethodTransaction( Long empId ) {
         super( empId );
     }
