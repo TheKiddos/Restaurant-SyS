@@ -14,7 +14,7 @@ import org.thekiddos.manager.gui.controllers.*;
 // TODO a lot of the controllers share the same logic abstract it
 
 // TODO Add test for gui with testFX
-// TODO Sick Employee should be given his salary in advance #34
+// TODO Chat between Manager and Waiter
 // TODO Active Reservation that span two days #81
 // TODO Fix timezone issues with date and time in the website #74
 public final class GUIApplication extends Application {

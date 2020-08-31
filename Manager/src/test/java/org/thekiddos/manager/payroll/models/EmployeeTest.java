@@ -209,4 +209,30 @@ class EmployeeTest {
         MonthlySchedule monthlySchedule = (MonthlySchedule)paymentSchedule;
         assertNotNull( monthlySchedule );
     }
+
+    @Test
+    void testChangeHourlyToSick() {
+        Long empId = 1L;
+        Transaction addEmployee = new AddHourlyEmployeeTransaction( empId, "Zahlt", 100.0 );
+        addEmployee.execute();
+
+        ChangeClassificationTransaction changeToSick = new ChangeToSickTransaction( empId );
+        changeToSick.execute();
+
+        Employee employee = Database.getEmployeeById( empId );
+
+        assertNotNull( employee );
+        assertEquals( "Zahlt", employee.getName() );
+
+        PaymentClassification paymentClassification = employee.getPaymentClassification();
+        SickClassification sickClassification = (SickClassification) paymentClassification;
+        assertNotNull( sickClassification );
+        int defaultThresholdHours = 8;
+        int daysInMonth = 30;
+        assertEquals( 100.0 * defaultThresholdHours * daysInMonth, sickClassification.getCompensation() );
+
+        PaymentSchedule paymentSchedule = employee.getPaymentSchedule();
+        MonthlySchedule monthlySchedule = (MonthlySchedule)paymentSchedule;
+        assertNotNull( monthlySchedule );
+    }
 }
