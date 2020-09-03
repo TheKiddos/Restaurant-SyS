@@ -29,6 +29,7 @@ public final class Database {
     private static TypeRepository typeRepository;
     private static TelegramUserRepository telegramUserRepository;
     private static DeliveryRepository deliveryRepository;
+    private static MessageRepository messageRepository;
 
     public static <T> T getBean(Class<T> beanClass) {
         return applicationContext.getBean(beanClass);
@@ -50,6 +51,7 @@ public final class Database {
         typeRepository = getBean( TypeRepository.class );
         telegramUserRepository = getBean( TelegramUserRepository.class );
         deliveryRepository = getBean( DeliveryRepository.class );
+        messageRepository = getBean( MessageRepository.class );
     }
 
     /**
@@ -349,6 +351,20 @@ public final class Database {
         List<Reservation> reservations = new ArrayList<>();
         reservationsRepository.findAll().forEach( reservations::add );
         return reservations;
+    }
+
+    public static void deleteMessages() {
+        messageRepository.deleteAll();
+    }
+
+    public static void addMessage( Message message ) {
+        messageRepository.save( message );
+    }
+
+    public static List<Message> getMessages() {
+        ArrayList<Message> messages = new ArrayList<>();
+        messageRepository.findAll().forEach( messages::add );
+        return messages;
     }
 
     // TODO

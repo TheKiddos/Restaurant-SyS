@@ -26,7 +26,7 @@ public final class GUIApplication extends Application {
 
         this.applicationContext = new SpringApplicationBuilder()
                 .sources( ManagerApplication.class )
-                .run(args);
+                .run( args );
     }
 
     @Override

@@ -119,6 +119,19 @@ create table items_types
 )
     collate=utf8mb4_unicode_ci;
 
+create table message
+(
+    id bigint unsigned auto_increment
+        primary key,
+    contents varchar(191) not null,
+    sender varchar(191) not null,
+    receiver varchar(191) not null,
+    seen tinyint(1) not null,
+    created_at timestamp null,
+    updated_at timestamp null
+)
+    collate=utf8mb4_unicode_ci;
+
 create table migrations
 (
     id int unsigned auto_increment
@@ -229,6 +242,16 @@ create table salaried_classification
 )
     collate=utf8mb4_unicode_ci;
 
+create table sick_classification
+(
+    id bigint unsigned auto_increment
+        primary key,
+    compensation double not null,
+    created_at timestamp null,
+    updated_at timestamp null
+)
+    collate=utf8mb4_unicode_ci;
+
 create table tables
 (
     id bigint unsigned auto_increment
@@ -244,10 +267,10 @@ create table telegram_users
 (
     id int not null
         primary key,
-    email varchar(191) not null,
-    last_command varchar(191) not null,
-    verification_code int not null,
-    is_verified tinyint(1) not null
+    email varchar(191) null,
+    last_command varchar(191) null,
+    verification_code int null,
+    is_verified tinyint(1) default 0 not null
 )
     collate=utf8mb4_unicode_ci;
 
