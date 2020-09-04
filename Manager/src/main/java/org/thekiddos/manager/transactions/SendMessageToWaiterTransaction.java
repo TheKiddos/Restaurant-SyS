@@ -1,5 +1,7 @@
 package org.thekiddos.manager.transactions;
 
+import org.thekiddos.manager.Util;
+
 public class SendMessageToWaiterTransaction extends SendMessageTransaction {
 
     public SendMessageToWaiterTransaction( String contents ) {
@@ -8,11 +10,11 @@ public class SendMessageToWaiterTransaction extends SendMessageTransaction {
 
     @Override
     String getSender() {
-        return "Manager";
+        return Util.CHAT_USER_MANAGER;
     }
 
     @Override
     String getReceiver() {
-        return "Waiter";
+        return Util.CHAT_USER_WAITER;
     }
 }

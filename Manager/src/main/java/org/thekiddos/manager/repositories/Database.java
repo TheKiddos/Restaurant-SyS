@@ -367,7 +367,7 @@ public final class Database {
         return messages;
     }
 
-    // TODO
-    // if there is time add tests
-    // FIX date in laravel not zone specific use Carbon
+    public static List<Message> getMessagesAt( LocalDate now ) {
+        return getMessages().stream().filter( message -> message.getCreatedAt().toLocalDate().equals( now ) ).collect( Collectors.toList() );
+    }
 }

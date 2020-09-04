@@ -39,8 +39,10 @@ public final class Util {
     private static final BCryptPasswordEncoder hasher = new BCryptPasswordEncoder();
     private static final String EMAIL_REGEX = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
-    private static Image ICON; // Initialized later0 so tests can work without graphics getting initialized
+    private static Image ICON; // Initialized later so tests can work without graphics getting initialized
 
+    public static final String CHAT_USER_MANAGER = "Manager";
+    public static final String CHAT_USER_WAITER = "Waiter";
     public static final Long INVALID_ID = -1L;
     public static final String STYLESHEET_PATH = Util.getResource( "static/style.css" ).toExternalForm();
     public static final String ROOT_STYLE_CLASS = "root";
