@@ -96,4 +96,8 @@ public class GUIController extends Controller {
         addReservationGUIStage = Util.getWindowContainer( "Add Reservation" ).getStage();
         addReservationGUIStage.setOnCloseRequest( e -> refreshMainGUI() );
     }
+
+    public void openMessenger( ActionEvent actionEvent ) {
+        Util.getWindowContainer( "Messenger" ).getStage().show();
+    }
 }

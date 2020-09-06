@@ -51,6 +51,9 @@ public final class GUIApplication extends Application {
         Stage addEmployeeStage = Util.createWindowContainer( AddEmployeeController.class, null, "Add Employee" ).getStage();
         addEmployeeStage.initModality( Modality.NONE );
 
+        Stage messengerStage = Util.createWindowContainer( MessengerController.class, null, "Messenger" ).getStage();
+        addEmployeeStage.initModality( Modality.NONE );
+
         Util.createWindowContainer( TableController.class, null, "Tables" );
         Util.createWindowContainer( CustomerController.class, null, "Customers" );
         Util.createWindowContainer( ItemController.class, null, "Items" );

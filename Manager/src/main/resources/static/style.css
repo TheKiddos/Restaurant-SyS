@@ -45,6 +45,15 @@
     -fx-text-fill: yellow;
 }
 
+#send-button {
+    -fx-background-color: rgba(0,0,30,0.2);
+    -fx-background-radius: 0px;
+}
+
+#message-area {
+    -fx-background-radius: 0px;
+}
+
 .jfx-text-field {
     -fx-text-fill: white;
     -fx-fill: white;
@@ -77,15 +86,6 @@
     -fx-text-fill: white;
     -fx-fill: white;
 }
-
-/*
-#username-input-field {
-  -fx-background-image:url('login.png');
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: left center;
-  -fx-padding: 5px 10px 5px 30px;
-}
- */
 
 .jfx-date-picker {
     -jfx-default-color: white;
@@ -303,6 +303,7 @@
 
 .scroll-bar > .thumb {
     -fx-background-color: darkcyan;
+    -fx-background-radius: 0px;
 }
 
 .scroll-bar > .thumb:hover {
@@ -321,9 +322,8 @@
 
 .scroll-bar > .increment-button,
 .scroll-bar > .decrement-button {
-    -fx-background-color: darkcyan;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-background-radius: 20;
 }
 
 .scroll-bar > .increment-button > *,

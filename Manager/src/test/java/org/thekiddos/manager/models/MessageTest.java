@@ -79,7 +79,7 @@ class MessageTest {
     }
 
     @Test
-    void testGetTodayMessages() {
+    void testGetMessagesAt() {
         Message yesterdayMessage = new Message( "Hi", Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER, LocalDateTime.now().minusDays( 1 ), false );
         Database.addMessage( yesterdayMessage );
         new SendMessageToWaiterTransaction( "Die" ).execute();
