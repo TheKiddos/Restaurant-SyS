@@ -1,18 +1,21 @@
 package org.thekiddos.manager.transactions;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.thekiddos.manager.models.Message;
 import org.thekiddos.manager.repositories.Database;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 public abstract class SendMessageTransaction implements Transaction {
-    private String contents;
+    @Getter
+    private Message message;
+
+    public SendMessageTransaction( String contents ) {
+        this.message = new Message( contents, getSender(), getReceiver(), LocalDateTime.now(), false );
+    }
 
     @Override
     public void execute() {
-        Message message = new Message( contents, getSender(), getReceiver(), LocalDateTime.now(), false );
         Database.addMessage( message );
     }
 

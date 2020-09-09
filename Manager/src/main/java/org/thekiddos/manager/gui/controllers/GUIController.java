@@ -98,6 +98,9 @@ public class GUIController extends Controller {
     }
 
     public void openMessenger( ActionEvent actionEvent ) {
-        Util.getWindowContainer( "Messenger" ).getStage().show();
+        WindowContainer messengerWindow = Util.getWindowContainer( "Messenger" );
+        MessengerController messengerController = (MessengerController) messengerWindow.getController();
+        messengerController.readMessages();
+        messengerWindow.getStage().show();
     }
 }

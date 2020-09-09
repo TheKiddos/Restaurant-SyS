@@ -6,6 +6,28 @@
     -fx-background-color: linear-gradient( rgba(10, 10, 10, 0.9 ), rgba(30, 30, 30, 0.9 ));
 }
 
+.header {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.message {
+    -fx-background-color: rgba(0,0,30,0.2);
+    -fx-border-color: rgba(0,0,30,0.2);
+    -fx-background-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+.message:hover {
+    -fx-border-color: yellow;
+}
+
+.right-align, .right-align * {
+    -fx-alignment: center-right;
+    -fx-text-alignment: right;
+}
+
 #root .tab-header-background {
     -fx-background-color: #008b8b;
 }
@@ -472,7 +494,7 @@
     -fx-background-color: white;
 }
 
-.list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
+.list-view > .virtual-flow > .clipped-containemessage-contentsr > .sheet > .list-cell {
     -fx-background-color: transparent;
 }
 

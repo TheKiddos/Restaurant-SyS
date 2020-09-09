@@ -9,6 +9,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import org.thekiddos.manager.Util;
+import org.thekiddos.manager.gui.views.MessagePane;
+import org.thekiddos.manager.models.Message;
+import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.ReadMessagesTransaction;
+import org.thekiddos.manager.transactions.SendMessageToWaiterTransaction;
+import org.thekiddos.manager.transactions.SendMessageTransaction;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @FxmlView("messenger.fxml")
@@ -18,6 +29,8 @@ public class MessengerController extends Controller {
     public JFXTextArea enteredMessageArea;
     public JFXButton sendMessageButton;
 
+    private List<Message> todayMessages = new ArrayList<>();
+    
     public void handleEnterKey( KeyEvent keyEvent ) {
         if ( keyEvent.getCode().equals( KeyCode.ENTER ) ) {
             if ( keyEvent.isShiftDown() ) {
@@ -32,7 +45,14 @@ public class MessengerController extends Controller {
     }
 
     public void sendMessage( ActionEvent actionEvent ) {
+        SendMessageTransaction sendMessageTransaction = new SendMessageToWaiterTransaction( enteredMessageArea.getText() );
+        sendMessageTransaction.execute();
 
+        addMessage( sendMessageTransaction.getMessage() );
+    }
+
+    public void addMessage( Message message ) {
+        messagesBox.getChildren().add( new MessagePane( message ) );
     }
 
     @Override
@@ -42,6 +62,27 @@ public class MessengerController extends Controller {
 
     @Override
     public void refresh() {
+        if ( getScene().getWindow().isShowing() && messagesBox.getChildren().size() != getTodayMessages().size() )
+            updateMessages();
+    }
 
+    private List<Message> getTodayMessages() {
+        return Database.getMessagesAt( LocalDate.now() );
+    }
+
+    public void readMessages() {
+        new ReadMessagesTransaction( Util.CHAT_USER_MANAGER ).execute();
+        updateMessages();
+    }
+
+    private void updateMessages() {
+        todayMessages = getTodayMessages();
+        fillMessagesBox();
+    }
+
+    private void fillMessagesBox() {
+        messagesBox.getChildren().clear();
+        for ( Message message : todayMessages )
+            addMessage( message );
     }
 }

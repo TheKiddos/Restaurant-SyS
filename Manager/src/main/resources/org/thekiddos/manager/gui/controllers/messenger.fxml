@@ -9,9 +9,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<VBox id="root" fx:id="root" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.MessengerController">
+<VBox id="root" fx:id="root" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.thekiddos.manager.gui.controllers.MessengerController">
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minViewportHeight="450.0" VBox.vgrow="ALWAYS">
-                <VBox fx:id="messagesBox" alignment="TOP_CENTER" spacing="10.0" />
+                <VBox fx:id="messagesBox" alignment="TOP_CENTER" spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding></VBox>
             </ScrollPane>
    <HBox alignment="CENTER_LEFT">
       <children>

@@ -54,6 +54,19 @@ class MessageTest {
         validateMessage( message, Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER, "Get over here!", false );
     }
 
+    @Test
+    void testSendMessageToManagerAndReadingIt() {
+        SendMessageTransaction sendMessageTransaction = new SendMessageToManagerTransaction( "Get over here!" );
+        sendMessageTransaction.getMessage().setSeen();
+        sendMessageTransaction.execute();
+
+        List<Message> messages = Database.getMessages();
+        assertEquals( 1, messages.size() );
+
+        Message message = messages.get( 0 );
+        validateMessage( message, Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER, "Get over here!", true );
+    }
+
     private void validateMessage( Message message, String receiver, String sender, String contents, boolean isSeen ) {
         assertEquals( receiver, message.getReceiver() );
         assertEquals( sender, message.getSender() );
