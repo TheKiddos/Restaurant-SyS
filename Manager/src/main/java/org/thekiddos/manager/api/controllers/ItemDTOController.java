@@ -17,6 +17,7 @@ import org.thekiddos.manager.gui.controllers.OrderController;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.services.ActiveTableService;
 import org.thekiddos.manager.services.ItemService;
+import org.thekiddos.manager.transactions.AddItemsToReservationTransaction;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,9 +61,19 @@ public class ItemDTOController {
         catch ( IllegalStateException e ) {
             if ( isGUINotInitialized( e ) )
                 throw e;
-            log.warn( e.getMessage() + ". Testing mode is assumed" );
+            log.warn( e.getMessage() + ". Testing mode is assumed. This means added items will be accepted without confirmation" );
+            addItemsToOrder( orderedItems, tableId );
+
         }
         return new ResponseEntity<>( "Order sent successfully", HttpStatus.CREATED );
+    }
+
+    // This should not be here move later
+    private void addItemsToOrder( List<Item> orderedItems, Long tableId ) {
+        AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( tableId );
+        for ( Item item : orderedItems )
+            serviceTransaction.addItem( item.getId() );
+        serviceTransaction.execute();
     }
 
     private boolean isGUINotInitialized( IllegalStateException e ) {

@@ -16,6 +16,7 @@ import org.thekiddos.manager.api.mapper.TableMapper;
 import org.thekiddos.manager.api.model.ItemDTO;
 import org.thekiddos.manager.api.model.OrderedItemsDTO;
 import org.thekiddos.manager.api.model.TableDTO;
+import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.models.Type;
 import org.thekiddos.manager.repositories.Database;
 import org.thekiddos.manager.services.ActiveTableService;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -135,6 +137,11 @@ class ItemDTOControllerTest {
         String orderedItemsJson = toJson( orderedItemsDTO );
         mockMvc.perform( post( "/api/items" ).content( orderedItemsJson ).contentType( "application/json;charset=UTF-8" ) )
                 .andExpect( status().isCreated() );
+
+        Reservation reservation = Database.getCurrentReservationByTableId( tableId );
+        assertEquals( 2, reservation.getOrder().getItemsQuantities().size() );
+        assertEquals( 1, reservation.getOrder().getItemsQuantities().get( Database.getItemById( itemId ) ) );
+        assertEquals( 1, reservation.getOrder().getItemsQuantities().get( Database.getItemById( itemId2 ) ) );
     }
 
     @Test
