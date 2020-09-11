@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thekiddos.manager.Util;
 import org.thekiddos.manager.api.mapper.ItemMapper;
 import org.thekiddos.manager.api.model.ItemListDTO;
 import org.thekiddos.manager.api.model.OrderedItemsDTO;
@@ -55,16 +56,14 @@ public class ItemDTOController {
         if ( activeTableService.getActiveTableById( tableId ) == null )
             return new ResponseEntity<>( "The table you selected isn't active", HttpStatus.BAD_REQUEST );
 
-        try {
+        if ( Util.isGuiInitialized() ) {
             Platform.runLater( () -> orderController.showAddItemsToOrderDialog( tableId, orderedItems ) );
         }
-        catch ( IllegalStateException e ) {
-            if ( isGUINotInitialized( e ) )
-                throw e;
-            log.warn( e.getMessage() + ". Testing mode is assumed. This means added items will be accepted without confirmation" );
+        else {
+            log.warn( "GUI is not initialized. Testing mode is assumed. This means added items will be accepted without confirmation" );
             addItemsToOrder( orderedItems, tableId );
-
         }
+
         return new ResponseEntity<>( "Order sent successfully", HttpStatus.CREATED );
     }
 
@@ -74,9 +73,5 @@ public class ItemDTOController {
         for ( Item item : orderedItems )
             serviceTransaction.addItem( item.getId() );
         serviceTransaction.execute();
-    }
-
-    private boolean isGUINotInitialized( IllegalStateException e ) {
-        return !e.getMessage().equals( "Toolkit not initialized" );
     }
 }

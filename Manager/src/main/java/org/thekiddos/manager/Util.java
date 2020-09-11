@@ -4,6 +4,7 @@ import com.github.plushaze.traynotification.animations.Animations;
 import com.github.plushaze.traynotification.notification.Notifications;
 import com.github.plushaze.traynotification.notification.TrayNotification;
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -287,5 +288,15 @@ public final class Util {
         tray.setTrayIcon( Util.ICON );
         tray.setImage( Util.ICON );
         return tray;
+    }
+
+    public static boolean isGuiInitialized() {
+        try {
+            Platform.runLater( () -> { } );
+            return true;
+        }
+        catch ( IllegalStateException e ) {
+            return !e.getMessage().equals( "Toolkit not initialized" );
+        }
     }
 }

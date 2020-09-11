@@ -1,6 +1,7 @@
 package org.thekiddos.manager;
 
 import javafx.application.Platform;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.thekiddos.manager.transactions.DeleteReservationTransaction;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class Scheduler {
     private GUIController guiController;
@@ -25,10 +27,15 @@ public class Scheduler {
     // This can be called with something like a REST Controller instead of constantly invoking
     @Scheduled(initialDelay = 10000, fixedDelay = 5000)
     void refreshGUIWindows() {
-        Platform.runLater( () -> {
-            for ( WindowContainer windowContainer : Util.getWindowContainers() )
-                windowContainer.getController().refresh();
-        });
+        if ( Util.isGuiInitialized() ) {
+            Platform.runLater( () -> {
+                for ( WindowContainer windowContainer : Util.getWindowContainers() )
+                    windowContainer.getController().refresh();
+            });
+        }
+        else {
+            log.warn( "GUI not initialized. Testing Mode is assumed." );
+        }
     }
 
     @Scheduled(initialDelay = 15000, fixedDelay = 900000) // 15 Minutes
