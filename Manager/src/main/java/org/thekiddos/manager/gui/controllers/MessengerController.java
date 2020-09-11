@@ -8,11 +8,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.Util;
 import org.thekiddos.manager.gui.views.MessagePane;
 import org.thekiddos.manager.models.Message;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.services.WaiterChatService;
 import org.thekiddos.manager.transactions.ReadMessagesTransaction;
 import org.thekiddos.manager.transactions.SendMessageToWaiterTransaction;
 import org.thekiddos.manager.transactions.SendMessageTransaction;
@@ -30,7 +32,13 @@ public class MessengerController extends Controller {
     public JFXButton sendMessageButton;
 
     private List<Message> todayMessages = new ArrayList<>();
-    
+    private final WaiterChatService waiterChatService;
+
+    @Autowired
+    public MessengerController( WaiterChatService waiterChatService ) {
+        this.waiterChatService = waiterChatService;
+    }
+
     public void handleEnterKey( KeyEvent keyEvent ) {
         if ( keyEvent.getCode().equals( KeyCode.ENTER ) ) {
             if ( keyEvent.isShiftDown() ) {
@@ -46,6 +54,8 @@ public class MessengerController extends Controller {
 
     public void sendMessage( ActionEvent actionEvent ) {
         SendMessageTransaction sendMessageTransaction = new SendMessageToWaiterTransaction( enteredMessageArea.getText() );
+        if ( waiterChatService.isOnline() )
+            sendMessageTransaction.getMessage().setSeen();
         sendMessageTransaction.execute();
 
         addMessage( sendMessageTransaction.getMessage() );
