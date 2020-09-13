@@ -143,7 +143,7 @@ class _TableIdFieldState extends State<TableIdField> {
           return 'That\'s not a integer dumb ass';
 
         return null;
-      }
+  }
 }
 
 class GoToMenuButton extends StatelessWidget {

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -32,5 +33,18 @@ public class Message {
 
     public void setSeen() {
         seen = true;
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) return true;
+        if ( o == null || getClass() != o.getClass() ) return false;
+        Message message = (Message) o;
+        return id.equals( message.id );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( id );
     }
 }
