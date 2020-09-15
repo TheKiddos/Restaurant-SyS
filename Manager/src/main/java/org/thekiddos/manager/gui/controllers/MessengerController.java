@@ -54,10 +54,12 @@ public class MessengerController extends Controller {
 
     public void sendMessage( ActionEvent actionEvent ) {
         SendMessageTransaction sendMessageTransaction = new SendMessageToWaiterTransaction( enteredMessageArea.getText() );
-        if ( waiterChatService.isOnline() )
-            sendMessageTransaction.getMessage().setSeen();
+        if ( waiterChatService.isOnline() ) {
+            Message message = sendMessageTransaction.getMessage();
+            message.setSeen();
+            waiterChatService.addPendingMessage( message );
+        }
         sendMessageTransaction.execute();
-
         addMessage( sendMessageTransaction.getMessage() );
     }
 
@@ -94,5 +96,12 @@ public class MessengerController extends Controller {
         messagesBox.getChildren().clear();
         for ( Message message : todayMessages )
             addMessage( message );
+    }
+
+    public void setWaiterMessagesRead() {
+        for ( Node node : messagesBox.getChildren() ) {
+            MessagePane messagePane = (MessagePane)node;
+            messagePane.setSeen();
+        }
     }
 }

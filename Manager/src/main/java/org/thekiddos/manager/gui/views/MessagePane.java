@@ -48,8 +48,8 @@ public class MessagePane extends VBox  {
     public void addStyleIfManagerIsSender( Message message ) {
         if ( message.getSender().equals( Util.CHAT_USER_MANAGER ) ) {
             body.getStyleClass().add( "right-align" );
-            if ( !message.isSeen() )
-                body.setStyle( "-fx-background-color: darkgreen; -fx-background-radius: 10px; -fx-padding: 0 15px" );
+            if ( message.isSeen() )
+                setSeen();
         }
     }
 
@@ -64,5 +64,10 @@ public class MessagePane extends VBox  {
         graphics.setFitWidth( GRAPHICS_WIDTH );
         graphics.setFitHeight( GRAPHICS_HEIGHT );
         return graphics;
+    }
+
+    public void setSeen() {
+        if ( header.getText().equals( Util.CHAT_USER_MANAGER ) )
+            body.setStyle( "-fx-background-color: darkgreen; -fx-background-radius: 10px; -fx-padding: 0 15px" );
     }
 }
