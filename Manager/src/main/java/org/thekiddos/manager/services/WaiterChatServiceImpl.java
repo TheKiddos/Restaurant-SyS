@@ -4,8 +4,9 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thekiddos.manager.api.mapper.MessageMapper;
-import org.thekiddos.manager.api.model.MessageListDTO;
+import org.thekiddos.manager.api.model.MessageDTO;
 import org.thekiddos.manager.models.Message;
+import org.thekiddos.manager.repositories.Database;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,6 +26,11 @@ public class WaiterChatServiceImpl implements WaiterChatService {
     @Autowired
     public WaiterChatServiceImpl( MessageMapper messageMapper ) {
         this.messageMapper = messageMapper;
+    }
+
+    @Override
+    public List<MessageDTO> getAllMessages() {
+        return Database.getMessages().stream().map( messageMapper::messageToMessageDTO ).collect( Collectors.toList() );
     }
 
     @Override
@@ -89,7 +95,7 @@ public class WaiterChatServiceImpl implements WaiterChatService {
     }
 
     @Override
-    public MessageListDTO getPendingMessages() {
-        return new MessageListDTO( pendingMessages.stream().map( messageMapper::messageToMessageDTO ).collect( Collectors.toList() ) );
+    public List<MessageDTO> getPendingMessages() {
+        return pendingMessages.stream().map( messageMapper::messageToMessageDTO ).collect( Collectors.toList() );
     }
 }

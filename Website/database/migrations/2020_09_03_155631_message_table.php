@@ -19,7 +19,7 @@ class MessageTable extends Migration
             $table->string('sender')->nullable( false );
             $table->string('receiver')->nullable( false );
             $table->boolean('seen')->nullable( false );
-            $table->timestamps();
+            $table->dateTime( 'created_at', 6 )->nullable( false );
         });
     }
 

@@ -87,7 +87,7 @@ public class MessengerController extends Controller {
         updateMessages();
     }
 
-    private void updateMessages() {
+    public void updateMessages() {
         todayMessages = getTodayMessages();
         fillMessagesBox();
     }

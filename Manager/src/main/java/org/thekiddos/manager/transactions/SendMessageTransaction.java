@@ -11,7 +11,9 @@ public abstract class SendMessageTransaction implements Transaction {
     private Message message;
 
     public SendMessageTransaction( String contents ) {
-        this.message = new Message( contents, getSender(), getReceiver(), LocalDateTime.now(), false );
+        // IMPORTANT: As it turns out since we're using MySQL it has limited precision for split seconds.
+        // So we decided to remove them for the tests for now.
+        this.message = new Message( contents, getSender(), getReceiver(), LocalDateTime.now().withNano( 0 ), false );
     }
 
     @Override

@@ -163,7 +163,6 @@ public class KDRSBot extends TelegramLongPollingBot {
         currentTelegramUser.setVerificationCode( code ); // the send instruction will update the user in the database
         emailService.sendEmail( email, "Verify your email", "Please enter the following code in telegram\n" + code );
 
-        response.setText( "Please enter the code sent to your email" );
         sendInstructions( "Please enter the code sent to your email", Commands.VERIFY );
     }
 
@@ -214,7 +213,7 @@ public class KDRSBot extends TelegramLongPollingBot {
 
         responseWithImage = new SendPhoto();
         responseWithImage.setChatId( response.getChatId() );
-        File image =  new File( new URI( item.getImagePath() ).toURL().getFile() );
+        File image = new File( new URI( item.getImagePath() ).toURL().getFile() );
         responseWithImage.setPhoto( image );
         responseWithImage.setCaption( item.getName() + "\nPrice: " + item.getPrice() + "\n" + item.getDescription() );
 

@@ -10,6 +10,8 @@ import org.thekiddos.manager.api.model.MessageDTO;
 import org.thekiddos.manager.models.Message;
 import org.thekiddos.manager.transactions.SendMessageToWaiterTransaction;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith( SpringExtension.class )
@@ -37,7 +39,7 @@ public class MessageMapperTest {
 
     @Test
     void testMessageDTOToMessage() {
-        MessageDTO messageDTO = new MessageDTO( "Hi Kids!", Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER );
+        MessageDTO messageDTO = new MessageDTO( "Hi Kids!", Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER, LocalDateTime.now(), false );
 
         Message message = messageMapper.messageDTOToMessage( messageDTO );
 

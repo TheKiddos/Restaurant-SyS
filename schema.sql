@@ -127,8 +127,7 @@ create table message
     sender varchar(191) not null,
     receiver varchar(191) not null,
     seen tinyint(1) not null,
-    created_at timestamp null,
-    updated_at timestamp null
+    created_at datetime(6) not null
 )
     collate=utf8mb4_unicode_ci;
 
