@@ -112,10 +112,10 @@ class ItemDTOControllerTest {
                 .andExpect( jsonPath( "$['items'][0].imagePath", is( "https://cms.splendidtable.org/sites/default/files/styles/w2000/public/french-fries.jpg?itok=FS-YwUYH" ) ) )
                 .andExpect( jsonPath( "$['items'][0].description", is( "Well it's French Fries what else to say!" ) ) )
                 .andExpect( jsonPath( "$['items'][0]['types']", hasSize( 4 ) ) )
-                .andExpect( jsonPath( "$['items'][0]['types'][0].name", is( "STARTER" ) ) )
-                .andExpect( jsonPath( "$['items'][0]['types'][1].name", is( "SNACK" ) ) )
-                .andExpect( jsonPath( "$['items'][0]['types'][2].name", is( "FOOD" ) ) )
-                .andExpect( jsonPath( "$['items'][0]['types'][3].name", is( "HOT" ) ) )
+                .andExpect( jsonPath( "$['items'][0]['types'][0].name", is( "FOOD" ) ) )
+                .andExpect( jsonPath( "$['items'][0]['types'][1].name", is( "STARTER" ) ) )
+                .andExpect( jsonPath( "$['items'][0]['types'][2].name", is( "HOT" ) ) )
+                .andExpect( jsonPath( "$['items'][0]['types'][3].name", is( "SNACK" ) ) )
                 .andExpect( jsonPath( "$['items'][1].id", is( 2 ) ) )
                 .andExpect( jsonPath( "$['items'][1].name", is( "Batata" ) ) )
                 .andExpect( jsonPath( "$['items'][1].price", is( 100.0 ) ) )
@@ -126,9 +126,9 @@ class ItemDTOControllerTest {
                 .andExpect( jsonPath( "$['items'][1].imagePath", is( "Yah Yah Yah" ) ) )
                 .andExpect( jsonPath( "$['items'][1].description", is( "Batataaaaaa" ) ) )
                 .andExpect( jsonPath( "$['items'][1]['types']", hasSize( 3 ) ) )
-                .andExpect( jsonPath( "$['items'][1]['types'][0].name", is( "SNACK" ) ) )
-                .andExpect( jsonPath( "$['items'][1]['types'][1].name", is( "COLD" ) ) )
-                .andExpect( jsonPath( "$['items'][1]['types'][2].name", is( "MILK" ) ) );
+                .andExpect( jsonPath( "$['items'][1]['types'][0].name", is( "COLD" ) ) )
+                .andExpect( jsonPath( "$['items'][1]['types'][1].name", is( "MILK" ) ) )
+                .andExpect( jsonPath( "$['items'][1]['types'][2].name", is( "SNACK" ) ) );
     }
 
     @Test

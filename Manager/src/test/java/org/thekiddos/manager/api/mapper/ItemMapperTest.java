@@ -6,18 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.api.model.ItemDTO;
+import org.thekiddos.manager.api.model.TypeDTO;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Type;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
 class ItemMapperTest {
-    private ItemMapper itemMapper;
+    private final ItemMapper itemMapper;
+    private final TypeMapper typeMapper;
 
     private final Long id = 1L;
     private final String name = "French Fries";
@@ -30,16 +33,19 @@ class ItemMapperTest {
     private final String description = "Batataaaaaaaaaa";
 
     private final Set<Type> types = Set.of( Type.type( "HOT" ), Type.type( "STARTER" ), Type.type( "FOOD" ) );
+    private final Set<TypeDTO> typeDTOs;
 
     @Autowired
-    public ItemMapperTest( ItemMapper itemMapper ) {
+    public ItemMapperTest( ItemMapper itemMapper, TypeMapper typeMapper ) {
         this.itemMapper = itemMapper;
+        this.typeMapper = typeMapper;
+        typeDTOs = types.stream().map( typeMapper::typeToTypeDTO ).collect( Collectors.toSet() );
     }
 
     @Test
     void testItemToItemDTO() {
         Item item = new Item( id, name, price, calories, fat, protein, carbohydrates, imagePath,
-                description, new HashSet<>( types ));
+                description, new HashSet<>( types ) );
 
         ItemDTO itemDTO = itemMapper.itemToItemDTO( item );
 
@@ -52,13 +58,13 @@ class ItemMapperTest {
         assertEquals( carbohydrates, itemDTO.getCarbohydrates() );
         assertEquals( description, itemDTO.getDescription() );
         assertEquals( imagePath, itemDTO.getImagePath() );
-        assertEquals( types, itemDTO.getTypes() );
+        assertEquals( typeDTOs, itemDTO.getTypes() );
     }
 
     @Test
     void testItemDTOToItem() {
         ItemDTO itemDTO = new ItemDTO( id, name, price, calories, fat, protein, carbohydrates, imagePath,
-                description, new HashSet<>( types ));
+                description, typeDTOs );
 
         Item item = itemMapper.itemDTOToItem( itemDTO );
 

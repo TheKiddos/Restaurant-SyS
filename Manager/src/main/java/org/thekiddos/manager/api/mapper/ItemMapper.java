@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import org.thekiddos.manager.api.model.ItemDTO;
 import org.thekiddos.manager.models.Item;
+import org.thekiddos.manager.repositories.Database;
+
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 @Component
@@ -15,6 +18,8 @@ public interface ItemMapper {
             return null;
         }
 
+        TypeMapper typeMapper = Database.getBean( TypeMapper.class );
+
         return new Item(
                 itemDTO.getId(),
                 itemDTO.getName(),
@@ -25,7 +30,7 @@ public interface ItemMapper {
                 itemDTO.getCarbohydrates(),
                 itemDTO.getImagePath(),
                 itemDTO.getDescription(),
-                itemDTO.getTypes()
+                itemDTO.getTypes().stream().map( typeMapper::typeDTOToType ).collect( Collectors.toSet() )
         );
     }
 }

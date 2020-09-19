@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thekiddos.manager.Util;
+import org.thekiddos.manager.api.mapper.TypeMapper;
 import org.thekiddos.manager.api.model.ItemDTO;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.models.Type;
@@ -16,6 +17,7 @@ import org.thekiddos.manager.transactions.AddItemTransaction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,11 +25,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ItemServiceTest {
     private final Long itemId = 1L, itemId2 = 2L;
-    private ItemService itemService;
+    private final ItemService itemService;
+    private final TypeMapper typeMapper;
 
     @Autowired
-    public ItemServiceTest( ItemService itemService ) {
+    public ItemServiceTest( ItemService itemService, TypeMapper typeMapper ) {
         this.itemService = itemService;
+        this.typeMapper = typeMapper;
     }
 
     @BeforeEach
@@ -86,7 +90,7 @@ class ItemServiceTest {
         assertEquals( item.getFat(), itemDTO.getFat() );
         assertEquals( item.getProtein(), itemDTO.getProtein() );
         assertEquals( item.getCarbohydrates(), itemDTO.getCarbohydrates() );
-        assertEquals( item.getTypes(), itemDTO.getTypes() );
+        assertEquals( item.getTypes().stream().map( typeMapper::typeToTypeDTO ).collect( Collectors.toSet() ), itemDTO.getTypes() );
     }
 
     @Test

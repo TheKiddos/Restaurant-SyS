@@ -1,7 +1,6 @@
 package org.thekiddos.manager.api.model;
 
 import lombok.*;
-import org.thekiddos.manager.models.Type;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -25,5 +24,5 @@ public class ItemDTO implements Serializable {
     private String imagePath;
     private String description;
 
-    private Set<Type> types = new HashSet<>();
+    private Set<TypeDTO> types = new HashSet<>();
 }
