@@ -5,6 +5,7 @@ import org.thekiddos.manager.api.mapper.ItemMapper;
 import org.thekiddos.manager.api.model.ItemDTO;
 import org.thekiddos.manager.models.Item;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.transactions.AddItemsToReservationTransaction;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,5 +33,16 @@ public class ItemServiceImpl implements ItemService {
         }
 
         return true;
+    }
+
+    @Override
+    public void addItemsToOrder( Long tableId, List<Item> orderedItems ) throws IllegalArgumentException {
+        if ( !allItemsInMenu( orderedItems ) )
+            throw new IllegalArgumentException( "One or more of the provided items are not served by the restaurant." );
+
+        AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( tableId );
+        for ( Item item : orderedItems )
+            serviceTransaction.addItem( item.getId() );
+        serviceTransaction.execute();
     }
 }

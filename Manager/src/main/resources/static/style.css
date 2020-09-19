@@ -502,6 +502,14 @@
     -fx-background-color: rgba(82,149,255,0.58);
 }
 
+
+.jfx-list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled,
+.table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell:filled,
+.table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell .table-cell {
+    -fx-background-color: rgba(0,0,30,0.2);
+    -fx-background-insets: 0;
+}
+
 .jfx-list-view:focused > .virtual-flow > .clipped-container > .sheet > .list-cell:filled:selected,
 .table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell:filled:selected,
 .table-view:focused > .virtual-flow > .clipped-container > .sheet > .table-row-cell .table-cell:selected {

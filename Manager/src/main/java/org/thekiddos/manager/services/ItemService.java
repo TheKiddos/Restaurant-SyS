@@ -14,4 +14,12 @@ public interface ItemService {
      * @return true if all items are in the menu, false otherwise
      */
     boolean allItemsInMenu( List<Item> orderedItems );
+
+    /**
+     * Adds items to the order of the given table.
+     * @param tableId - The table number to add the order to.
+     * @param orderedItems - A list of items to add.
+     * @throws IllegalArgumentException - If the table is not active now, or the items are not in the database.
+     */
+    void addItemsToOrder( Long tableId, List<Item> orderedItems ) throws IllegalArgumentException;
 }

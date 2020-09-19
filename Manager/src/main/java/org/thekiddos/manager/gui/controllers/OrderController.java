@@ -16,6 +16,7 @@ import org.thekiddos.manager.models.Order;
 import org.thekiddos.manager.models.OrderedItem;
 import org.thekiddos.manager.models.Reservation;
 import org.thekiddos.manager.repositories.Database;
+import org.thekiddos.manager.services.ItemService;
 import org.thekiddos.manager.transactions.AddItemsToReservationTransaction;
 
 import java.util.HashSet;
@@ -34,6 +35,11 @@ public class OrderController extends Controller {
     public JFXButton addOrderItemButton;
     public JFXListView<ItemPane> itemsList;
     private Reservation reservation;
+    private final ItemService itemService;
+
+    public OrderController( ItemService itemService ) {
+        this.itemService = itemService;
+    }
 
     public void initialize() {
         addOrderItemButton.disableProperty().bind( itemsList.getSelectionModel().selectedItemProperty().isNull() );
@@ -91,12 +97,8 @@ public class OrderController extends Controller {
     public void showAddItemsToOrderDialog( Long tableId, List<Item> orderedItems ) {
         Alert alert = Util.createAlert("Add Order?", getOrderDetails( tableId, orderedItems ), getScene().getWindow(), ButtonType.OK, ButtonType.CANCEL );
         Optional<ButtonType> clickedButton = alert.showAndWait();
-        // Can be refactored with one of the above methods
         if ( clickedButton.isPresent() && clickedButton.get().equals( ButtonType.OK ) ) {
-            AddItemsToReservationTransaction serviceTransaction = new AddItemsToReservationTransaction( tableId );
-            for ( Item item : orderedItems )
-                serviceTransaction.addItem( item.getId() );
-            serviceTransaction.execute();
+            itemService.addItemsToOrder( tableId, orderedItems );
             refresh();
         }
     }
