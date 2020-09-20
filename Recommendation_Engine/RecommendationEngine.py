@@ -54,10 +54,9 @@ class RecommendationEngine:
         """
         if self.ratings_frame is None:
             return None
-        indices = self.engine.kneighbors(self.user_item_frame.iloc[user_id - 1].values.reshape(1, -1), n_neighbors=2, return_distance=False)
-        indices = indices + 1  # ids starts at 1 while indices starts at 0
+        indices = self.engine.kneighbors(self.user_item_frame.loc[user_id].values.reshape(1, -1), n_neighbors=2, return_distance=False)
         # index 0 is the user himself so we choose 1
-        nearest_user = self.user_item_frame.loc[indices.flatten()[1]]
+        nearest_user = self.user_item_frame.iloc[indices.flatten()[1]]
         user = self.user_item_frame.loc[user_id]
         recommendations = nearest_user[user == 0]
         recommendations = recommendations[nearest_user > 3]
