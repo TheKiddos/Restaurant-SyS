@@ -86,6 +86,8 @@ public class OrderController extends Controller {
         if ( reservation == null )
             return;
         reservation = Database.getReservationById( reservation.getCustomerId(), reservation.getDate() );
+        if ( reservation == null ) // Checkout will delete the reservation. so checking is required
+            return;
         Order order = reservation.getOrder();
         Set<Item> items = new HashSet<>( order.getItemsQuantities().keySet() );
         for ( Item item : items ) {
