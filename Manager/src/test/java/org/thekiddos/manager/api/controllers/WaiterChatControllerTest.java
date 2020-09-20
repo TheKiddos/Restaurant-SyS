@@ -4,25 +4,33 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.thekiddos.manager.Util;
+import org.thekiddos.manager.api.mapper.MessageMapper;
+import org.thekiddos.manager.api.model.MessageDTO;
 import org.thekiddos.manager.models.Message;
 import org.thekiddos.manager.repositories.Database;
-import org.thekiddos.manager.services.WaiterChatService;
+import org.thekiddos.manager.services.WaiterChatServiceImpl;
 import org.thekiddos.manager.transactions.SendMessageToManagerTransaction;
 import org.thekiddos.manager.transactions.SendMessageToWaiterTransaction;
 import org.thekiddos.manager.transactions.SendMessageTransaction;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,14 +41,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class WaiterChatControllerTest {
     private final WaiterChatController waiterChatController;
-    private final WaiterChatService waiterChatService;
+    @MockBean
+    private WaiterChatServiceImpl waiterChatService;
     private final MockMvc mockMvc;
+    private final MessageMapper messageMapper;
 
     @Autowired
-    public WaiterChatControllerTest( WaiterChatController waiterChatController, WaiterChatService waiterChatService ) {
+    public WaiterChatControllerTest( WaiterChatController waiterChatController, MessageMapper messageMapper ) {
         this.waiterChatController = waiterChatController;
-        this.waiterChatService = waiterChatService;
         mockMvc = MockMvcBuilders.standaloneSetup( waiterChatController ).build();
+        this.messageMapper = messageMapper;
     }
 
     @BeforeEach
@@ -51,20 +61,24 @@ public class WaiterChatControllerTest {
     @Test
     void testProcessAcknowledgmentWithoutMessages() throws Exception {
         mockMvc.perform( post( "/api/chat" ) ).andExpect( status().isOk() );
+        Mockito.verify( waiterChatService, Mockito.times( 1 ) ).setAcknowledged();
+        /*
+        // Since we already know that waiterChatService.setAcknowledged() does it's job in another test
+        // we only want to know that the controller calls it so we don't need the following:
         assertTrue( waiterChatService.isOnline() );
         assertTrue( waiterChatService.isAcknowledgedNow() );
+        // The rest of the tests will use the same idea but without this comment.
+         */
     }
 
     @Test
     void testProcessAcknowledgmentWithMessages() throws Exception {
-        Message unreadMessage = new SendMessageToWaiterTransaction( "Hello" ).getMessage();
-        Message readMessage = new SendMessageToWaiterTransaction( "Go to Hell!" ).getMessage();
-        readMessage.setSeen();
+        // I used with nano 0 to stick with the problem of database can't save the same precision as java.
+        MessageDTO unreadMessage = new MessageDTO( "Hello", Util.CHAT_USER_WAITER, Util.CHAT_USER_MANAGER, LocalDateTime.now().withNano( 0 ), false );
+        MessageDTO readMessage = new MessageDTO( "Go to HELL!", Util.CHAT_USER_MANAGER, Util.CHAT_USER_WAITER, LocalDateTime.now().withNano( 0 ), true );
 
         // Waiter Should Be online when receiving messages
-        waiterChatService.setAcknowledged();
-        waiterChatService.addPendingMessage( unreadMessage );
-        waiterChatService.addPendingMessage( readMessage );
+        Mockito.when( waiterChatService.getPendingMessages() ).thenReturn( Arrays.asList( unreadMessage, readMessage ) );
 
         mockMvc.perform( post( "/api/chat" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() )
                 .andExpect( jsonPath( "$[*]", hasSize( 1 ) ) )
@@ -80,9 +94,8 @@ public class WaiterChatControllerTest {
                 .andExpect( jsonPath( "$['messages'][1].createdAt", is( readMessage.getCreatedAt().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd hh:mm:ss" ) ) ) ) )
                 .andExpect( jsonPath( "$['messages'][1].seen", is( readMessage.isSeen() ) ) );
 
-        assertTrue( waiterChatService.isOnline() );
-        assertTrue( waiterChatService.isAcknowledgedNow() );
-        assertEquals( 0, waiterChatService.getPendingMessagesNumber() );
+        Mockito.verify( waiterChatService, Mockito.times( 1 ) ).setAcknowledged();
+        Mockito.verify( waiterChatService, Mockito.times( 1 ) ).clearPendingMessages();
     }
 
     @SneakyThrows
@@ -96,6 +109,9 @@ public class WaiterChatControllerTest {
         SendMessageTransaction sendMessageToManager = new SendMessageToManagerTransaction( "Go to Hell!" );
         sendMessageToManager.execute();
         Message messageToManager = sendMessageToManager.getMessage();
+
+        List<MessageDTO> messages = Stream.of( messageToWaiter, messageToManager ).map( messageMapper::messageToMessageDTO ).collect( Collectors.toList() );
+        Mockito.when( waiterChatService.getAllMessages() ).thenReturn( messages );
 
         mockMvc.perform( get( "/api/chat/messages" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() )
                 .andExpect( jsonPath( "$[*]", hasSize( 1 ) ) )
@@ -113,9 +129,6 @@ public class WaiterChatControllerTest {
 
         // Waiter has seen messages sent to him
         Database.getMessages().stream().filter( message -> message.getReceiver().equals( Util.CHAT_USER_WAITER ) ).forEach( message -> assertTrue( message.isSeen() ) );
-        assertTrue( waiterChatService.isAcknowledgedNow() );
-        assertTrue( waiterChatService.isOnline() );
+        Mockito.verify( waiterChatService, Mockito.times( 1 ) ).setAcknowledged();
     }
-
-
 }
