@@ -74,7 +74,7 @@ public class MessengerController extends Controller {
 
     @Override
     public void refresh() {
-        if ( getScene().getWindow().isShowing() && messagesBox.getChildren().size() != getTodayMessages().size() )
+        if ( isManagerOnline() && messagesBox.getChildren().size() != getTodayMessages().size() )
             updateMessages();
     }
 
@@ -102,6 +102,15 @@ public class MessengerController extends Controller {
         for ( Node node : messagesBox.getChildren() ) {
             MessagePane messagePane = (MessagePane)node;
             messagePane.setSeen();
+        }
+    }
+
+    public boolean isManagerOnline() {
+        try {
+            return getScene().getWindow().isShowing();
+        }
+        catch ( Exception e ) {
+            return false;
         }
     }
 }

@@ -31,7 +31,7 @@ public class WaiterChatController {
     @PostMapping
     private ResponseEntity<MessageListDTO> processAcknowledgment() {
         waiterChatService.setAcknowledged();
-        ResponseEntity<MessageListDTO> responseEntity = new ResponseEntity<>( new MessageListDTO( waiterChatService.getPendingMessages() ), HttpStatus.OK );
+        ResponseEntity<MessageListDTO> responseEntity = new ResponseEntity<>( new MessageListDTO( messengerController.isManagerOnline() ,waiterChatService.getPendingMessages() ), HttpStatus.OK );
         waiterChatService.clearPendingMessages();
         if ( Util.isGuiInitialized() ) {
             Platform.runLater( messengerController::setWaiterMessagesRead );

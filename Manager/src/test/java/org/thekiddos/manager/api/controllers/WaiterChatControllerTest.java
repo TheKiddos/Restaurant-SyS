@@ -60,7 +60,11 @@ public class WaiterChatControllerTest {
 
     @Test
     void testProcessAcknowledgmentWithoutMessages() throws Exception {
-        mockMvc.perform( post( "/api/chat" ) ).andExpect( status().isOk() );
+        // isManagerOnline is not important for the server, it's for the client only.
+        mockMvc.perform( post( "/api/chat" ) ).andExpect( status().isOk() )
+                .andExpect( jsonPath( "$[*]", hasSize( 2 ) ) )
+                .andExpect( jsonPath( "$['managerOnline']", is( false ) ) )
+                .andExpect( jsonPath( "$['messages']", hasSize( 0 ) ) );
         Mockito.verify( waiterChatService, Mockito.times( 1 ) ).setAcknowledged();
         /*
         // Since we already know that waiterChatService.setAcknowledged() does it's job in another test
@@ -81,7 +85,8 @@ public class WaiterChatControllerTest {
         Mockito.when( waiterChatService.getPendingMessages() ).thenReturn( Arrays.asList( unreadMessage, readMessage ) );
 
         mockMvc.perform( post( "/api/chat" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() )
-                .andExpect( jsonPath( "$[*]", hasSize( 1 ) ) )
+                .andExpect( jsonPath( "$[*]", hasSize( 2 ) ) )
+                .andExpect( jsonPath( "$['managerOnline']", is( false ) ) )
                 .andExpect( jsonPath( "$['messages']", hasSize( 2 ) ) )
                 .andExpect( jsonPath( "$['messages'][0].contents", is( unreadMessage.getContents() ) ) )
                 .andExpect( jsonPath( "$['messages'][0].sender", is( unreadMessage.getSender() ) ) )
@@ -114,7 +119,8 @@ public class WaiterChatControllerTest {
         Mockito.when( waiterChatService.getAllMessages() ).thenReturn( messages );
 
         mockMvc.perform( get( "/api/chat/messages" ).accept( MediaType.APPLICATION_JSON ) ).andExpect( status().isOk() )
-                .andExpect( jsonPath( "$[*]", hasSize( 1 ) ) )
+                .andExpect( jsonPath( "$[*]", hasSize( 2 ) ) )
+                .andExpect( jsonPath( "$['managerOnline']", is( false ) ) )
                 .andExpect( jsonPath( "$['messages']", hasSize( 2 ) ) )
                 .andExpect( jsonPath( "$['messages'][0].contents", is( messageToWaiter.getContents() ) ) )
                 .andExpect( jsonPath( "$['messages'][0].sender", is( messageToWaiter.getSender() ) ) )

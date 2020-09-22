@@ -83,6 +83,7 @@ public final class ReservationPane extends TitledPane {
 
     private void activateReservation( ActionEvent actionEvent ) {
         new ActivateReservationTransaction( reservation.getReservedTableId() ).execute();
+        reservation.activate();
 
         activateButton.setDisable( true );
         viewOrderButton.setDisable( false );
@@ -97,7 +98,7 @@ public final class ReservationPane extends TitledPane {
     }
 
     private void checkOut( ActionEvent actionEvent ) {
-        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation );
+        CheckOutTransaction checkOutTransaction = new CheckOutTransaction( reservation.getReservedTableId() );
         checkOutTransaction.execute();
         showAndPrintInvoice( checkOutTransaction.getInvoice() );
     }
