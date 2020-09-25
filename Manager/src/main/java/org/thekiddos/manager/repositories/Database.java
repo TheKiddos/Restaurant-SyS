@@ -364,10 +364,11 @@ public final class Database {
     public static List<Message> getMessages() {
         ArrayList<Message> messages = new ArrayList<>();
         messageRepository.findAll().forEach( messages::add );
-        return messages;
+        return messages.stream().sorted( Comparator.comparing( Message::getCreatedAt ) ).collect( Collectors.toList() );
     }
 
     public static List<Message> getMessagesAt( LocalDate now ) {
-        return getMessages().stream().filter( message -> message.getCreatedAt().toLocalDate().equals( now ) ).collect( Collectors.toList() );
+        // sorting is useless here but keeping for now
+        return getMessages().stream().filter( message -> message.getCreatedAt().toLocalDate().equals( now ) ).sorted( Comparator.comparing( Message::getCreatedAt ) ).collect( Collectors.toList() );
     }
 }

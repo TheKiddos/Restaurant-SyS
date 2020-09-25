@@ -1,5 +1,6 @@
 package org.thekiddos.manager.api.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import org.thekiddos.manager.transactions.SendMessageToManagerTransaction;
 import org.thekiddos.manager.transactions.SendMessageToWaiterTransaction;
 import org.thekiddos.manager.transactions.SendMessageTransaction;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -29,13 +31,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith( SpringExtension.class )
 @SpringBootTest
@@ -45,12 +45,14 @@ public class WaiterChatControllerTest {
     private WaiterChatServiceImpl waiterChatService;
     private final MockMvc mockMvc;
     private final MessageMapper messageMapper;
+    private final ObjectMapper objectToJsonMapper;
 
     @Autowired
-    public WaiterChatControllerTest( WaiterChatController waiterChatController, MessageMapper messageMapper ) {
+    public WaiterChatControllerTest( WaiterChatController waiterChatController, MessageMapper messageMapper, ObjectMapper objectToJsonMapper ) {
         this.waiterChatController = waiterChatController;
         mockMvc = MockMvcBuilders.standaloneSetup( waiterChatController ).build();
         this.messageMapper = messageMapper;
+        this.objectToJsonMapper = objectToJsonMapper;
     }
 
     @BeforeEach
@@ -136,5 +138,26 @@ public class WaiterChatControllerTest {
         // Waiter has seen messages sent to him
         Database.getMessages().stream().filter( message -> message.getReceiver().equals( Util.CHAT_USER_WAITER ) ).forEach( message -> assertTrue( message.isSeen() ) );
         Mockito.verify( waiterChatService, Mockito.times( 1 ) ).setAcknowledged();
+    }
+
+    @Test
+    void testPostMessage() throws Exception {
+        MessageDTO messageToManager = new MessageDTO();
+        messageToManager.setContents( "Die!" );
+        String messageJson = objectToJsonMapper.writeValueAsString( messageToManager );
+
+        assertEquals( 0, Database.getMessages().size() );
+
+        mockMvc.perform( post( "/api/chat/send" ).content( messageJson ).contentType( "application/json;charset=UTF-8" ) )
+                .andExpect( status().isCreated() )
+                .andExpect( content().string( containsString( "Message Not Read" ) ) );
+
+        assertEquals( 1, Database.getMessages().size() );
+        Message message = Database.getMessages().get( 0 );
+        assertEquals( messageToManager.getContents(), message.getContents() );
+        assertEquals( Util.CHAT_USER_MANAGER, message.getReceiver() );
+        assertEquals( Util.CHAT_USER_WAITER, message.getSender() );
+        assertFalse( message.isSeen() );
+        assertEquals( 0, Duration.between( message.getCreatedAt(), LocalDateTime.now() ).toMinutes() );
     }
 }

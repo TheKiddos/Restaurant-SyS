@@ -1,6 +1,5 @@
 package org.thekiddos.manager.api.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,14 +49,16 @@ class ItemDTOControllerTest {
     private final ActiveTableService activeTableService;
     private final TableMapper tableMapper;
     private final ItemMapper itemMapper;
+    private final ObjectMapper objectToJsonMapper;
     private MockMvc mockMvc;
 
     @Autowired
-    public ItemDTOControllerTest( ItemDTOController itemDTOController, ActiveTableService activeTableService, TableMapper tableMapper, ItemMapper itemMapper ) {
+    public ItemDTOControllerTest( ItemDTOController itemDTOController, ActiveTableService activeTableService, TableMapper tableMapper, ItemMapper itemMapper, ObjectMapper objectToJsonMapper ) {
         this.itemDTOController = itemDTOController;
         this.activeTableService = activeTableService;
         this.tableMapper = tableMapper;
         this.itemMapper = itemMapper;
+        this.objectToJsonMapper = objectToJsonMapper;
     }
 
     @BeforeEach
@@ -154,7 +155,7 @@ class ItemDTOControllerTest {
         }).when( itemService ).addItemsToOrder( ArgumentMatchers.anyLong(), ArgumentMatchers.anyList() );
 
         OrderedItemsDTO orderedItemsDTO = new OrderedItemsDTO( activeTableService.getActiveTableById( tableId ), itemService.getItems() );
-        String orderedItemsJson = toJson( orderedItemsDTO );
+        String orderedItemsJson = objectToJsonMapper.writeValueAsString( orderedItemsDTO );
         mockMvc.perform( post( "/api/items" ).content( orderedItemsJson ).contentType( "application/json;charset=UTF-8" ) )
                 .andExpect( status().isCreated() );
 
@@ -171,7 +172,7 @@ class ItemDTOControllerTest {
 
         TableDTO inActiveTable = tableMapper.tableToTableDTO( Database.getTableById( tableId2 ) );
         OrderedItemsDTO orderedItemsDTO = new OrderedItemsDTO( inActiveTable, itemService.getItems() );
-        String orderedItemsJson = toJson( orderedItemsDTO );
+        String orderedItemsJson = objectToJsonMapper.writeValueAsString( orderedItemsDTO );
         mockMvc.perform( post( "/api/items" ).content( orderedItemsJson ).contentType( "application/json;charset=UTF-8" ) )
                 .andExpect( status().isBadRequest() )
                 .andExpect( content().string( "No Current Reservations for the selected table" ) );
@@ -191,15 +192,10 @@ class ItemDTOControllerTest {
         itemsWithInvalidItem.add( invalidItemDTO );
 
         OrderedItemsDTO orderedItemsDTO = new OrderedItemsDTO( activeTableService.getActiveTableById( tableId ), itemsWithInvalidItem );
-        String orderedItemsJson = toJson( orderedItemsDTO );
+        String orderedItemsJson = objectToJsonMapper.writeValueAsString( orderedItemsDTO );
         mockMvc.perform( post( "/api/items" ).content( orderedItemsJson ).contentType( "application/json;charset=UTF-8" ) )
                 .andExpect( status().isBadRequest() )
                 .andExpect( content().string( "One or more of the provided items are not served by the restaurant." ) );
-    }
-
-    private String toJson( Object object ) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString( object );
     }
 
     // TODO test failing cases
