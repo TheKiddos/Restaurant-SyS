@@ -77,9 +77,7 @@ class ViewOrder extends StatelessWidget {
         items.add( orderedItem.item );
     });
 
-    bool requestSuccess = false;
-    await postOrder( tableId, items ).then( (value) => requestSuccess = value );
-    
+    bool requestSuccess = await postOrder( tableId, items );
     requestSuccess ? EasyLoading.showSuccess( "Order sent successfully!" ) : EasyLoading.showError( "Something went wrong. Please check the manager." );
   }
 }

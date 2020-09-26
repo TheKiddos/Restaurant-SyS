@@ -192,18 +192,16 @@ class GoToMenuButton extends StatelessWidget {
       }
 
       int tableId = int.tryParse( tableIdFieldController.text );
-      bool requestSuccess = false;
-      await tableExists( tableId ).then( (value) => requestSuccess = value );
+      bool requestSuccess = await tableExists( tableId );
       if ( !requestSuccess ) {
         EasyLoading.showError( "Make sure the table exists and that it's active" );
         return;
       }
 
       EasyLoading.show(status: "Fetching Menu..." );
-      List<Item> items = [];
-      List<Type> types = [];
-      await fetchItems().then( (value) => items = value );
-      await fetchTypes().then( (value) => types = value );
+      List<Item> items = await fetchItems();
+      List<Type> types = await fetchTypes();
+
       if ( items.isEmpty ) {
         EasyLoading.showError( "Something went wrong while fetching the items. Please check with the manager" );
         return;
