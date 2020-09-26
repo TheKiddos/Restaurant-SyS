@@ -1,15 +1,14 @@
 import 'dart:collection';
 
-import 'package:Waiter/ordered_item.dart';
+import 'package:Waiter/const.dart';
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/ordered_item.dart';
+import 'package:Waiter/models/type.dart';
+import 'package:Waiter/screens/view_order.dart';
+import 'package:Waiter/widgets/item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'const.dart';
-import 'item.dart';
-import 'item_widget.dart';
-import 'type.dart';
-import 'view_order.dart';
 
 double sizeWidth;
 Map<int, ItemWidget> _itemWidgetsMap = HashMap<int, ItemWidget>();

@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:Waiter/ordered_items_list.dart';
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/ordered_items_list.dart';
+import 'package:Waiter/models/type.dart';
+import 'package:Waiter/services/auth.dart';
 import 'package:http/http.dart' as http;
-
-import 'auth.dart';
-import 'item.dart';
-import 'type.dart';
 
 Future<bool> tableExists( int tableId ) async {
   try {

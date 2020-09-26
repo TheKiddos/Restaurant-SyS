@@ -1,4 +1,4 @@
-import 'item.dart';
+import 'package:Waiter/models/item.dart';
 
 class OrderedItemsList {
   int tableId;

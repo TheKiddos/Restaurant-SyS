@@ -1,12 +1,11 @@
-import 'package:Waiter/item.dart';
-import 'package:Waiter/ordered_item_widget.dart';
+import 'package:Waiter/const.dart';
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/ordered_item.dart';
+import 'package:Waiter/services/manager_api.dart';
+import 'package:Waiter/widgets//ordered_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import 'const.dart';
-import 'manager_api.dart';
-import 'ordered_item.dart';
 
 class ViewOrder extends StatelessWidget {
   final int _tableId;

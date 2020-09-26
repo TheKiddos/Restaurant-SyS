@@ -26,5 +26,4 @@ Website/.phpunit.result.cache
 /Recommendation_Engine/sandbox/data/Reviews.csv
 /.idea/statistic.xml
 /Manager/src/main/resources/application.yml
-/Waiter/lib/auth.dart
 /Manager/src/main/java/org/thekiddos/manager/api/WebConfig.java

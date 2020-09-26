@@ -1,6 +1,5 @@
-import 'package:Waiter/quantity.dart';
-
-import 'item.dart';
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/quantity.dart';
 
 class OrderedItem {
   final Item _item;

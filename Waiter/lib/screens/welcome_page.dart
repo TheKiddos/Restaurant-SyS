@@ -1,13 +1,12 @@
-import 'package:Waiter/view_deals.dart';
+import 'package:Waiter/const.dart';
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/type.dart';
+import 'package:Waiter/screens/menu.dart';
+import 'package:Waiter/screens/view_deals.dart';
+import 'package:Waiter/services//manager_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
-import 'const.dart';
-import 'item.dart';
-import 'manager_api.dart';
-import 'menu.dart';
-import 'type.dart';
 
 class WelcomeMenu extends StatefulWidget {
   @override

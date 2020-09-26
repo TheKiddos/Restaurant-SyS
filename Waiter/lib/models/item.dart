@@ -1,4 +1,4 @@
-import 'type.dart';
+import 'package:Waiter/models/type.dart';
 
 class Item {
   int _id;

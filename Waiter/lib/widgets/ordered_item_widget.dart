@@ -1,9 +1,8 @@
+import 'package:Waiter/models/item.dart';
+import 'package:Waiter/models/quantity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'item.dart';
-import 'quantity.dart';
 
 class OrderedItemWidget extends StatelessWidget {
   final Item item;
